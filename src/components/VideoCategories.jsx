@@ -4,7 +4,7 @@ import { useDataContext } from "../context/DataContext"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
 //import custom hook fetch
-import { useFetchVideoDetails } from "../hooks/customHooks"
+import { useFetchVideoDetails } from "../Hooks/customHooks"
 
 export const VideoCategories = ({ catergoryName }) => {
   const { location } = useDataContext()
