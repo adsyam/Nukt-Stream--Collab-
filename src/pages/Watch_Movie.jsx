@@ -8,7 +8,7 @@ export default function WatchMovie() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <MediaFrame id={id} Season={season} Episode={episode} />
       <div className="mx-20">
         <MediaDetails id={id} />

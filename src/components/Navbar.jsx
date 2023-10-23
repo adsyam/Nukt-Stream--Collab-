@@ -31,7 +31,7 @@ export const Navbar = () => {
           isActive || sidebar
             ? "bg-[#0A0E1730] backdrop-blur-[1px]"
             : "bg-transparent"
-        } h-14 flex items-center justify-between px-5 fixed top-0 right-0 left-0 z-20  text-white`}
+        } py-2 flex items-center justify-between px-5 fixed top-0 right-0 left-0 z-10 text-white`}
       >
         <div className="flex gap-5">
           <button

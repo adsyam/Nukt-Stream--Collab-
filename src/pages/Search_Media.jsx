@@ -58,7 +58,7 @@ export default function SearchPage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       {!loading ? (
         <>
           <div className="text-white my-12 ">

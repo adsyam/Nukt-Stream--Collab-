@@ -13,7 +13,7 @@ import {
 export default function Home() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Carousel />
       <div>
         <Popular />

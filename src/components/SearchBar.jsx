@@ -1,15 +1,13 @@
-import { BiSearch } from "react-icons/bi"
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faBars,
-  faMagnifyingGlass,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons"
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 
 export const Searchbar = () => {
   const [search, setSearch] = useState("")
+  const location = useLocation()
+  const pathname = location.pathname
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -31,35 +29,41 @@ export const Searchbar = () => {
     if (search !== "") {
       if (e.key === "Enter") {
         navigate(`/search/${search}`)
+        setSearch("")
       }
     }
   }
 
   return (
-    <form
-      //   onSubmit={handleSubmit}
-      className="relative flex items-center justify-end"
-    >
+    // <form
+    //   //   onSubmit={handleSubmit}
+    //   className="relative flex items-center justify-end"
+    // >
+    <div className="relative flex items-center justify-end backdrop-blur-none">
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search movies and videos"
+        placeholder="Search Movies, TV Series, and more"
         style={searchStyle}
         onKeyDown={searchEnter}
-        className="w-full ps-[1rem] outline-none border-0"
+        className="w-full ps-[1rem] outline-none border-0 backdrop-blur-none"
       />
-      <Link
+      {/* <Link
         // to={`/search?q=${search}`}
         to={search !== "" ? `/Search/${search}` : null}
-        className="px-[.5rem] py-[.5rem] group-hover:bg-[#00ffff]"
-      ></Link>
+        className="px-[.5rem] py-[.5rem]"
+      ></Link> */}
       <Link
-        className="text-white absolute pr-7"
-        to={search !== "" ? `/Search/${search}` : null}
+        className="text-white absolute pr-3"
+        to={search !== "" ? `/search/${search}` : pathname}
+        onClick={() => setSearch("")}
       >
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <motion.div whileHover={{ scale: 1.15 }} className="">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </motion.div>
       </Link>
-    </form>
+      {/* </form> */}
+    </div>
   )
 }

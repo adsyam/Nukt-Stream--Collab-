@@ -25,7 +25,7 @@ export default function WatchTVSeries() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <MediaFrame id={id} Season={season} Episode={episode} />
       {!loading ? (
         <>

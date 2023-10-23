@@ -8,9 +8,6 @@ export default {
         "hero-pattern": "url('./assets/BG.jpg')",
       },
     },
-    fontFamily: {
-      fig: ["Figtree", "sans-serif"],
-    },
   },
   plugins: [],
 }
