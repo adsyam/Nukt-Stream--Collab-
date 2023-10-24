@@ -34,12 +34,16 @@ export const WatchPage = () => {
       <div className="flex flex-col gap-3 pt-[5rem]">
         <div className="flex-1">
           <div className="w-full p-[1rem]">
-            <ReactPlayer
-              key={id}
-              url={`https://www.youtube.com/embed/${id}`}
-              className="react-player"
-              controls
-            />
+            <div className="">
+                <iframe
+                  key={id}
+                  src={`https://www.youtube.com/embed/${id}`}
+                //   className="react-player"
+                  allowFullScreen
+                  frameBorder={0}
+                  className="aspect-video w-full h-full rounded-[10px]"
+                />
+            </div>
             <VideoDescriptions videoDetail={videoDetails} />
           </div>
           <Reviews />

@@ -118,7 +118,7 @@ const Trending = () => {
                           <p className="word-break text-[16px] font-normal truncate-text">
                             {trend.original_title || trend.original_name}
                           </p>
-                          <p>
+                          <p className="text-sm opacity-50">
                             {(trend.release_date &&
                               trend.release_date.split("-")[0]) ||
                               (trend.first_air_date &&

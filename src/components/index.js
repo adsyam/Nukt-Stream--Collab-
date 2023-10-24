@@ -12,7 +12,6 @@ import { SearchPage } from "../pages/SearchPage"
 import { Hero } from "./Hero"
 import { History } from "./History"
 import { Login } from "./Login"
-import { MovieWatchHistory } from "./MovieWatchHistory"
 import { Navbar } from "./Navbar"
 import { Plans } from "./Plans"
 import { Pricing } from "./Pricing"
@@ -27,7 +26,6 @@ import { Profile_Playlist } from "./Profile_Playlist"
 import { ProtectedRoute } from "./ProtectedRoute"
 import { Reviews } from "./Reviews"
 import { Searchbar } from "./SearchBar"
-import { SeriesWatchHistory } from "./SeriesWatchHistory"
 import { Sidebar } from "./Sidebar"
 import { SignUp } from "./SignUp"
 import { Success } from "./Success"
@@ -45,11 +43,14 @@ import EpisodeList from "./EpisodeList"
 import GenreMap from "./GenreMap"
 import MediaDetails from "./MediaDetails"
 import MediaFrame from "./MediaFrame"
+import MediaRecommendation from "./MediaRecommendation"
 import MediaReviews from "./MediaReviews"
+import { MovieWatchHistory } from "./MovieWatchHistory"
 import Popular from "./Popular"
 import { RedirectRoute } from "./RedirectRoute"
 import SearchMovie from "./SearchMovie"
 import SearchTVSeries from "./SearchTVSeries"
+import { SeriesWatchHistory } from "./SeriesWatchHistory"
 import ServerList from "./ServerList.jsx"
 import TopRated from "./TopRated"
 import Trending from "./Trending"
@@ -73,6 +74,7 @@ export {
   Login,
   MediaDetails,
   MediaFrame,
+  MediaRecommendation,
   MediaReviews,
   MovieWatchHistory,
   Navbar,
