@@ -8,37 +8,35 @@ import { Footer } from "./Footer"
 import { ForgotPassword } from "./ForgotPassword"
 // import { Forms } from "./Forms"
 // import { Home } from "../pages/Home"
-import { SearchPage } from "../pages/SearchPage"
-import { Hero } from "./Hero"
-import { History } from "./History"
-import { Login } from "./Login"
-import { Navbar } from "./Navbar"
-import { Plans } from "./Plans"
-import { Pricing } from "./Pricing"
-import { ProfileDetails } from "./ProfileDetails"
-import { ProfileNav } from "./ProfileNav"
-import { ProfilePic } from "./ProfilePic"
-import { Profile_About } from "./Profile_About"
-import { Profile_Contents } from "./Profile_Contents"
-import { Profile_Downloads } from "./Profile_Downloads"
-import { Profile_Home } from "./Profile_Home"
-import { Profile_Playlist } from "./Profile_Playlist"
-import { ProtectedRoute } from "./ProtectedRoute"
-import { Reviews } from "./Reviews"
-import { Searchbar } from "./SearchBar"
-import { Sidebar } from "./Sidebar"
-import { SignUp } from "./SignUp"
-import { Success } from "./Success"
-import { User } from "./User"
-import { UserSidebar } from "./UserSideBar"
-import { VideoCard } from "./VideoCard"
-import { VideoCategories } from "./VideoCategories"
-import { VideoDescriptions } from "./VideoDescription"
-import { VideoFeed } from "./VideoFeed"
-import { VideosGrid } from "./VideosGrid"
-import { VideosLinear } from "./VideosLinear"
-import { MovieWatchHistory } from "./MovieWatchHistory";
-import { SeriesWatchHistory } from "./SeriesWatchHistory";
+import { SearchPage } from "../pages/SearchPage";
+import { Hero } from "./Hero";
+import { History } from "./History";
+import { Login } from "./Login";
+import { Navbar } from "./Navbar";
+import { Plans } from "./Plans";
+import { Pricing } from "./Pricing";
+import { ProfileDetails } from "./ProfileDetails";
+import { ProfileNav } from "./ProfileNav";
+import { ProfilePic } from "./ProfilePic";
+import { Profile_About } from "./Profile_About";
+import { Profile_Contents } from "./Profile_Contents";
+import { Profile_Downloads } from "./Profile_Downloads";
+import { Profile_Home } from "./Profile_Home";
+import { Profile_Playlist } from "./Profile_Playlist";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { Reviews } from "./Reviews";
+import { Searchbar } from "./SearchBar";
+import { Sidebar } from "./Sidebar";
+import { SignUp } from "./SignUp";
+import { Success } from "./Success";
+import { User } from "./User";
+import { UserSidebar } from "./UserSideBar";
+import { VideoCard } from "./VideoCard";
+import { VideoCategories } from "./VideoCategories";
+import { VideoDescriptions } from "./VideoDescription";
+import { VideoFeed } from "./VideoFeed";
+import { VideosGrid } from "./VideosGrid";
+import { VideosLinear } from "./VideosLinear";
 // import { WatchPage } from "./WatchPage"
 import Carousel from "./Carousel";
 import GenreMap from "./GenreMap";
@@ -52,7 +50,6 @@ import TopRated from "./TopRated";
 import Trending from "./Trending";
 import EpisodeList from "./EpisodeList";
 import ServerList from "./ServerList.jsx";
-import { RedirectRoute } from "./RedirectRoute.jsx";
 
 export {
   Banner,
