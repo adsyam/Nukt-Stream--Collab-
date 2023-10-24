@@ -17,7 +17,8 @@ import {
   SignUp,
   Success,
   User,
-} from "./components/index";
+  RedirectRoute,
+} from "./components/index.js";
 
 import {
   Home,
@@ -54,18 +55,30 @@ export const AppRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Dashboard />,
+        element: (
+          <RedirectRoute>
+            <Dashboard />
+          </RedirectRoute>
+        ),
       },
       {
         path: "/login",
         children: [
           {
             path: "/login",
-            element: <Login />,
+            element: (
+              <RedirectRoute>
+                <Login />
+              </RedirectRoute>
+            ),
           },
           {
             path: "forgot-password",
-            element: <ForgotPassword />,
+            element: (
+              <RedirectRoute>
+                <ForgotPassword />
+              </RedirectRoute>
+            ),
           },
         ],
       },
@@ -74,7 +87,11 @@ export const AppRouter = createBrowserRouter([
         children: [
           {
             path: "/signup",
-            element: <SignUp />,
+            element: (
+              <RedirectRoute>
+                <SignUp />
+              </RedirectRoute>
+            ),
           },
           {
             path: "pricing",
