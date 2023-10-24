@@ -11,12 +11,12 @@ import { TOKEN_AUTH } from "../constants/apiConfig"
 const Popular = () => {
   const [popular, setPopular] = useState([])
   const [loading, setLoading] = useState(true)
-  const [change, setChange] = useState("tv")
+  const [path, setpath] = useState("tv")
 
   useEffect(() => {
     const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/${change}/popular`,
+      url: `https://api.themoviedb.org/3/${path}/popular`,
       params: { language: "en-US", page: "1" },
       headers: {
         accept: "application/json",
@@ -36,7 +36,7 @@ const Popular = () => {
         console.error(error)
         setLoading(false)
       })
-  }, [change, loading])
+  }, [path, loading])
 
   useEffect(() => {})
 
@@ -54,9 +54,9 @@ const Popular = () => {
               <p className="text-2xl mb-1 font-medium">Popular</p>
               <motion.div className="flex gap-2 px-3 py-1 rounded-md">
                 <motion.button
-                  onClick={() => setChange("tv")}
+                  onClick={() => setpath("tv")}
                   className={`${
-                    change === "tv"
+                    path === "tv"
                       ? "bg-[#ffffff30] px-3 py-1 rounded-md"
                       : null
                   } px-3 py-1 rounded-md`}
@@ -64,9 +64,9 @@ const Popular = () => {
                   Series
                 </motion.button>
                 <motion.button
-                  onClick={() => setChange("movie")}
+                  onClick={() => setpath("movie")}
                   className={`${
-                    change === "movie"
+                    path === "movie"
                       ? "bg-[#ffffff30] px-3 py-1 rounded-md"
                       : null
                   } px-3 py-1 rounded-md`}
@@ -87,11 +87,10 @@ const Popular = () => {
                   .slice(0, 20)
                   .map((pop, index) => (
                     <Link
-                      href="#"
                       key={pop.id}
                       className="w-fit grid"
                       to={
-                        change === "tv"
+                        path === "tv"
                           ? `/TVSeries/${pop.id}/1/1`
                           : `/Movie/${pop.id}`
                       }

@@ -2,22 +2,14 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router"
+// import { useLocation } from "react-router"
 import { TOKEN_AUTH } from "../constants/apiConfig"
+import TrailerModal from "./TrailerModal"
 
-export default function MovieDetails({ id, Season, Episode }) {
+export default function MovieDetails({ id, Season, Episode, path }) {
   const [movieDetail, setMovieDetail] = useState(null)
-  const [path, setPath] = useState()
-  const location = useLocation()
-  const pathname = location.pathname
-
-  useEffect(() => {
-    if (pathname.includes("/TVSeries")) {
-      setPath("tv")
-    } else if (pathname.includes("/Movie")) {
-      setPath("movie")
-    }
-  }, [pathname])
+  const [isOpen, setIsOpen] = useState(false)
+  const [trailerData, setTrailerData] = useState([])
 
   useEffect(() => {
     const options = {
@@ -26,8 +18,7 @@ export default function MovieDetails({ id, Season, Episode }) {
       params: { language: "en-US" },
       headers: {
         accept: "application/json",
-        Authorization:
-          TOKEN_AUTH,
+        Authorization: TOKEN_AUTH,
       },
     }
 
@@ -35,6 +26,27 @@ export default function MovieDetails({ id, Season, Episode }) {
       .request(options)
       .then(function (response) {
         setMovieDetail(response.data)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }, [id, path])
+
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/${path}/${id}/videos`,
+      params: { language: "en-US" },
+      headers: {
+        accept: "application/json",
+        Authorization: TOKEN_AUTH,
+      },
+    }
+
+    axios
+      .request(options)
+      .then(function (response) {
+        setTrailerData(response.data.results)
       })
       .catch(function (error) {
         console.error(error)
@@ -110,9 +122,23 @@ export default function MovieDetails({ id, Season, Episode }) {
             <p>SYNOPSIS:</p>
             <p>{movieDetail.overview}</p>
             <div className="flex gap-2 rounded-md">
-              <button className="rounded-md px-3 py-1 bg-[#ffffff10] border border-[#ffe9e950] hover:bg-[#ffffff20] transition-all">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="rounded-md px-3 py-1 bg-[#ffffff10] border border-[#ffe9e950] hover:bg-[#ffffff20] transition-all"
+              >
                 WATCH TRAILER
               </button>
+              {trailerData
+                .filter((td) => td.type === "Trailer")
+                .slice(0, 1)
+                .map((td, index) => (
+                  <TrailerModal
+                    key={index}
+                    trailerKey={td.key}
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                  />
+                ))}
               <button className="rounded-md px-3 py-1 bg-[#ffffff10] border border-[#ffe9e950] hover:bg-[#ffffff20] transition-all text-center align-middle">
                 <FontAwesomeIcon icon={faBookmark} />
                 &nbsp;ADD TO THE LIBRARY

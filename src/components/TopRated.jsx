@@ -109,10 +109,10 @@ const TopRated = () => {
                           className="rounded-[5px] w-fit border-transparent box-border border-white"
                         />
                         <div>
-                          <p className="word-break text-[16px] font-normal ml-1 box-border">
+                          <p className="word-break text-[16px] font-normal ml-1 box-border truncate-text">
                             {tr.original_title || tr.original_name}
                           </p>
-                          <p>
+                          <p className="text-sm opacity-50">
                             {(tr.release_date &&
                               tr.release_date.split("-")[0]) ||
                               (tr.first_air_date &&

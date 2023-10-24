@@ -38,6 +38,7 @@ import { VideoFeed } from "./VideoFeed";
 import { VideosGrid } from "./VideosGrid";
 import { VideosLinear } from "./VideosLinear";
 // import { WatchPage } from "./WatchPage"
+<<<<<<< Updated upstream
 import Carousel from "./Carousel";
 import GenreMap from "./GenreMap";
 import MediaDetails from "./MediaDetails";
@@ -51,6 +52,22 @@ import Trending from "./Trending";
 import EpisodeList from "./EpisodeList";
 import ServerList from "./ServerList.jsx";
 import { RedirectRoute } from "./RedirectRoute.jsx";
+=======
+import Carousel from "./Carousel"
+import EpisodeList from "./EpisodeList"
+import GenreMap from "./GenreMap"
+import MediaDetails from "./MediaDetails"
+import MediaFrame from "./MediaFrame"
+import MediaRecommendation from "./MediaRecommendation"
+import MediaReviews from "./MediaReviews"
+import Popular from "./Popular"
+import SearchMovie from "./SearchMovie"
+import SearchTVSeries from "./SearchTVSeries"
+import ServerList from "./ServerList.jsx"
+import TopRated from "./TopRated"
+import TrailerModal from "./TrailerModal"
+import Trending from "./Trending"
+>>>>>>> Stashed changes
 
 export {
   Banner,
@@ -59,6 +76,7 @@ export {
   ChannelCard,
   CoverPhoto,
   Dashboard,
+  EpisodeList,
   FAQs,
   Footer,
   ForgotPassword,
@@ -70,6 +88,7 @@ export {
   Login,
   MediaDetails,
   MediaFrame,
+  MediaRecommendation,
   MediaReviews,
   Navbar,
   Plans,
@@ -89,10 +108,12 @@ export {
   SearchPage,
   SearchTVSeries,
   Searchbar,
+  ServerList,
   Sidebar,
   SignUp,
   Success,
   TopRated,
+  TrailerModal,
   Trending,
   User,
   UserSidebar,
@@ -102,7 +123,11 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
+<<<<<<< Updated upstream
   EpisodeList,
   ServerList,
   RedirectRoute,
 };
+=======
+}
+>>>>>>> Stashed changes
