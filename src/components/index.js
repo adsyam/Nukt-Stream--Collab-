@@ -37,22 +37,22 @@ import { VideoDescriptions } from "./VideoDescription"
 import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
+import { MovieWatchHistory } from "./MovieWatchHistory";
+import { SeriesWatchHistory } from "./SeriesWatchHistory";
 // import { WatchPage } from "./WatchPage"
-import Carousel from "./Carousel"
-import EpisodeList from "./EpisodeList"
-import GenreMap from "./GenreMap"
-import MediaDetails from "./MediaDetails"
-import MediaFrame from "./MediaFrame"
-import MediaRecommendation from "./MediaRecommendation"
-import MediaReviews from "./MediaReviews"
-import Popular from "./Popular"
-import { RedirectRoute } from "./RedirectRoute.jsx"
-import SearchMovie from "./SearchMovie"
-import SearchTVSeries from "./SearchTVSeries"
-import ServerList from "./ServerList.jsx"
-import TopRated from "./TopRated"
-import TrailerModal from "./TrailerModal"
-import Trending from "./Trending"
+import Carousel from "./Carousel";
+import GenreMap from "./GenreMap";
+import MediaDetails from "./MediaDetails";
+import MediaFrame from "./MediaFrame";
+import MediaReviews from "./MediaReviews";
+import Popular from "./Popular";
+import SearchMovie from "./SearchMovie";
+import SearchTVSeries from "./SearchTVSeries";
+import TopRated from "./TopRated";
+import Trending from "./Trending";
+import EpisodeList from "./EpisodeList";
+import ServerList from "./ServerList.jsx";
+import { RedirectRoute } from "./RedirectRoute.jsx";
 
 export {
   Banner,
@@ -73,7 +73,6 @@ export {
   Login,
   MediaDetails,
   MediaFrame,
-  MediaRecommendation,
   MediaReviews,
   Navbar,
   Plans,
@@ -99,7 +98,6 @@ export {
   SignUp,
   Success,
   TopRated,
-  TrailerModal,
   Trending,
   User,
   UserSidebar,
@@ -109,4 +107,6 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
-}
+  MovieWatchHistory,
+  SeriesWatchHistory,
+};
