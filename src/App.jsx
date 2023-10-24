@@ -1,5 +1,5 @@
-import "@stripe/stripe-js" //stripe library for user authentication
-import { createBrowserRouter, Outlet } from "react-router-dom"
+import "@stripe/stripe-js"; //stripe library for user authentication
+import { createBrowserRouter, Outlet } from "react-router-dom";
 
 import {
   Dashboard,
@@ -17,12 +17,18 @@ import {
   SignUp,
   Success,
   User,
-} from "./components/index"
+} from "./components/index";
 
-import { Home, SearchMedia, WatchMovie, WatchPage, WatchTVSeries } from "./pages"
+import {
+  Home,
+  SearchMedia,
+  WatchMovie,
+  WatchPage,
+  WatchTVSeries,
+} from "./pages";
 
-import { AuthProvider } from "./context/AuthContext"
-import { DataProvider } from "./context/DataContext"
+import { AuthProvider } from "./context/AuthContext";
+import { DataProvider } from "./context/DataContext";
 //======== CONTEXT PROVIDER ========
 
 //USER-CHANNEL PAGE
@@ -39,7 +45,7 @@ const AppLayout = () => (
       </DataProvider>
     </AuthProvider>
   </>
-)
+);
 
 //create a browser router with the pages as the children of the app layout
 export const AppRouter = createBrowserRouter([
@@ -108,7 +114,7 @@ export const AppRouter = createBrowserRouter([
         path: "/search",
         children: [
           {
-            path: ":query",
+            path: "/search",
             element: (
               <ProtectedRoute>
                 <SearchMedia />
@@ -204,4 +210,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-])
+]);
