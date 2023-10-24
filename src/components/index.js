@@ -37,6 +37,8 @@ import { VideoDescriptions } from "./VideoDescription";
 import { VideoFeed } from "./VideoFeed";
 import { VideosGrid } from "./VideosGrid";
 import { VideosLinear } from "./VideosLinear";
+import { MovieWatchHistory } from "./MovieWatchHistory";
+import { SeriesWatchHistory } from "./SeriesWatchHistory";
 // import { WatchPage } from "./WatchPage"
 import Carousel from "./Carousel";
 import GenreMap from "./GenreMap";
@@ -50,7 +52,6 @@ import TopRated from "./TopRated";
 import Trending from "./Trending";
 import EpisodeList from "./EpisodeList";
 import ServerList from "./ServerList.jsx";
-import { RedirectRoute } from "./RedirectRoute.jsx";
 
 export {
   Banner,
@@ -104,5 +105,6 @@ export {
   VideosLinear,
   EpisodeList,
   ServerList,
-  RedirectRoute,
+  MovieWatchHistory,
+  SeriesWatchHistory,
 };
