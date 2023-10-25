@@ -6,29 +6,29 @@ import {
   AiOutlineHistory,
   AiOutlineSetting,
   AiOutlineStar,
-} from "react-icons/ai"
-import { BiMoviePlay, BiDownload, BiHelpCircle } from "react-icons/bi"
+} from "react-icons/ai";
+import { BiMoviePlay, BiDownload, BiHelpCircle } from "react-icons/bi";
 import {
   MdOutlineVideoLibrary,
   MdPlaylistPlay,
   MdReportGmailerrorred,
-} from "react-icons/md"
-import { VscFeedback } from "react-icons/vsc"
+} from "react-icons/md";
+import { VscFeedback } from "react-icons/vsc";
 
 // ========= IMPORT LOGO ============
 export const logo =
-  "https://cdn3d.iconscout.com/3d/free/thumb/free-video-play-5658931-4715737.png"
+  "https://cdn3d.iconscout.com/3d/free/thumb/free-video-play-5658931-4715737.png";
 export const bg_url =
-  "https://wallpapers.com/images/hd/dark-gradient-6bly12umg2d4psr2.jpg"
+  "https://wallpapers.com/images/hd/dark-gradient-6bly12umg2d4psr2.jpg";
 
 // ========= CATEGORIES INSIDE THE FEED ============
 export const feedCategories = [
-  { name: "new" },
-  { name: "trending" },
-  { name: "most popular" },
+  { name: "trailers" },
+  { name: "short movie" },
+  { name: "funny" },
   { name: "music" },
   { name: "react js" },
-]
+];
 
 // ========= CATEGORIES IN THE HEADER ============
 export const headerCategories = [
@@ -48,7 +48,7 @@ export const headerCategories = [
   { name: "Beauty" },
   { name: "Comedy" },
   { name: "Crypto" },
-]
+];
 
 // ========= SIDEBAR MENUS WITH ICONS ============
 export const sidebarMenus1 = [
@@ -70,7 +70,11 @@ export const sidebarMenus1 = [
   { name: "latest", icon: <AiOutlineVideoCamera />, url: "/search" },
   { name: "popular", icon: <BiMoviePlay />, url: "/search" },
   { name: "ongoing", icon: <BiMoviePlay />, url: "/search" },
-  { name: "subscriptions", icon: <AiOutlineStar />, url: "/" },
+  {
+    name: "subscriptions",
+    icon: <AiOutlineStar />,
+    url: "/feed/subscriptions",
+  },
   { name: "library", icon: <MdOutlineVideoLibrary />, url: "/" },
   { name: "history", icon: <AiOutlineHistory />, url: "/feed/history" },
   { name: "downloads", icon: <BiDownload />, url: "/" },
@@ -79,14 +83,14 @@ export const sidebarMenus1 = [
   { name: "report", icon: <MdReportGmailerrorred />, url: "/" },
   { name: "help", icon: <BiHelpCircle />, url: "/" },
   { name: "send feedback", icon: <VscFeedback />, url: "/" },
-]
+];
 
 // ========= SEARCH PAGE CATEGORY ============
 export const searchFilters = [
   { name: "movies" },
   { name: "tv series" },
   { name: "videos" },
-]
+];
 
 // ========= PRICE PLAN ============
 export const planPrices = [
@@ -129,7 +133,7 @@ export const planPrices = [
     ],
     checkoutUrl: "https://buy.stripe.com/test_4gweY4beMaAh9UY4gl",
   },
-]
+];
 
 // ========= FAQs details ============
 export const FAQsDetails = [
@@ -158,7 +162,7 @@ export const FAQsDetails = [
     answer:
       "Nukt is all about flexibility. With no binding contracts or obligations, you can effortlessly cancel your account online in just a few clicks, and there are no pesky cancellation fees. Start or stop your account whenever it suits you.",
   },
-]
+];
 
 // ========= Profile Navigations ============
 export const ProfileNavs = [
@@ -167,7 +171,7 @@ export const ProfileNavs = [
   { name: "playlist", url: "playlist" },
   { name: "downloads", url: "downloads" },
   { name: "history", url: "history" },
-]
+];
 
 // ========= User Sidebar Menu ============
 export const UserSidebarMenu = [
@@ -184,7 +188,7 @@ export const UserSidebarMenu = [
   { name: "settings", url: "/home" },
   { name: "help", url: "/home" },
   { name: "send feedback", url: "/home" },
-]
+];
 
 // ========= IMAGES ============
 export const Images = [
@@ -200,11 +204,11 @@ export const Images = [
     title: "John Wick: Chapter 4",
     url: "https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/09/john-wick-4.jpg",
   },
-]
+];
 
-export const demoThumbnailUrl = "https://i.ibb.co/G2L2Gwp/API-Course.png"
-export const demoChannelUrl = "/channel/UCmXmlB4-HJytD7wek0Uo97A"
-export const demoVideoUrl = "/video/pZyGYUMZAeg"
-export const demoChannelTitle = "DemoChannelTV"
-export const demoVideoTitle = "demo video title"
-export const demoProfilePicture = "https://i.pravatar.cc/300"
+export const demoThumbnailUrl = "https://i.ibb.co/G2L2Gwp/API-Course.png";
+export const demoChannelUrl = "/channel/UCmXmlB4-HJytD7wek0Uo97A";
+export const demoVideoUrl = "/video/pZyGYUMZAeg";
+export const demoChannelTitle = "DemoChannelTV";
+export const demoVideoTitle = "demo video title";
+export const demoProfilePicture = "https://i.pravatar.cc/300";

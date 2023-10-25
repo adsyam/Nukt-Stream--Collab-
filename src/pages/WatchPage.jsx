@@ -1,32 +1,25 @@
-import { VideosGrid, Reviews, VideoDescriptions } from "../components/index"
-
-import ReactPlayer from "react-player"
-import { useFetchRelatedVideos, useFetchStats } from '../Hooks/customHooks'
-import { useLocation } from "react-router-dom"
-import { useEffect } from "react"
-
+import { VideosGrid, Reviews, VideoDescriptions } from "../components/index";
+import { useFetchRelatedVideos, useFetchStats } from "../Hooks/customHooks";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export const WatchPage = () => {
-  const id = new URLSearchParams(window.location.search).get("v")
-  const videoDetails = useFetchStats(id)
-  const videos = useFetchRelatedVideos(id)
-  const location = useLocation().search
+  const id = new URLSearchParams(window.location.search).get("v");
+  const videoDetails = useFetchStats(id);
+  const videos = useFetchRelatedVideos(id);
+  const location = useLocation().search;
 
   useEffect(() => {
-    const storedVideoIds = JSON.parse(localStorage.getItem("videoIds")) || []
-
-    if (!storedVideoIds.includes(id)) {
-      storedVideoIds.push(id)
-      localStorage.setItem("videoIds", JSON.stringify(storedVideoIds))
-    }
-  }, [location])
+    const jsonString = JSON.stringify(videoDetails);
+    localStorage.setItem(videoDetails?.id, jsonString);
+  }, [videoDetails]);
 
   if (!videoDetails) {
     return (
       <div className="w-full h-[100vh] bg-black grid place-items-center">
         <h1 className="text-[2rem] text-white">Loading...</h1>
       </div>
-    )
+    );
   }
 
   return (
@@ -35,14 +28,13 @@ export const WatchPage = () => {
         <div className="flex-1">
           <div className="w-full p-[1rem]">
             <div className="">
-                <iframe
-                  key={id}
-                  src={`https://www.youtube.com/embed/${id}`}
-                //   className="react-player"
-                  allowFullScreen
-                  frameBorder={0}
-                  className="aspect-video w-full h-full rounded-[10px]"
-                />
+              <iframe
+                key={id}
+                src={`https://www.youtube.com/embed/${id}`}
+                allowFullScreen
+                frameBorder={0}
+                className="aspect-video w-full h-full rounded-[10px]"
+              />
             </div>
             <VideoDescriptions videoDetail={videoDetails} />
           </div>
@@ -56,5 +48,5 @@ export const WatchPage = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
