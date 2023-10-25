@@ -1,5 +1,9 @@
 import { VideosGrid, Reviews, VideoDescriptions } from "../components/index";
-import { useFetchRelatedVideos, useFetchStats } from "../Hooks/customHooks";
+import {
+  useFetchRelatedVideos,
+  useFetchStats,
+  useFetchVideoComments,
+} from "../Hooks/customHooks";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -7,6 +11,7 @@ export const WatchPage = () => {
   const id = new URLSearchParams(window.location.search).get("v");
   const videoDetails = useFetchStats(id);
   const videos = useFetchRelatedVideos(id);
+  const comments = useFetchVideoComments(id);
   const location = useLocation().search;
 
   useEffect(() => {
@@ -38,12 +43,16 @@ export const WatchPage = () => {
             </div>
             <VideoDescriptions videoDetail={videoDetails} />
           </div>
-          <Reviews />
         </div>
-        <div className="px-[1rem] py-[2rem] md:py-[1rem] flex flex-col justify-start items-baseline">
-          <p className="text-white text-[1.5rem] font-bold">Related Videos</p>
-          <div className="">
-            <VideosGrid videos={videos} />
+        <div className="flex flex-1 flex-col lg:flex-row items-baseline w-full">
+          <Reviews comments={comments} />
+          <div className="flex flex-1 flex-col">
+            <p className="text-white text-center text-[1.5rem] font-medium">
+              Related Videos
+            </p>
+            <div className="">
+              <VideosGrid videos={videos} />
+            </div>
           </div>
         </div>
       </div>

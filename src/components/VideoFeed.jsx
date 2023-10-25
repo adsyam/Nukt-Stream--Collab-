@@ -22,7 +22,10 @@ export const VideoFeed = () => {
                 {item.name}
                 <span className="text-white"> videos</span>
               </p>
-              <Link to={`/search?q=${item.name}`} className="cursor-pointer">
+              <Link
+                to={`/search?q=${item.name}`}
+                className="cursor-pointer flex items-center gap-1"
+              >
                 {`See all`}
                 <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
               </Link>

@@ -170,7 +170,7 @@ export const ProfileNavs = [
   { name: "contents", url: "contents" },
   { name: "playlist", url: "playlist" },
   { name: "downloads", url: "downloads" },
-  { name: "history", url: "history" },
+  { name: "about", url: "about" },
 ];
 
 // ========= User Sidebar Menu ============
