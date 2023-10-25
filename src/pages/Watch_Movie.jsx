@@ -11,7 +11,7 @@ import {
 } from "../components"
 
 export default function WatchMovie() {
-  const { id, season, episode } = useParams()
+  const { id } = useParams()
   const [loading, setLoading] = useState(true)
   const [path, setPath] = useState()
   const [server, setServer] = useState(
@@ -26,16 +26,13 @@ export default function WatchMovie() {
   const server4 = `https://2embed.org/series.php?id=${id}/`
   const server5 = `https://www.2embed.cc/embed/${id}/`
 
-
   useEffect(() => {
     pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
-  }, [pathname])
 
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 2000)
-  }, [id])
+  }, [pathname, id])
 
   return (
     <>

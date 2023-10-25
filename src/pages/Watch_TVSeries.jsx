@@ -2,6 +2,7 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router"
 import { loader_Geometric } from "../assets"
+// import { serverSelection } from "../constants/serverSelection"
 
 import {
   EpisodeList,
@@ -16,67 +17,80 @@ export default function WatchTVSeries() {
   const { id, season, episode } = useParams()
   const [loading, setLoading] = useState(true)
   const [path, setPath] = useState()
-  const [server, setServer] = useState(
-    `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
-  )
-//   const [selectedEpisode, setSelectedEpisode] = useState(server)
+  const [server, setServer] = useState("Server1")
+  const [currentServer, setCurrentServer] = useState()
+
   const location = useLocation()
   const pathname = location.pathname
 
   useEffect(() => {
-    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
-    // setSelectedEpisode(server)
-    // setServer(server)
-  }, [pathname, id])
+    const servers = {
+      Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
+      Server2: `https://vidsrc.me/embed/${path}?tmdb=${id}&season=${season}&episode=${episode}`,
+      Server3: `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`,
+      Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
+      Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
+    }
+    if (server in servers) {
+      setCurrentServer(servers[server])
+    }
 
-  useEffect(() => {
+    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
+
     setTimeout(() => {
       setLoading(false)
     }, 2000)
-  }, [id])
-
-  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
-  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}&season=${season}&episode=${episode}`
-  const server3 = `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`
-  const server4 = `https://2embed.org/series.php?id=${id}/${season}/${episode}/`
-  const server5 = `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`
+  }, [server, path, id, season, episode, pathname])
 
   return (
     <>
-      <MediaFrame id={id} season={season} episode={episode} server={server} />
+      <MediaFrame
+        id={id}
+        season={season}
+        episode={episode}
+        server={currentServer}
+        path={path}
+      />
       {!loading ? (
         <>
           <div className="flex mx-24 justify-center gap-4">
-            <EpisodeList
-              id={id}
-              Season={season}
-              server={server}
-              setServer={setServer}
-            />
+            <EpisodeList id={id} Season={season} server={currentServer} />
             <div className="text-white border border-[#6b13d7] flex flex-col w-fit rounded-md">
               <div className="p-2 rounded-md">
                 <h2 className="bg-[#6b13d7] rounded-md px-1 text-white w-full whitespace-nowrap">
                   Server List
                 </h2>
-                <ul className="flex flex-col items-center">
-                  {[
-                    { name: "Server 1", url: server1 },
-                    { name: "Server 2", url: server2 },
-                    { name: "Server 3", url: server3 },
-                    { name: "Server 4", url: server4 },
-                    { name: "Server 5", url: server5 },
-                  ].map((server, index) => (
-                    <li
-                      role="button"
-                      key={index}
-                      onClick={() => setServer(server.url)}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20] ${
-                        server.url === server ? "bg-[#ffffff20]" : ""
-                      }`}
-                    >
-                      {server.name}
-                    </li>
-                  ))}
+                <ul className="flex flex-col items-center" role="button">
+                  <li
+                    onClick={() => setServer("Server1")}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
+                  >
+                    Server 1
+                  </li>
+                  <li
+                    onClick={() => setServer("Server2")}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
+                  >
+                    Server 2
+                  </li>
+                  <li
+                    onClick={() => setServer("Server3")}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
+                  >
+                    Server 3
+                  </li>
+                  <li
+                    onClick={() => setServer("Server4")}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
+                  >
+                    Server 4
+                  </li>
+                  <li
+                    onClick={() => setServer("Server5")}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
+                  >
+                    Server 5
+                  </li>
                 </ul>
               </div>
             </div>
