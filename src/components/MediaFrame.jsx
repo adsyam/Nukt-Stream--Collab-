@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
 import { Ripples } from "@uiball/loaders"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
 
-
-export default function MediaFrame({id, Season, Episode, server}) {
-const [isLoading, setIsLoading] = useState(false)
+export default function MediaFrame({ server, id }) {
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -11,6 +11,7 @@ const [isLoading, setIsLoading] = useState(false)
       setIsLoading(false)
     }, 2000)
   }, [id])
+
 
   return (
     <div className="flex items-center justify-center m-10 pt-1 mt-24">
@@ -21,7 +22,7 @@ const [isLoading, setIsLoading] = useState(false)
           </div>
         ) : (
           <iframe
-            title={{}}
+            title={``}
             src={server}
             frameBorder={0}
             allowFullScreen

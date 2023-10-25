@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { React, useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import { defprofile } from "../assets"
+import { TOKEN_AUTH } from "../constants/apiConfig"
 
 export default function MediaReviews({ id }) {
   const [review, setReview] = useState([])
@@ -50,7 +51,7 @@ export default function MediaReviews({ id }) {
       headers: {
         accept: "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MmYzMzZmYzc2MzIyMDIyYmY0OTdiZmYwMmRiZWQ1YSIsInN1YiI6IjY1MjQwYTE2MGNiMzM1MTZmNjNiMTZiZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5E0K7l1TaIxgmhI98EM6y2mvcmuLcJTxdlRHI8u5Qac",
+          TOKEN_AUTH,
       },
     }
 
@@ -83,7 +84,7 @@ export default function MediaReviews({ id }) {
       }
     }
     fetchData()
-  }, [review.index])
+  }, [review.index, review.length])
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
