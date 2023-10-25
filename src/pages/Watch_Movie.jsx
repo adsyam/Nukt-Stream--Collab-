@@ -27,6 +27,17 @@ export default function WatchMovie() {
   const server5 = `https://www.2embed.cc/embed/${id}/`
 
   useEffect(() => {
+    //===== this code is for watch history =======
+    const storedMovieIdsJSON = localStorage.getItem("movieIds")
+    const storedMovieIds = storedMovieIdsJSON
+      ? JSON.parse(storedMovieIdsJSON)
+      : []
+
+    if (!storedMovieIds.includes(id)) {
+      storedMovieIds.push(id)
+      localStorage.setItem("movieIds", JSON.stringify(storedMovieIds))
+    }
+    //===== this code is for watch history =======
     pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
 
     setTimeout(() => {

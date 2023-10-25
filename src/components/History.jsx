@@ -63,25 +63,28 @@ useEffect(() => {
         </button>
       </div>
       <hr className="border-white/20 translate-y-[10rem]" />
-      <div className="translate-y-[12rem] flex items-center gap-[2rem]">
-        {filteredVideoDetails.map((videoDetail) => (
-          <div key={videoDetail?.id} className="relative group">
-            <button
-              onClick={() => handleDelete(videoDetail?.id)}
-              className="absolute right-0 bg-black/40 p-[.5rem] rounded-full
-              z-50 opacity-0 group-hover:opacity-100 duration-300"
-            >
-              <AiOutlineClose size={25} />
-            </button>
-            <VideoCard item={videoDetail} />
-          </div>
-        ))}
-      </div>
       <div className="translate-y-[12rem] flex items-center gap-[2rem] mb-[2rem]">
         <MovieWatchHistory reload={reload} />
       </div>
       <div className="translate-y-[12rem] flex items-center gap-[2rem] mb-[2rem]">
         <SeriesWatchHistory reload={reload} />
+      </div>
+      <div className="translate-y-[12rem] flex flex-col gap-3">
+        {filteredVideoDetails.length < 1 ? "" : <h2>Videos</h2>}
+        <div className="flex gap-5">
+          {filteredVideoDetails.map((videoDetail) => (
+            <div key={videoDetail?.id} className="relative group">
+              <button
+                onClick={() => handleDelete(videoDetail?.id)}
+                className="absolute right-0 bg-black/40 p-[.5rem] rounded-full
+              z-50 opacity-0 group-hover:opacity-100 duration-300"
+              >
+                <AiOutlineClose size={25} />
+              </button>
+              <VideoCard item={videoDetail} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -16,7 +16,7 @@ const options = {
     // "X-RapidAPI-Key": "8f5e478a21msh9eb5ba222359471p1d1849jsn3faf4f30b90b",
     "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
   },
-}
+};
 
 export const useFetch = async (url) => {
   try {

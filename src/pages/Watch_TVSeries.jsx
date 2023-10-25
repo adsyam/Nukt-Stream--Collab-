@@ -1,8 +1,7 @@
-import { Player } from "@lottiefiles/react-lottie-player"
-import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
-import { loader_Geometric } from "../assets"
-// import { serverSelection } from "../constants/serverSelection"
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router";
+import { loader_Geometric } from "../assets";
 
 import {
   EpisodeList,
@@ -11,7 +10,7 @@ import {
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
-} from "../components"
+} from "../components";
 
 export default function WatchTVSeries() {
   const { id, season, episode } = useParams()
@@ -34,7 +33,18 @@ export default function WatchTVSeries() {
     if (server in servers) {
       setCurrentServer(servers[server])
     }
-
+    
+    //===== this code is for watch history =======
+    const storedSeriesIdsJSON = localStorage.getItem("seriesIds");
+    const storedSeriesIds = storedSeriesIdsJSON
+    ? JSON.parse(storedSeriesIdsJSON)
+    : [];
+    
+    if (!storedSeriesIds.includes(id)) {
+        storedSeriesIds.push(id);
+        localStorage.setItem("seriesIds", JSON.stringify(storedSeriesIds));
+    }
+    
     pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
 
     setTimeout(() => {
@@ -114,5 +124,5 @@ export default function WatchTVSeries() {
         />
       )}
     </>
-  )
+  );
 }

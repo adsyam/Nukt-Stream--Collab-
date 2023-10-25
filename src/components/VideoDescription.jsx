@@ -22,7 +22,7 @@ export const VideoDescriptions = ({ videoDetail }) => {
           descriptionRef.current.clientHeight
       )
     }
-  })
+  },[])
 
   const {
     snippet: { title, channelId, channelTitle, description, publishedAt },
