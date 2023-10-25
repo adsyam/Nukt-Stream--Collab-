@@ -1,6 +1,12 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export const VideoCard = ({ video, item }) => {
+export const VideoCard = ({ video, item, index }) => {
+  const fadeInVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
   return (
     <div className="w-[300px] h-max">
       <Link
@@ -10,16 +16,29 @@ export const VideoCard = ({ video, item }) => {
             : `/watch?v=${item?.id}`
         }
       >
-        <div className="w-full h-[160px] overflow-hidden rounded-md">
-          <img
+        <motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: index * 0.07 }}
+          className="w-full h-[160px] overflow-hidden rounded-md"
+        >
+          <motion.img
+            style={{ y: -25 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 10,
+            }}
             src={
               video?.snippet?.thumbnails?.high?.url ||
               item?.snippet?.thumbnails?.high?.url
             }
             alt={video?.snippet?.title || item?.snippet?.title}
-            className="text-center w-[400px] -translate-y-7"
+            className="text-center w-[400px] -translate-y-9"
           />
-        </div>
+        </motion.div>
       </Link>
       <div className="h-[120px] text-wrap p-[1rem] flex flex-col justify-start gap-2">
         <Link to={`/watch?v=${video?.id?.videoId}` || `/watch?v=${item?.id}`}>
@@ -43,5 +62,5 @@ export const VideoCard = ({ video, item }) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};

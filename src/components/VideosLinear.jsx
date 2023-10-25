@@ -1,37 +1,37 @@
-import { useState, useRef, useEffect } from "react"
-import { VideoCard } from "./VideoCard"
-import { ChannelCard } from "./ChannelCard"
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi"
+import { useState, useRef, useEffect } from "react";
+import { VideoCard } from "./VideoCard";
+import { ChannelCard } from "./ChannelCard";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 export const VideosLinear = ({ videos }) => {
   if (!videos?.length) {
-    return <section className="text-white">Loading...</section>
+    return <section className="text-white">Loading...</section>;
   }
 
-  const TRANSLATE_AMOUNT = 200
+  const TRANSLATE_AMOUNT = 300;
 
-  const [isLeftVisible, setIsLeftVisible] = useState(false)
-  const [isRightVisible, setIsRightVisible] = useState(false)
-  const [move, setMove] = useState(0)
-  const containerRef = useRef(null)
+  const [isLeftVisible, setIsLeftVisible] = useState(false);
+  const [isRightVisible, setIsRightVisible] = useState(false);
+  const [move, setMove] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (containerRef.current === null) return
+    if (containerRef.current === null) return;
 
     const observer = new ResizeObserver((entries) => {
-      const container = entries[0]?.target
-      if (container === null) return
+      const container = entries[0]?.target;
+      if (container === null) return;
 
-      setIsLeftVisible(move > 0)
-      setIsRightVisible(move + container.clientWidth < container.scrollWidth)
-    })
+      setIsLeftVisible(move > 0);
+      setIsRightVisible(move + container.clientWidth < container.scrollWidth);
+    });
 
-    observer.observe(containerRef.current)
+    observer.observe(containerRef.current);
 
     return () => {
-      observer.disconnect()
-    }
-  }, [move])
+      observer.disconnect();
+    };
+  }, [move]);
 
   return (
     <div ref={containerRef} className="w-full overflow-x-hidden relative">
@@ -41,9 +41,11 @@ export const VideosLinear = ({ videos }) => {
       >
         {videos.map((item, index) => (
           <div className="flex" key={index}>
-            {item.id.playlistId && <VideoCard video={item} />}
-            {item.id.videoId && <VideoCard video={item} />}
-            {item.id.channelId && <ChannelCard channelDetail={item} />}
+            {item.id.playlistId && <VideoCard video={item} index={index} />}
+            {item.id.videoId && <VideoCard video={item} index={index} />}
+            {item.id.channelId && (
+              <ChannelCard channelDetail={item} index={index} />
+            )}
           </div>
         ))}
       </div>
@@ -57,10 +59,10 @@ export const VideosLinear = ({ videos }) => {
             className="bg-white text-black p-[.1rem] rounded-full"
             onClick={() => {
               setMove((move) => {
-                let newTranslate = move - TRANSLATE_AMOUNT
-                if (newTranslate <= 0) return 0
-                return newTranslate
-              })
+                let newTranslate = move - TRANSLATE_AMOUNT;
+                if (newTranslate <= 0) return 0;
+                return newTranslate;
+              });
             }}
           >
             <BiChevronLeft size={40} />
@@ -76,15 +78,15 @@ export const VideosLinear = ({ videos }) => {
             className="bg-white text-black p-[.1rem] rounded-full"
             onClick={() => {
               setMove((move) => {
-                if (containerRef.current === null) return move
-                const edge = containerRef.current.scrollWidth
-                const width = containerRef.current.clientWidth
-                const newTranslate = move + TRANSLATE_AMOUNT
+                if (containerRef.current === null) return move;
+                const edge = containerRef.current.scrollWidth;
+                const width = containerRef.current.clientWidth;
+                const newTranslate = move + TRANSLATE_AMOUNT;
                 if (newTranslate + width >= edge) {
-                  return edge - width
+                  return edge - width;
                 }
-                return newTranslate
-              })
+                return newTranslate;
+              });
             }}
           >
             <BiChevronRight size={40} />
@@ -92,5 +94,5 @@ export const VideosLinear = ({ videos }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
