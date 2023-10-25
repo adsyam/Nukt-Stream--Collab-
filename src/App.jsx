@@ -18,6 +18,7 @@ import {
   Success,
   User,
   RedirectRoute,
+  Subscriptions,
 } from "./components/index.js";
 
 import {
@@ -119,14 +120,14 @@ export const AppRouter = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      //   {
-      //     path: "/search",
-      //     element: (
-      //       <ProtectedRoute>
-      //         <SearchPage />
-      //       </ProtectedRoute>
-      //     ),
-      //   },
+      {
+        path: "/feed/subscriptions",
+        element: (
+          <ProtectedRoute>
+            <Subscriptions />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/search",
         children: [

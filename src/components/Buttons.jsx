@@ -1,14 +1,18 @@
-import { MdKeyboardArrowDown } from "react-icons/md"
-import { Link } from "react-router-dom"
-import { useDataContext } from "../context/DataContext"
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { useDataContext } from "../context/DataContext";
 
 //create side bar buttons
 export const SidebarMenu = ({ name, icon, url, index }) => {
-  const { setCategory } = useDataContext()
+  const { setCategory } = useDataContext();
 
   return (
     <Link
-      to={name === "history" ? url : `${url}?q=${name}`}
+      to={
+        name === "history" || name === "subscriptions"
+          ? url
+          : `${url}?q=${name}`
+      }
       className={`font-fig basis-1 flex items-center justify-start
           cursor-pointer outline-none border-0 py-[.5rem] px-[.9rem]
           my-[.5rem] me-[1rem] rounded-full transition-all duration-300 ease-in-out group 
@@ -21,12 +25,12 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
         {name}
       </span>
     </Link>
-  )
-}
+  );
+};
 
 //create the dropdown buttons
 export const DropdownBtn = ({ name, icon, list, index }) => {
-  const { handleDropDown, dropDown, setCategory } = useDataContext()
+  const { handleDropDown, dropDown, setCategory } = useDataContext();
 
   return (
     <>
@@ -67,5 +71,5 @@ export const DropdownBtn = ({ name, icon, list, index }) => {
         ""
       )}
     </>
-  )
-}
+  );
+};
