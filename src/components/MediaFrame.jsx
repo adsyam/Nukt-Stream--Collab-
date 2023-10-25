@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react"
 import { Ripples } from "@uiball/loaders"
+import { useEffect, useState } from "react"
 
-
-export default function MediaFrame({id, Season, Episode, server}) {
-const [isLoading, setIsLoading] = useState(false)
+export default function MediaFrame({ id, season, server, episode }) {
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -11,6 +10,7 @@ const [isLoading, setIsLoading] = useState(false)
       setIsLoading(false)
     }, 2000)
   }, [id])
+
 
   return (
     <div className="flex items-center justify-center m-10 pt-1 mt-24">
@@ -21,8 +21,9 @@ const [isLoading, setIsLoading] = useState(false)
           </div>
         ) : (
           <iframe
-            title={{}}
-            src={server}
+            title={``}
+            // src={server}
+            src={`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`}
             frameBorder={0}
             allowFullScreen
             className="aspect-video w-full h-full rounded-[10px]"

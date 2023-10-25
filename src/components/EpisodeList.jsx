@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { API_KEY } from "../constants/apiConfig"
 
-export default function EpisodeList({ id, Season }) {
+export default function EpisodeList({ id, Season, setSelectedServer, server, setServer }) {
   const [data, setData] = useState({})
   const defSeason = Season > 1 ? Season : "1"
   const [selectedSeason, setSelectedSeason] = useState(defSeason)
@@ -64,6 +64,7 @@ export default function EpisodeList({ id, Season }) {
                                   index + 1
                                 }`}
                                 key={index}
+                                onClick={() => setServer(server)}
                                 className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
                               >
                                 Episode {index + 1}

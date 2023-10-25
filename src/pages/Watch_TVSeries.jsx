@@ -19,17 +19,15 @@ export default function WatchTVSeries() {
   const [server, setServer] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
   )
+//   const [selectedEpisode, setSelectedEpisode] = useState(server)
   const location = useLocation()
   const pathname = location.pathname
 
-  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
-  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}&season=${season}&episode=${episode}`
-  const server3 = `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`
-  const server4 = `https://2embed.org/series.php?id=${id}/${season}/${episode}/`
-
   useEffect(() => {
     pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
-  }, [pathname])
+    // setSelectedEpisode(server)
+    // setServer(server)
+  }, [pathname, id])
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,47 +35,48 @@ export default function WatchTVSeries() {
     }, 2000)
   }, [id])
 
+  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
+  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}&season=${season}&episode=${episode}`
+  const server3 = `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`
+  const server4 = `https://2embed.org/series.php?id=${id}/${season}/${episode}/`
+  const server5 = `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`
+
   return (
     <>
-      <MediaFrame id={id} Season={season} Episode={episode} server={server} />
+      <MediaFrame id={id} season={season} episode={episode} server={server} />
       {!loading ? (
         <>
           <div className="flex mx-24 justify-center gap-4">
-            <EpisodeList id={id} Season={season} />
+            <EpisodeList
+              id={id}
+              Season={season}
+              server={server}
+              setServer={setServer}
+            />
             <div className="text-white border border-[#6b13d7] flex flex-col w-fit rounded-md">
               <div className="p-2 rounded-md">
                 <h2 className="bg-[#6b13d7] rounded-md px-1 text-white w-full whitespace-nowrap">
                   Server List
                 </h2>
                 <ul className="flex flex-col items-center">
-                  <li
-                    role="button"
-                    onClick={() => setServer(server1)}
-                    className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
-                  >
-                    Server 1
-                  </li>
-                  <li
-                    role="button"
-                    onClick={() => setServer(server2)}
-                    className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
-                  >
-                    Server 2
-                  </li>
-                  <li
-                    role="button"
-                    onClick={() => setServer(server3)}
-                    className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
-                  >
-                    Server 3
-                  </li>
-                  <li
-                    role="button"
-                    onClick={() => setServer(server4)}
-                    className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
-                  >
-                    Server 4
-                  </li>
+                  {[
+                    { name: "Server 1", url: server1 },
+                    { name: "Server 2", url: server2 },
+                    { name: "Server 3", url: server3 },
+                    { name: "Server 4", url: server4 },
+                    { name: "Server 5", url: server5 },
+                  ].map((server, index) => (
+                    <li
+                      role="button"
+                      key={index}
+                      onClick={() => setServer(server.url)}
+                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20] ${
+                        server.url === server ? "bg-[#ffffff20]" : ""
+                      }`}
+                    >
+                      {server.name}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
