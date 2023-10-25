@@ -4,7 +4,7 @@ import { useDataContext } from "../context/DataContext";
 
 //create side bar buttons
 export const SidebarMenu = ({ name, icon, url, index }) => {
-  const { setCategory } = useDataContext();
+//   const { setCategory } = useDataContext();
 
   return (
     <Link
@@ -18,7 +18,7 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
           my-[.5rem] me-[1rem] rounded-full transition-all duration-300 ease-in-out group 
           bg-transparent text-white hover:bg-[#398FDD]`}
       key={index}
-      onClick={() => setCategory(name)}
+    //   onClick={() => setCategory(name)}
     >
       <span className="me-[1rem] text-[1rem] md:text-[1.2rem]">{icon}</span>
       <span className="w-max text-[1rem] md:text-[1.2rem] group-hover:text-black capitalize">
