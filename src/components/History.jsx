@@ -7,20 +7,28 @@ export const History = () => {
   const [reload, setReload] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);
 
-  useEffect(() => {
-    const dataStore = []; //temp store variable for the localStorage data
+useEffect(() => {
+  const dataStore = []
 
-    for (const key in localStorage) {
-      if (key !== "movieIds" && key !== "seriesIds") {
-        const value = localStorage.getItem(key);
+  for (const key in localStorage) {
+    if (key !== "movieIds" && key !== "seriesIds") {
+      const value = localStorage.getItem(key)
 
-        //if the is a value. push it to dataStore array as a json value
-        if (JSON.parse(value) !== null) dataStore.push(JSON.parse(value));
+      try {
+        // Attempt to parse the value as JSON
+        const parsedValue = JSON.parse(value)
+
+        if (parsedValue !== null) {
+          dataStore.push(parsedValue)
+        }
+      } catch (error) {
+        console.error(`Error parsing JSON for key '${key}':`, error)
       }
     }
+  }
 
-    setVideoDetails(dataStore);
-  }, [reload]);
+  setVideoDetails(dataStore)
+}, [reload])
 
   //clear the data of localStorage
   const handleClear = () => {
