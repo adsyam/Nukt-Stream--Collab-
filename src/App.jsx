@@ -113,21 +113,27 @@ export const AppRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/feed/history",
-        element: (
-          <ProtectedRoute>
-            <History />
-          </ProtectedRoute>
-        ),
+        path: "/feed",
+        children: [
+          {
+            path: "history",
+            element: (
+              <ProtectedRoute>
+                <History />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "subscriptions",
+            element: (
+              <ProtectedRoute>
+                <Subscriptions />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
-      {
-        path: "/feed/subscriptions",
-        element: (
-          <ProtectedRoute>
-            <Subscriptions />
-          </ProtectedRoute>
-        ),
-      },
+
       {
         path: "/search",
         children: [

@@ -1,33 +1,33 @@
-import { useState, useEffect, useRef } from "react"
-import { Link } from "react-router-dom"
-import { AiFillCheckCircle } from "react-icons/ai"
-import { timeFormat } from "../utils/timeFormat"
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { timeFormat } from "../utils/timeFormat";
 
 const descriptionStyles = {
   WebkitLineClamp: 5,
   WebkitBoxOrient: "vertical",
   display: "-webkit-box",
   overflow: "hidden",
-}
+};
 
 export const VideoDescriptions = ({ videoDetail }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [readMore, setReadMore] = useState(false)
-  const descriptionRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const [readMore, setReadMore] = useState(false);
+  const descriptionRef = useRef(null);
 
   useEffect(() => {
     if (descriptionRef.current) {
       setReadMore(
         descriptionRef.current.scrollHeight >=
           descriptionRef.current.clientHeight
-      )
+      );
     }
-  },[])
+  }, []);
 
   const {
     snippet: { title, channelId, channelTitle, description, publishedAt },
     statistics: { viewCount, likeCount },
-  } = videoDetail
+  } = videoDetail;
 
   return (
     <>
@@ -37,7 +37,7 @@ export const VideoDescriptions = ({ videoDetail }) => {
       <div className="flex flex-col gap-3 justify-between text-white px-[1rem]">
         <div className="flex justify-between">
           <Link
-            to={`/channel/${channelId}`}
+            to={`/profile/${channelId}`}
             className="flex items-center gap-1"
           >
             <p className="text-slate-300">{channelTitle}</p>
@@ -72,5 +72,5 @@ export const VideoDescriptions = ({ videoDetail }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

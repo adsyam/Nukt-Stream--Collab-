@@ -54,9 +54,9 @@ export const Reviews = ({ comments }) => {
                   <img
                     src={
                       comment?.snippet?.topLevelComment?.snippet
-                        ?.authorProfileImageUrl
+                        ?.authorProfileImageUrl || "https://i.pravatar.cc/50"
                     }
-                    alt="profile photo"
+                    alt=""
                     className="rounded-full h-[45px]"
                   />
                   <div>
