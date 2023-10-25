@@ -19,6 +19,7 @@ import {
   User,
   RedirectRoute,
   Subscriptions,
+  Feed
 } from "./components/index.js";
 
 import {
@@ -115,6 +116,14 @@ export const AppRouter = createBrowserRouter([
       {
         path: "/feed",
         children: [
+          {
+            path: "/feed",
+            element: (
+              <ProtectedRoute>
+                <Feed />
+              </ProtectedRoute>
+            ),
+          },
           {
             path: "history",
             element: (
@@ -234,4 +243,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-]);
+])
