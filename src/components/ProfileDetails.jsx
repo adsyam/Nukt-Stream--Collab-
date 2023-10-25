@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react"
-import { ProfileNav } from "./ProfileNav"
+import { useEffect, useState } from "react";
+import { ProfileNav } from "./ProfileNav";
 
 export const ProfileDetails = ({ channelDetail }) => {
-  const [isUser, setIsUser] = useState(false)
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     if (!channelDetail.id) {
-      setIsUser(true)
+      setIsUser(true);
     } else {
-      setIsUser(false)
+      setIsUser(false);
     }
-  }, [channelDetail])
+  }, [channelDetail]);
 
   return (
     <section className="px-[2rem]">
-      <div className="w-max flex flex-col  gap-2 translate-x-[18rem] -translate-y-[12rem]">
+      <div
+        className="w-max flex flex-col gap-2 translate-x-[9rem] md:translate-x-[18rem]
+        -translate-y-[5rem] md:-translate-y-[12rem]"
+      >
         <div>
           <h2 className="text-[1.2rem] font-medium">
             {isUser ? channelDetail.displayName : channelDetail?.snippet?.title}
@@ -49,5 +52,5 @@ export const ProfileDetails = ({ channelDetail }) => {
       </div>
       <ProfileNav id={isUser ? channelDetail.uid : channelDetail.id} />
     </section>
-  )
-}
+  );
+};
