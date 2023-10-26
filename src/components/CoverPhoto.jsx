@@ -1,5 +1,5 @@
-import { bg_url } from "../utils/index"
-import { AiOutlineCamera } from "react-icons/ai"
+import { bg_url } from "../utils/index";
+import { AiOutlineCamera } from "react-icons/ai";
 
 export const CoverPhoto = () => {
   return (
@@ -10,8 +10,10 @@ export const CoverPhoto = () => {
          hover:bg-white hover:text-black duration-300"
       >
         <AiOutlineCamera size={30} />{" "}
-        <span className="capitalize">change your cover photo</span>
+        <span className="capitalize hidden md:block">
+          change your cover photo
+        </span>
       </div>
     </div>
-  )
-}
+  );
+};

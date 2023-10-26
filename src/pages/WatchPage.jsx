@@ -1,4 +1,9 @@
-import { VideosGrid, Reviews, VideoDescriptions } from "../components/index";
+import {
+  VideosGrid,
+  Reviews,
+  VideoDescriptions,
+  Footer,
+} from "../components/index";
 import {
   useFetchRelatedVideos,
   useFetchStats,
@@ -28,34 +33,37 @@ export const WatchPage = () => {
   }
 
   return (
-    <section className="min-h-[100vh] bg-black">
-      <div className="flex flex-col gap-3 pt-[5rem]">
-        <div className="flex-1">
-          <div className="w-full p-[1rem]">
-            <div className="">
-              <iframe
-                key={id}
-                src={`https://www.youtube.com/embed/${id}`}
-                allowFullScreen
-                frameBorder={0}
-                className="aspect-video w-full h-full rounded-[10px]"
-              />
-            </div>
-            <VideoDescriptions videoDetail={videoDetails} />
-          </div>
-        </div>
-        <div className="flex flex-1 flex-col lg:flex-row items-baseline w-full">
-          <Reviews comments={comments} />
-          <div className="flex flex-1 flex-col">
-            <p className="text-white text-center text-[1.5rem] font-medium">
-              Related Videos
-            </p>
-            <div className="">
-              <VideosGrid videos={videos} />
+    <>
+      <section className="min-h-[100vh] bg-black">
+        <div className="flex flex-col gap-3 pt-[5rem]">
+          <div className="flex-1">
+            <div className="w-full p-[1rem]">
+              <div className="">
+                <iframe
+                  key={id}
+                  src={`https://www.youtube.com/embed/${id}`}
+                  allowFullScreen
+                  frameBorder={0}
+                  className="aspect-video w-full h-full rounded-[10px]"
+                />
+              </div>
+              <VideoDescriptions videoDetail={videoDetails} />
             </div>
           </div>
+          <div className="flex flex-1 flex-col lg:flex-row items-baseline w-full">
+            <Reviews comments={comments} />
+            <div className="flex flex-1 flex-col">
+              <p className="text-white text-center text-[1.5rem] font-medium">
+                Related Videos
+              </p>
+              <div className="">
+                <VideosGrid videos={videos} />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Footer />
+    </>
   );
 };
