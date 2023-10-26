@@ -1,8 +1,9 @@
-import "@stripe/stripe-js"; //stripe library for user authentication
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import "@stripe/stripe-js" //stripe library for user authentication
+import { createBrowserRouter, Outlet } from "react-router-dom"
 
 import {
   Dashboard,
+  Feed,
   ForgotPassword,
   History,
   Login,
@@ -14,24 +15,24 @@ import {
   Profile_Home,
   Profile_Playlist,
   ProtectedRoute,
+  RedirectRoute,
   SignUp,
+  Subscriptions,
   Success,
   User,
-  RedirectRoute,
-  Subscriptions,
-  Feed
-} from "./components/index.js";
+} from "./components/index.js"
 
 import {
+  AllCategory,
   Home,
   SearchMedia,
   WatchMovie,
   WatchPage,
   WatchTVSeries,
-} from "./pages";
+} from "./pages"
 
-import { AuthProvider } from "./context/AuthContext";
-import { DataProvider } from "./context/DataContext";
+import { AuthProvider } from "./context/AuthContext"
+import { DataProvider } from "./context/DataContext"
 //======== CONTEXT PROVIDER ========
 
 //USER-CHANNEL PAGE
@@ -48,7 +49,7 @@ const AppLayout = () => (
       </DataProvider>
     </AuthProvider>
   </>
-);
+)
 
 //create a browser router with the pages as the children of the app layout
 export const AppRouter = createBrowserRouter([
@@ -107,11 +108,40 @@ export const AppRouter = createBrowserRouter([
       },
       {
         path: "/home",
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
+        children: [
+          {
+            path: "/home",
+            element: (
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "popular",
+            element: (
+              <ProtectedRoute>
+                <AllCategory />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "trending",
+            element: (
+              <ProtectedRoute>
+                <AllCategory />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "toprated",
+            element: (
+              <ProtectedRoute>
+                <AllCategory />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
       {
         path: "/feed",

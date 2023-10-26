@@ -1,5 +1,4 @@
 import {
-  Navbar,
   Carousel,
   Popular,
   Trending,
@@ -13,7 +12,6 @@ import {
 export default function Home() {
   return (
     <>
-      {/* <Navbar /> */}
       <Carousel />
       <div>
         <Popular />

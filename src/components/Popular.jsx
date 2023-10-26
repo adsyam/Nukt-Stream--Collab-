@@ -5,145 +5,102 @@ import axios from "axios"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { loader_Geometric, loader_Gradient } from "../assets"
-import { TOKEN_AUTH } from "../constants/apiConfig"
+import { loader_Geometric } from "../assets"
+import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
+import { useDataContext } from "../context/DataContext"
+import CategoryCard from "./CategoryCard"
+import MediaTypeButton from "./MediaTypeButton"
 
 const Popular = () => {
-  const [popular, setPopular] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [path, setpath] = useState("tv")
+  const [data, setData] = useState([])
+  const [isloading, setIsLoading] = useState(true)
+  const [mediaType, setMediaType] = useState("tv")
+  const [page, setPage] = useState(1)
+  const { sidebar } = useDataContext()
 
   useEffect(() => {
-    const options = {
-      method: "GET",
-      url: `https://api.themoviedb.org/3/${path}/popular`,
-      params: { language: "en-US", page: "1" },
-      headers: {
-        accept: "application/json",
-        Authorization: TOKEN_AUTH,
-      },
-    }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${TMDB_BASE_URL}/${mediaType}/popular?api_key=${API_KEY}&page=${page}`
+        )
 
-    axios
-      .request(options)
-      .then(function (response) {
-        setPopular(response.data.results)
+        setData(response.data.results)
         setTimeout(() => {
-          setLoading(false)
+          setIsLoading(false)
         }, 1300)
-      })
-      .catch(function (error) {
-        console.error(error)
-        setLoading(false)
-      })
-  }, [path, loading])
-
-  useEffect(() => {})
-
-  const fadeInVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  }
+      } catch (error) {
+        console.error("Error fething data (POPULAR):", error)
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [mediaType, page])
 
   return (
     <>
-      <motion.div className="flex justify-center w-full">
+      <motion.section
+        initial={{ y: 200, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true, amount: 0.1 }}
+        className={`flex justify-center ${
+          sidebar ? "relative right-[-100px] mx-10" : ""
+        }`}
+      >
         <div className="text-white py-12 w-full gap-1">
-          <div className="flex items-center px-2 justify-between mx-12">
+          <div className={`flex items-center px-2 justify-between mx-32`}>
             <div className="flex gap-2 items-center">
-              <p className="text-2xl mb-1 font-medium">Popular</p>
-              <motion.div className="flex gap-2 px-3 py-1 rounded-md">
-                <motion.button
-                  onClick={() => setpath("tv")}
-                  className={`${
-                    path === "tv"
-                      ? "bg-[#ffffff30] px-3 py-1 rounded-md"
-                      : null
-                  } px-3 py-1 rounded-md`}
-                >
-                  Series
-                </motion.button>
-                <motion.button
-                  onClick={() => setpath("movie")}
-                  className={`${
-                    path === "movie"
-                      ? "bg-[#ffffff30] px-3 py-1 rounded-md"
-                      : null
-                  } px-3 py-1 rounded-md`}
-                >
-                  Movie
-                </motion.button>
-              </motion.div>
+              <h1 className="text-2xl mb-1 font-medium">Popular</h1>
+              <div className="flex gap-2 px-3 py-1 rounded-md">
+                <MediaTypeButton
+                  setMediaType={setMediaType}
+                  mediaType={mediaType}
+                />
+              </div>
             </div>
-            <Link className="flex items-center gap-1" to={`/Search`}>
+            <Link className="flex items-center gap-1" to={`/home/popular`}>
               <p>See all </p>
               <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
             </Link>
           </div>
-          <div className="grid grid-cols-10 mx-12 gap-4">
-            {!loading
-              ? popular
-                  .filter((pop) => pop.poster_path && pop.backdrop_path)
-                  .slice(0, 20)
-                  .map((pop, index) => (
-                    <Link
-                      key={pop.id}
-                      className="w-fit grid"
-                      to={
-                        path === "tv"
-                          ? `/TVSeries/${pop.id}/1/1`
-                          : `/Movie/${pop.id}`
-                      }
-                    >
-                      <motion.div
-                        variants={fadeInVariants}
-                        initial="hidden"
-                        animate="visible"
-                        transition={{ delay: index * 0.07 }}
-                      >
-                        <motion.img
-                          whileHover={{ scale: 1.05 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 10,
-                          }}
-                          src={`https://image.tmdb.org/t/p/original/${pop.poster_path}`}
-                          alt={`${
-                            pop.original_title || pop.original_name
-                          } backdrop`}
-                          width={215}
-                          className="rounded-[5px] w-fit border-transparent box-border border-white"
-                        />
-                        <div>
-                          <p className="word-break text-[16px] font-normal truncate-text">
-                            {pop.original_title || pop.original_name}
-                          </p>
-                          <p className="text-sm opacity-50">
-                            {(pop.release_date &&
-                              pop.release_date.split("-")[0]) ||
-                              (pop.first_air_date &&
-                                pop.first_air_date.split("-")[0])}
-                          </p>
-                        </div>
-                      </motion.div>
-                    </Link>
+          <div
+            className={`grid ${
+              sidebar ? "grid-cols-8" : "grid-cols-8"
+            } mx-32 gap-4`}
+          >
+            {!isloading
+              ? data
+                  .filter((d) => d.poster_path && d.backdrop_path)
+                  .slice(0, 16)
+                  .map((d, index) => (
+                    <CategoryCard
+                      key={d.id}
+                      index={index}
+                      id={d.id}
+                      poster={d.poster_path}
+                      title={d.original_title}
+                      name={d.original_name}
+                      releaseDate={d.release_date}
+                      firstAirDate={d.first_air_date}
+                      mediaType={mediaType}
+                    />
                   ))
-              : popular
-                  .filter((pop) => pop.poster_path && pop.backdrop_path)
-                  .slice(0, 20)
-                  .map((pop, index) => (
+              : data
+                  .filter((d) => d.poster_path && d.backdrop_path)
+                  .slice(0, 16)
+                  .map((d, index) => (
                     <Player
                       autoplay
                       loop
                       src={loader_Geometric}
                       key={index}
                       className="h-[35vh]"
-                    ></Player>
+                    />
                   ))}
           </div>
         </div>
-      </motion.div>
+      </motion.section>
     </>
   )
 }

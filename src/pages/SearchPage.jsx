@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { VideoCategories } from "../components/index";
+import { VideoCategories, Footer } from "../components/index";
 import { searchFilters } from "../utils/index";
 
 export const SearchPage = () => {

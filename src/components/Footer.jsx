@@ -8,13 +8,17 @@ import {
 } from "react-icons//ai";
 import { BiLogoTiktok } from "react-icons/bi";
 import { BsFillSendFill } from "react-icons/bs";
+import { useDataContext } from "../context/DataContext";
 
 export const Footer = () => {
+  const { sidebar } = useDataContext()
+
+
   return (
-    <footer className="w-full min-h-full text-white bg-transparent font-fig px-[2rem]">
+    <footer className={`w-full min-h-full text-white bg-transparent font-fig px-[2rem]`}>
       <section
-        className="flex flex-col xl:flex-row justify-around items-start
-        xl:items-center py-[5rem]"
+        className={`flex flex-col xl:flex-row justify-around items-start
+        xl:items-center py-[5rem] ${sidebar ? "relative right-[-10.2%] mr-20" : ""}`}
       >
         <Link to="/home" className="flex gap-3 items-center pb-[2rem]">
           <img src={nukt_logo} className="w-[60px]" />
