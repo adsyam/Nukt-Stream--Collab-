@@ -12,6 +12,8 @@ export const ProfileDetails = ({ channelDetail }) => {
     }
   }, [channelDetail]);
 
+  console.log(channelDetail);
+
   return (
     <section className="px-[2rem]">
       <div
