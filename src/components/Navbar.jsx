@@ -1,16 +1,17 @@
 //import link
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 //import components
 // import logo and icons
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { AiFillBell } from "react-icons/ai"
-import { nukt_logo } from "../assets"
-import { useAuthContext } from "../context/AuthContext"
-import { useDataContext } from "../context/DataContext"
-import { Searchbar } from "./SearchBar"
-import { Sidebar } from "./Sidebar"
-import { UserSidebar } from "./UserSideBar"
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AiFillBell } from "react-icons/ai";
+import { nukt_logo } from "../assets";
+import { useAuthContext } from "../context/AuthContext";
+import { useDataContext } from "../context/DataContext";
+import { Searchbar } from "./SearchBar";
+import { Sidebar } from "./Sidebar";
+import { UserSidebar } from "./UserSideBar";
+import { FeedbackModal } from "./FeedbackModal";
 
 // import { Searchbar, Sidebar, UserSidebar } from "./index"
 
@@ -21,8 +22,9 @@ export const Navbar = () => {
     userSidebar,
     showUserSidebar,
     isActive,
-  } = useDataContext()
-  const { user } = useAuthContext()
+    modal,
+  } = useDataContext();
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -84,6 +86,7 @@ export const Navbar = () => {
         </div>
       </nav>
       <Sidebar showSidebar={sidebar} />
+      <FeedbackModal active={modal} />
     </>
-  )
-}
+  );
+};

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { UserSidebarMenu } from "../utils/index";
+import { useDataContext } from "../context/DataContext";
 
 export const UserSidebar = ({ showUserSidebar }) => {
   const { user, logout } = useAuthContext();
+  const { modal, setModal } = useDataContext();
 
   return (
     <aside
@@ -29,14 +31,16 @@ export const UserSidebar = ({ showUserSidebar }) => {
       <div className="flex flex-col gap-[1.5rem] my-[2rem]">
         {UserSidebarMenu.map((item, index) => (
           <>
-            {item.name === "sign out" ? (
-              <Link
+            {item.name === "sign out" || item.name === "send feedback" ? (
+              <button
                 key={index}
-                onClick={logout}
-                className="uppercase hover:text-[#389FDD] hover:font-bold"
+                onClick={
+                  item.name === "sign out" ? logout : () => setModal(!modal)
+                }
+                className="uppercase hover:text-[#389FDD] hover:font-bold text-start"
               >
                 {item.name}
-              </Link>
+              </button>
             ) : (
               <Link
                 key={index}

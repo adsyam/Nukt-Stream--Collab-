@@ -19,7 +19,9 @@ import {
   User,
   RedirectRoute,
   Subscriptions,
-  Feed
+  Feed,
+  ReportPage,
+  Library,
 } from "./components/index.js";
 
 import {
@@ -140,9 +142,24 @@ export const AppRouter = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
+          {
+            path: "library",
+            element: (
+              <ProtectedRoute>
+                <Library />
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
-
+      {
+        path: "/report",
+        element: (
+          <ProtectedRoute>
+            <ReportPage />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/search",
         children: [
@@ -243,4 +260,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-])
+]);
