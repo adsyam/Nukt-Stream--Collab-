@@ -132,6 +132,7 @@ export default function SearchPage() {
           ></Player>
         </div>
       )}
+      <Footer />
     </>
   )
 }

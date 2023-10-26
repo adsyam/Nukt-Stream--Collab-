@@ -1,13 +1,13 @@
-import { sidebarMenus1 } from "../utils/index"
-import { SidebarMenu, DropdownBtn } from "./Buttons"
-import { useLocation } from "react-router-dom"
+import { sidebarMenus1 } from "../utils/index";
+import { SidebarMenu, DropdownBtn } from "./Buttons";
+import { useLocation } from "react-router-dom";
 
 export const Sidebar = ({ showSidebar }) => {
-  const location = useLocation().pathname
+  const location = useLocation().pathname;
 
   return (
     <aside
-      className={`fixed bg-black flex flex-col overflow-y-auto h-[90%] ps-[1rem]
+      className={`fixed bg-black flex flex-col overflow-y-auto h-[92%] ps-[1rem]
        -left-[100%] transition-all duration-300 z-[100] translate-y-[4.51rem]
         ${
           showSidebar ? "left-0 transition-all duration-300" : ""
@@ -19,14 +19,14 @@ export const Sidebar = ({ showSidebar }) => {
             location === "/home" &&
             ["latest", "popular", "ongoing"].includes(item.name)
           ) {
-            return false
+            return false;
           } else if (
             location === "/search" &&
             ["videos", "movies", "TV"].includes(item.name)
           ) {
-            return false
+            return false;
           }
-          return true
+          return true;
         })
         .map((menu, index) => (
           <>
@@ -54,5 +54,5 @@ export const Sidebar = ({ showSidebar }) => {
           </>
         ))}
     </aside>
-  )
-}
+  );
+};

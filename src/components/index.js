@@ -55,6 +55,8 @@ import { VideoDescriptions } from "./VideoDescription"
 import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
+import { ReportPage } from "./ReportPage"
+import { Library } from "./Library"
 
 export {
   Banner,
@@ -114,4 +116,6 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
-}
+  ReportPage,
+  Library,
+};

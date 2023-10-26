@@ -20,67 +20,77 @@ export const Footer = () => {
         className={`flex flex-col xl:flex-row justify-around items-start
         xl:items-center py-[5rem] ${sidebar ? "relative right-[-10.2%] mr-20" : ""}`}
       >
-        <Link to="/home" className="flex gap-3 items-center pb-[2rem]">
-          <img src={nukt_logo} className="w-[60px]" />
-          <h2 className="uppercase font-medium text-[2rem]">nukt</h2>
+        <Link to="/home" className="flex gap-3 items-center pb-[2rem] xl:pb-0">
+          <img src={nukt_logo} className="w-[100px]" />
+          <h2 className="uppercase font-medium text-[2.5rem]">nukt</h2>
         </Link>
         <div className="w-full xl:w-[70%] flex flex-col lg:flex-row justify-around items-center">
-          <div className="flex gap-[5rem] pb-[2rem]">
+          <div className="flex-1 flex gap-[5rem] pb-[2rem] lg:pb-0 items-center justify-center">
             <ul className="flex flex-col gap-2">
               {FooterLinks1.map((item, index) => (
-                <li key={index} className="capitalize text-[1.2rem]">
+                <li
+                  key={index}
+                  className="capitalize text-[1.2rem] hover:text-[#389FDD]"
+                >
                   <Link>{item.name}</Link>
                 </li>
               ))}
             </ul>
             <ul className="flex flex-col gap-2">
               {FooterLinks2.map((item, index) => (
-                <li key={index} className="capitalize text-[1.2rem]">
+                <li
+                  key={index}
+                  className="capitalize text-[1.2rem] hover:text-[#389FDD]"
+                >
                   <Link>{item.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
           <div
-            className="w-full flex flex-col md:flex-row justify-around items-start
+            className="flex-1 flex flex-col md:flex-row justify-around items-start
             md:items-center gap-[2rem]"
           >
-            <div className="flex flex-col items-start md:items-center gap-2">
+            <div className="w-full flex flex-col items-start md:items-center gap-2">
               <h2 className="text-[1.3rem] capitalize font-bold">
                 connect with us
               </h2>
               <ul className="flex gap-4 items-center">
                 <li>
-                  <Link>
+                  <Link className="hover:text-[#389FDD] hover:scale-[1.5]">
                     <AiOutlineInstagram size={40} />
                   </Link>
                 </li>
                 <li>
-                  <Link>
+                  <Link className="hover:text-[#389FDD]">
                     <BiLogoTiktok size={40} />
                   </Link>
                 </li>
                 <li>
-                  <Link>
+                  <Link className="hover:text-[#389FDD]">
                     <AiOutlineFacebook size={40} />
                   </Link>
                 </li>
                 <li>
-                  <Link>
+                  <Link className="hover:text-[#389FDD]">
                     <AiOutlineTwitter size={40} />
                   </Link>
                 </li>
               </ul>
               <div className="flex flex-col underline">
-                <Link>yambaoadrianne@gmail.com</Link>
-                <Link>danemaas16@gmail.com</Link>
+                <Link className="hover:text-[#389FDD]">
+                  yambaoadrianne@gmail.com
+                </Link>
+                <Link className="hover:text-[#389FDD]">
+                  danemaas16@gmail.com
+                </Link>
               </div>
             </div>
 
-            <div className="flex flex-col items-start gap-2 w-[300px]">
+            <div className="w-full flex flex-col items-start gap-2">
               <h2 className="text-[1.3rem] capitalize font-bold">newsletter</h2>
               <p>
-                Subscribe to out newsletter to get our latest update & news.
+                Subscribe to our newsletter to get our latest update & news.
               </p>
               <form className="bg-white/10 w-full py-2 flex gap-2 items-center">
                 <input

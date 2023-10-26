@@ -20,7 +20,9 @@ import {
   Subscriptions,
   Success,
   User,
-} from "./components/index.js"
+  ReportPage,
+  Library,
+} from "./components/index.js";
 
 import {
   AllCategory,
@@ -170,9 +172,24 @@ export const AppRouter = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
+          {
+            path: "library",
+            element: (
+              <ProtectedRoute>
+                <Library />
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
-
+      {
+        path: "/report",
+        element: (
+          <ProtectedRoute>
+            <ReportPage />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/search",
         children: [
@@ -273,4 +290,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-])
+]);
