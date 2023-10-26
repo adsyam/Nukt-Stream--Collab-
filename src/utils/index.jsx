@@ -190,6 +190,19 @@ export const UserSidebarMenu = [
   { name: "send feedback", url: "/home" },
 ];
 
+// ========= Footer links ============
+export const FooterLinks1 = [
+  { name: "about us" },
+  { name: "contact us" },
+  { name: "terms of service" },
+];
+
+export const FooterLinks2 = [
+  { name: "pricing" },
+  { name: "help center" },
+  { name: "privacy policy" },
+];
+
 // ========= IMAGES ============
 export const Images = [
   {
