@@ -1,14 +1,14 @@
-import { nukt_logo } from "../assets";
-import { useDataContext } from "../context/DataContext";
-import { AiOutlineClose } from "react-icons/ai";
-import { faStar } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { faStar } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react"
+import { AiOutlineClose } from "react-icons/ai"
+import { nukt_logo } from "../assets"
+import { useDataContext } from "../context/DataContext"
 
 export const FeedbackModal = ({ active }) => {
-  const { modal, setModal } = useDataContext();
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(null);
+  const { modal, setModal } = useDataContext()
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(null)
 
   return (
     <section
@@ -31,6 +31,7 @@ export const FeedbackModal = ({ active }) => {
           <p className="capitalize">how was your experience?</p>
           {[...Array(5)].map((icon, index) => (
             <FontAwesomeIcon
+              key={index}
               icon={faStar}
               className="text-md cursor-pointer"
               color={index + 1 <= (hover || rating) ? "#389FDD" : ""}
@@ -61,5 +62,5 @@ export const FeedbackModal = ({ active }) => {
         </form>
       </div>
     </section>
-  );
-};
+  )
+}

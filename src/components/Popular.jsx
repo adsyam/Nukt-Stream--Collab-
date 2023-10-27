@@ -84,6 +84,7 @@ const Popular = () => {
                       releaseDate={d.release_date}
                       firstAirDate={d.first_air_date}
                       mediaType={mediaType}
+                      rating={d.vote_average}
                     />
                   ))
               : data

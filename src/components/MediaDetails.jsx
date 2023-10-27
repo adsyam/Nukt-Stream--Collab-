@@ -60,10 +60,7 @@ export default function MovieDetails({ id, Season, Episode, path }) {
           <div className="flex gap-2 items-center">
             <h2 className="text-4xl">
               {movieDetail.original_title || movieDetail.original_name}
-            </h2>{" "}
-            {/* {path === "tv" && (
-              
-            )} */}
+            </h2>
           </div>
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
