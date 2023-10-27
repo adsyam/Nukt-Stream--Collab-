@@ -1,34 +1,36 @@
 import { useEffect, useState } from "react";
 import { VideoCard, MovieWatchHistory, SeriesWatchHistory } from "./index";
 import { AiOutlineClose } from "react-icons/ai";
+import { useDataContext } from "../context/DataContext";
 
 export const History = () => {
   const [videoDetails, setVideoDetails] = useState([]);
   const [reload, setReload] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);
+  const { sidebar } = useDataContext();
 
-useEffect(() => {
-  const dataStore = []
+  useEffect(() => {
+    const dataStore = [];
 
-  for (const key in localStorage) {
-    if (key !== "movieIds" && key !== "seriesIds") {
-      const value = localStorage.getItem(key)
+    for (const key in localStorage) {
+      if (key !== "movieIds" && key !== "seriesIds") {
+        const value = localStorage.getItem(key);
 
-      try {
-        // Attempt to parse the value as JSON
-        const parsedValue = JSON.parse(value)
+        try {
+          // Attempt to parse the value as JSON
+          const parsedValue = JSON.parse(value);
 
-        if (parsedValue !== null) {
-          dataStore.push(parsedValue)
+          if (parsedValue !== null) {
+            dataStore.push(parsedValue);
+          }
+        } catch (error) {
+          console.error(`Error parsing JSON for key '${key}':`, error);
         }
-      } catch (error) {
-        console.error(`Error parsing JSON for key '${key}':`, error)
       }
     }
-  }
 
-  setVideoDetails(dataStore)
-}, [reload])
+    setVideoDetails(dataStore);
+  }, [reload]);
 
   //clear the data of localStorage
   const handleClear = () => {
@@ -52,7 +54,13 @@ useEffect(() => {
   );
 
   return (
-    <section className="w-full min-h-[100vh] bg-black text-white px-[3rem]">
+    <section
+      className={`min-h-[100vh] bg-black text-white px-[3rem] ${
+        sidebar
+          ? "translate-x-[14rem] origin-left duration-300 w-[89%]"
+          : "w-full origin-right duration-300"
+      }`}
+    >
       <div className="w-full flex justify-between items-center translate-y-[8rem]">
         <h1 className="text-[1.5rem] font-medium">History Feed</h1>
         <button

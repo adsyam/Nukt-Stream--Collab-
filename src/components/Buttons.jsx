@@ -1,10 +1,12 @@
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDataContext } from "../context/DataContext";
+import { useAuthContext } from "../context/AuthContext";
 
 //create side bar buttons
 export const SidebarMenu = ({ name, icon, url, index }) => {
   const { modal, setModal } = useDataContext();
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -32,6 +34,8 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
             name === "report" ||
             name === "library"
               ? url
+              : name === "downloads" || name === "playlist"
+              ? `profile/${user?.uid}/${url}`
               : `${url}?q=${name}`
           }
           className={`font-fig basis-1 flex items-center justify-start
