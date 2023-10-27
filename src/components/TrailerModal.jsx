@@ -11,11 +11,6 @@ export default function TrailerModal({ key, trailerKey, isOpen, onClose }) {
     visible: { opacity: 1 },
   }
 
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 0.8 }, // Adjust the opacity as desired
-  }
-
   const youtubeOpts = {
     height: "390",
     width: "640",
