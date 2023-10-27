@@ -14,14 +14,14 @@ export const UserSidebar = ({ showUserSidebar }) => {
 
   return (
     <aside
-      className={`absolute top-[4rem] right-[2rem] w-[300px] min-h-[90vh] bg-black p-[1rem]
-    rounded-md shadow-sm shadow-white ${
+      className={`absolute top-[4rem] right-[2rem] w-[300px]  bg-[#0A0E1790] p-[1rem]
+    rounded-md shadow-sm border-2 border-[#ffffff30] shadow-white ${
       showUserSidebar
         ? "origin-top-right scale-1 duration-300 ease-in-out"
         : "origin-top-right scale-0 duration-300 ease-in-out"
     }`}
     >
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center gap-4 mb-3">
         <img
           src={user.photoURL || "https://i.pravatar.cc/40"}
           alt="user image"
@@ -33,7 +33,7 @@ export const UserSidebar = ({ showUserSidebar }) => {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col gap-[1.5rem] my-[2rem]">
+      <div className="flex flex-col gap-3 mt-[1rem]">
         {UserSidebarMenu.map((item, index) => (
           <>
             {item.name === "sign out" || item.name === "send feedback" ? (
@@ -59,5 +59,5 @@ export const UserSidebar = ({ showUserSidebar }) => {
         ))}
       </div>
     </aside>
-  );
+  )
 };

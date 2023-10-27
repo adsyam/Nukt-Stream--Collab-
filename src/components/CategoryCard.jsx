@@ -1,7 +1,17 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 
-export default function CategoryCard({ mediaType, id, index, poster, title, name, releaseDate, firstAirDate }) {
+export default function CategoryCard({
+  mediaType,
+  id,
+  index,
+  poster,
+  title,
+  name,
+  releaseDate,
+  firstAirDate,
+  rating,
+}) {
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -19,19 +29,45 @@ export default function CategoryCard({ mediaType, id, index, poster, title, name
           initial="hidden"
           animate="visible"
           transition={{ delay: index * 0.07 }}
+          className=""
         >
-          <motion.img
+          <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{
               type: "spring",
               stiffness: 300,
               damping: 10,
             }}
-            src={`https://image.tmdb.org/t/p/original/${poster}`}
-            alt={`${title || name} backdrop`}
-            width={215}
-            className="rounded-[5px] w-fit border-transparent box-border border-white"
-          />
+            className="relative"
+          >
+            <motion.img
+              src={`https://image.tmdb.org/t/p/original/${poster}`}
+              alt={`${title || name} backdrop`}
+              width={215}
+              className="rounded-[5px] w-fit border-transparent box-border border-white relative brightness-[0.85]"
+            />
+            {rating === 0 ? (
+              ""
+            ) : (
+              <motion.div
+                // initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                // exit={{ opacity: 1 }}
+                className="absolute z-10 pt-1 ps-1 bottom-0 right-1 flex gap-1 items-center"
+              >
+                <p className="text-[12px] font-normal">{rating}</p>
+                {/* <FontAwesomeIcon icon={faStar} className="text-sm text-yellow-500"/> */}
+                <motion.img
+                //   initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  src="https://img.icons8.com/?size=512&id=12246&format=png"
+                  alt=""
+                  width={27}
+                  className="h-fit"
+                />
+              </motion.div>
+            )}
+          </motion.div>
           <div>
             <h2 className="word-break text-[16px] font-normal truncate-text">
               {title || name}
