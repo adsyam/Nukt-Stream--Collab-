@@ -7,6 +7,11 @@ export const UserSidebar = ({ showUserSidebar }) => {
   const { user, logout } = useAuthContext();
   const { modal, setModal } = useDataContext();
 
+  const toggleModal = () => {
+    setModal(!modal);
+    return (document.body.style.overflow = "hidden");
+  };
+
   return (
     <aside
       className={`absolute top-[4rem] right-[2rem] w-[300px] min-h-[90vh] bg-black p-[1rem]
@@ -34,9 +39,7 @@ export const UserSidebar = ({ showUserSidebar }) => {
             {item.name === "sign out" || item.name === "send feedback" ? (
               <button
                 key={index}
-                onClick={
-                  item.name === "sign out" ? logout : () => setModal(!modal)
-                }
+                onClick={item.name === "sign out" ? logout : toggleModal}
                 className="uppercase hover:text-[#389FDD] hover:font-bold text-start"
               >
                 {item.name}

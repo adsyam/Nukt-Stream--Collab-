@@ -13,7 +13,7 @@ export const FeedbackModal = ({ active }) => {
   return (
     <section
       className={`${
-        active ? "block overflow-hidden" : "hidden overflow-auto"
+        active ? "block" : "hidden overflow-auto"
       } absolute top-0 left-0 z-[100] text-white bg-black/10 backdrop-blur-[2px]
         w-full h-full grid place-items-center`}
     >
@@ -23,7 +23,11 @@ export const FeedbackModal = ({ active }) => {
             <img src={nukt_logo} className="w-[50px]" />
             <h2 className="capitalize">send a feedback to us</h2>
           </div>
-          <button onClick={() => setModal(!modal)}>
+          <button
+            onClick={() => (
+              setModal(!modal), (document.body.style.overflow = "auto")
+            )}
+          >
             <AiOutlineClose size={25} />
           </button>
         </div>
