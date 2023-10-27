@@ -56,7 +56,7 @@ export const VideosLinear = ({ videos }) => {
           bg-gradient-to-r from-black/75 from-50% to-transparent w-24 h-full"
         >
           <button
-            className="bg-white text-black p-[.1rem] rounded-full"
+            className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
             onClick={() => {
               setMove((move) => {
                 let newTranslate = move - TRANSLATE_AMOUNT;
@@ -65,7 +65,7 @@ export const VideosLinear = ({ videos }) => {
               });
             }}
           >
-            <BiChevronLeft size={40} />
+            <BiChevronLeft />
           </button>
         </div>
       )}
@@ -75,7 +75,7 @@ export const VideosLinear = ({ videos }) => {
           bg-gradient-to-l from-black/75 from-50% to-transparent w-24 h-full"
         >
           <button
-            className="bg-white text-black p-[.1rem] rounded-full"
+            className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
             onClick={() => {
               setMove((move) => {
                 if (containerRef.current === null) return move;
@@ -89,7 +89,7 @@ export const VideosLinear = ({ videos }) => {
               });
             }}
           >
-            <BiChevronRight size={40} />
+            <BiChevronRight />
           </button>
         </div>
       )}

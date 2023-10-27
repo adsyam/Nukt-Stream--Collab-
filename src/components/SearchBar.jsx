@@ -9,10 +9,10 @@ export const Searchbar = () => {
   const location = useLocation();
   const pathname = location.pathname;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    window.location.href = `/search?q=${search}`;
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   window.location.href = `/search?q=${search}`;
+  // };
 
   const searchStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.1)",
@@ -39,7 +39,7 @@ export const Searchbar = () => {
     //   //   onSubmit={handleSubmit}
     //   className="relative flex items-center justify-end"
     // >
-    <div className="relative flex items-center justify-end backdrop-blur-none">
+    <div className="relative flex items-center justify-end backdrop-blur-none group">
       <input
         type="text"
         value={search}

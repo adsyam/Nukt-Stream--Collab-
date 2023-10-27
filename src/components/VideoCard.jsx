@@ -8,7 +8,7 @@ export const VideoCard = ({ video, item, index }) => {
   };
 
   return (
-    <div className="w-[300px] h-max">
+    <div className="w-[200px] md:w-[300px] h-max">
       <Link
         to={
           video?.id?.videoId
@@ -21,7 +21,7 @@ export const VideoCard = ({ video, item, index }) => {
           initial="hidden"
           animate="visible"
           transition={{ delay: index * 0.07 }}
-          className="w-full h-[160px] overflow-hidden rounded-md"
+          className="w-full h-[100px] md:h-[160px] overflow-hidden rounded-md"
         >
           <motion.img
             style={{ y: -25 }}
@@ -40,23 +40,23 @@ export const VideoCard = ({ video, item, index }) => {
           />
         </motion.div>
       </Link>
-      <div className="h-[120px] text-wrap p-[1rem] flex flex-col justify-start gap-2">
+      <div className="h-[100px] md:h-[120px] text-wrap p-[.5rem] md:p-[1rem] flex flex-col justify-start gap-2">
         <Link to={`/watch?v=${video?.id?.videoId}` || `/watch?v=${item?.id}`}>
-          <p className="text-[1rem] font-bold">
-            {video?.snippet?.title.slice(0, 50) ||
-              item?.snippet?.title.slice(0, 50)}
+          <p className="text-sm md:text-[1rem] font-bold">
+            {video?.snippet?.title.slice(0, 40) ||
+              item?.snippet?.title.slice(0, 40)}
           </p>
         </Link>
         <Link
           to={
-            `/channel/${video?.snippet?.channelId}` ||
-            `/channel/${item?.snippet?.channelId}`
+            `/profile/${video?.snippet?.channelId}` ||
+            `/profile/${item?.snippet?.channelId}`
           }
         >
           <div className="flex justify-start items-center gap-1 bg-slate-400/30 w-max px-[.4rem] rounded-md">
-            <p className="text-[.9rem] font-semibold text-slate-300">
-              {video?.snippet?.channelTitle.slice(0, 50) ||
-                item?.snippet?.channelTitle.slice(0, 50)}
+            <p className="text-xs md:text-[.9rem] font-semibold text-slate-300">
+              {video?.snippet?.channelTitle.slice(0, 20) ||
+                item?.snippet?.channelTitle.slice(0, 20)}
             </p>
           </div>
         </Link>

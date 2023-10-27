@@ -1,6 +1,6 @@
-import { MdKeyboardArrowDown } from "react-icons/md"
-import { Link } from "react-router-dom"
-import { useDataContext } from "../context/DataContext"
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { useDataContext } from "../context/DataContext";
 
 //create side bar buttons
 export const SidebarMenu = ({ name, icon, url, index }) => {
@@ -10,7 +10,9 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
     <>
       {name === "send feedback" ? (
         <button
-          onClick={() => setModal(!modal)}
+          onClick={() => (
+            setModal(!modal), (document.body.style.overflow = "hidden")
+          )}
           className={`font-fig basis-1 flex items-center justify-start
           cursor-pointer outline-none border-0 py-[.5rem] px-[.9rem]
           my-[.5rem] me-[1rem] rounded-full transition-all duration-300 ease-in-out group 
@@ -91,5 +93,5 @@ export const DropdownBtn = ({ name, icon, list, index }) => {
         ""
       )}
     </>
-  )
-}
+  );
+};

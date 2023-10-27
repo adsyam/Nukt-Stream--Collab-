@@ -50,7 +50,7 @@ export const Reviews = ({ comments }) => {
               ) ? (
                 ""
               ) : (
-                <div key={comment?.id} className="flex gap-[1rem] mb-[1rem]">
+                <div key={comment?.id} className="flex gap-[1rem] mb-[1.5rem]">
                   <img
                     src={
                       comment?.snippet?.topLevelComment?.snippet
@@ -60,20 +60,26 @@ export const Reviews = ({ comments }) => {
                     className="rounded-full h-[45px]"
                   />
                   <div>
-                    <h2>
-                      {
-                        comment?.snippet?.topLevelComment?.snippet
-                          ?.authorDisplayName
-                      }
-                    </h2>
-                    <p>
-                      posted{" "}
-                      {timeFormat(
-                        comment?.snippet?.topLevelComment?.snippet?.publishedAt
-                      )}
-                    </p>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h2>
+                        {
+                          comment?.snippet?.topLevelComment?.snippet
+                            ?.authorDisplayName
+                        }
+                      </h2>
+                      <p className="text-white/50 text-sm">
+                        posted{" "}
+                        {timeFormat(
+                          comment?.snippet?.topLevelComment?.snippet
+                            ?.publishedAt
+                        )}
+                      </p>
+                    </div>
                     <div>
-                      <p style={{ whiteSpace: "pre-line" }}>
+                      <p
+                        style={{ whiteSpace: "pre-line" }}
+                        className="text-[.9rem]"
+                      >
                         {
                           comment?.snippet?.topLevelComment?.snippet
                             ?.textDisplay

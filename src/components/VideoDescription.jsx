@@ -54,7 +54,7 @@ export const VideoDescriptions = ({ videoDetail }) => {
             </Link>
             <button
               onClick={() => setSubscribe(!subscribe)}
-              className={`bg-white/50 px-2 rounded-md capitalize ${
+              className={`px-2 rounded-md capitalize ${
                 subscribe ? "bg-[#389FDD]" : "bg-white/50"
               }`}
             >
@@ -62,15 +62,16 @@ export const VideoDescriptions = ({ videoDetail }) => {
             </button>
           </div>
           <div className="flex items-center gap-3">
-            <p className="text-slate-300">
+            <p className="text-slate-300 border-2 py-[.45rem] px-3 rounded-md">
               {parseInt(viewCount).toLocaleString() || 0} views
             </p>
-            <div className="flex gap-3 items-center border-2 py-1 px-3 rounded-full">
+            <div className="flex gap-3 items-center border-2 py-1 px-3 rounded-md">
               <p className="text-slate-300">
                 {like
                   ? (parseInt(likeCount) + 1).toLocaleString()
                   : parseInt(likeCount).toLocaleString() || 0}
               </p>
+              <hr className="h-[30px] border-[1px] border-white/20" />
               {like ? (
                 <AiFillLike
                   onClick={() => setLike(!like)}
