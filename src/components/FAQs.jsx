@@ -17,9 +17,9 @@ export const FAQs = () => {
       <div className="wrapper w-full md:max-w-[700px]">
         <div className="accordion flex flex-col gap-[1rem]">
           {FAQsDetails.map((item, index) => (
-            <div key={index} className="bg-slate-400/50 rounded-md p-4">
+            <div key={index} className="bg-slate-400/30 rounded-md p-4 border-2">
               <div
-                className="flex justify-between items-center cursor-pointer group is-active"
+                className="flex justify-between items-center cursor-pointer"
                 onClick={() => toggle(index)}
               >
                 <h3 className="font-medium capitalize text-[1.3rem]">

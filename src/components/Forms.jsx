@@ -1,12 +1,13 @@
-import { Link, useNavigate } from "react-router-dom"
+import { sendPasswordResetEmail } from "firebase/auth"
+import { motion } from "framer-motion"
 import { useState } from "react"
+import { FcGoogle } from "react-icons/fc"
+import { Link, useNavigate } from "react-router-dom"
 import { useSnapshot } from "valtio"
 import { user } from "../StateStore"
-import { isValidEmail } from "../utils/Authentication"
 import { auth } from "../config/firebase"
-import { sendPasswordResetEmail } from "firebase/auth"
-import { FcGoogle } from "react-icons/fc"
 import { useAuthContext } from "../context/AuthContext"
+import { isValidEmail } from "../utils/Authentication"
 
 //input field on the dashboard
 export const EmailInput = () => {
@@ -34,14 +35,14 @@ export const EmailInput = () => {
           type="text"
           value={userSnap.email}
           onChange={(e) => (user.email = e.target.value)}
-          className="w-full outline-none border-2 border-[#389FDD] p-4 rounded-md text-[#389FDD] font-semibold"
+          className="w-full outline-none border-2 border-[#ffffff70] p-4 rounded-md text-[#389FDD] font-semibold bg-transparent"
         />
         <label
-          className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
+          className={`text-[1.2rem] ml-2 absolute left-[10px] text-[#ffffff]
               transition-all duration-300 pointer-events-none leading-[1rem]
               ${
                 userSnap.email ? "-top-[2px] text-xs" : "top-[17px]"
-              } group-focus-within:-top-[2px] group-focus-within:text-xs bg-white mt-1`}
+              } group-focus-within:-top-[2px] group-focus-within:text-xs bg-transparent mt-1`}
         >
           Enter your email
         </label>
@@ -53,13 +54,15 @@ export const EmailInput = () => {
           {`Please input a valid email`}
         </p>
       </div>
-      <button
-        className="bg-transparent border-2 border-[#389FDD] uppercase font-semibold
-            py-4 px-[1rem] rounded-md hover:bg-[#389FDD] hover:text-black
+      <motion.button
+        whileTap={{ scale: 3 }}
+        transition={{ duration: 0.1 }}
+        className="bg-transparent border-2 border-[#ffffff70] uppercase font-semibold
+            py-4 px-[1rem] rounded-md hover:bg-[#ffffff30]
             transition-all duration-300 whitespace-nowrap tracking-[2px]"
       >
         sign up
-      </button>
+      </motion.button>
     </form>
   )
 }
@@ -193,7 +196,7 @@ export const LoginForm = () => {
       <div className="w-full relative">
         <span
           className="absolute w-max text-center bg-white px-[.2rem]
-          translate-x-[8rem] -translate-y-[.7rem]"
+          translate-x-[9rem] -translate-y-[.7rem]"
         >
           or
         </span>
@@ -309,33 +312,25 @@ export const SignUpForm = () => {
   return (
     <form
       onSubmit={(e) => validateInput(e)}
-      className="bg-white text-black p-[2rem] rounded-md
-          flex flex-col gap-3 justify-center items-center font-fig max-w-[350px] md:max-w-[400px] w-full"
+      className="text-white p-[2rem] ring-0 rounded-md
+          flex flex-col gap-0 justify-center items-center font-fig max-w-[350px] md:max-w-[400px] w-full"
     >
       <h2 className="uppercase font-bold text-[1.8rem] mb-[1rem]">
         create an account
       </h2>
       <div className="flex gap-2">
-        <div className="group relative w-full mb-[1rem]">
+        <div className="group relative w-full">
+          <label className="pl-2 opacity-90 font-thin">First name</label>
           <input
             type="text"
             name="firstName"
             value={firstName.input}
+            placeholder="Enter name"
             onChange={(e) =>
               setFirstName({ ...firstName, input: e.target.value })
             }
-            className="w-full outline-none border-2 border-[#389FDD] p-2 rounded-md"
+            className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
           />
-          <label
-            className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
-              transition-all duration-300 pointer-events-none leading-[1rem]
-              ${
-                firstName.input ? "-top-[7px] bg-white" : "top-[15px]"
-              } group-focus-within:-top-[7px]
-              group-focus-within:bg-white`}
-          >
-            first name
-          </label>
           <p
             className={`text-red-500 text-[.8rem] font-bold italic absolute ${
               firstName.isEmpty ? "block" : "hidden"
@@ -344,26 +339,18 @@ export const SignUpForm = () => {
             input must not be empty
           </p>
         </div>
-        <div className="group relative w-full mb-[1rem]">
+        <div className="relative w-full">
+          <label className="pl-2 opacity-90 font-thin">Last name</label>
           <input
             type="text"
             name="lastName"
             value={lastName.input}
+            placeholder="Enter name"
             onChange={(e) =>
               setLastName({ ...lastName, input: e.target.value })
             }
-            className="w-full outline-none border-2 border-[#389FDD] p-2 rounded-md"
+            className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
           />
-          <label
-            className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
-              transition-all duration-300 pointer-events-none leading-[1rem]
-              ${
-                lastName.input ? "-top-[7px] bg-white" : "top-[15px]"
-              } group-focus-within:-top-[7px]
-              group-focus-within:bg-white`}
-          >
-            last name
-          </label>
           <p
             className={`text-red-500 text-[.8rem] font-bold italic absolute ${
               lastName.isEmpty ? "block" : "hidden"
@@ -374,24 +361,16 @@ export const SignUpForm = () => {
         </div>
       </div>
 
-      <div className="group relative w-full mb-[1rem]">
+      <div className="relative w-full">
+        <label className="pl-2 opacity-90 font-thin">Email</label>
         <input
           type="text"
           name="email"
+          placeholder="Enter your email"
           value={userSnap.email}
           onChange={(e) => (user.email = e.target.value)}
-          className="w-full outline-none border-2 border-[#389FDD] p-2 rounded-md"
+          className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
         />
-        <label
-          className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
-              transition-all duration-300 pointer-events-none leading-[1rem]
-              ${
-                userSnap.email ? "-top-[7px] bg-white" : "top-[15px]"
-              } group-focus-within:-top-[7px]
-              group-focus-within:bg-white`}
-        >
-          email
-        </label>
         <p
           className={`text-red-500 text-[.8rem] font-bold italic absolute ${
             errMsg.includes("email") ? "block" : "hidden"
@@ -400,23 +379,15 @@ export const SignUpForm = () => {
           {errMsg}
         </p>
       </div>
-      <div className="group relative w-full mb-[1rem]">
+      <div className="relative w-full">
+        <label className="pl-2 opacity-90 font-thin">Password</label>
         <input
           type="password"
           name="password"
+          placeholder="Enter your password"
           onChange={(e) => (user.password = e.target.value)}
-          className="w-full outline-none border-2 border-[#389FDD] p-2 rounded-md"
+          className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
         />
-        <label
-          className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
-              transition-all duration-300 pointer-events-none leading-[1rem]
-              ${
-                userSnap.password ? "-top-[7px] bg-white" : "top-[15px]"
-              } group-focus-within:-top-[7px]
-              group-focus-within:bg-white`}
-        >
-          password
-        </label>
         <p
           className={`text-red-500 text-[.8rem] font-bold italic absolute ${
             errMsg.includes("password") ? "block" : "hidden"
@@ -426,22 +397,14 @@ export const SignUpForm = () => {
         </p>
       </div>
       <div className="group relative w-full mb-[1rem]">
+        <label className="pl-2 opacity-90 font-thin">Confirm password</label>
         <input
           type="password"
           name="confirm"
+          placeholder="Re-Enter your password"
           onChange={(e) => (user.confirm = e.target.value)}
-          className="w-full outline-none border-2 border-[#389FDD] p-2 rounded-md"
+          className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10 shadow-2xl"
         />
-        <label
-          className={`capitalize text-[1.2rem] absolute left-[10px] text-[#389FDD]
-              transition-all duration-300 pointer-events-none leading-[1rem]
-              ${
-                userSnap.confirm ? "-top-[7px] bg-white" : "top-[15px]"
-              } group-focus-within:-top-[7px]
-              group-focus-within:bg-white`}
-        >
-          confirm password
-        </label>
         <p
           className={`text-red-500 text-[.8rem] font-bold italic absolute ${
             error ? "block" : "hidden"
@@ -452,9 +415,9 @@ export const SignUpForm = () => {
       </div>
       <button
         disabled={loading}
-        className="bg-transparent mb-[1rem] border-2 border-[#389FDD] uppercase font-semibold
-            py-[.5rem] px-[1.5rem] rounded-full hover:bg-[#389FDD] hover:text-black
-            transition-all duration-300 text-[#389FDD]"
+        className="bg-transparent mb-[1rem] border-2 border-[#D9D9D990] uppercase w-full
+            py-[.5rem] px-[1.5rem] rounded-md hover:bg-[#D9D9D920] text-white
+            transition-all duration-300"
       >
         continue
       </button>

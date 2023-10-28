@@ -129,7 +129,7 @@ export const planPrices = [
       "ad-free experience",
       "4 device at a time",
       "Co-sharing",
-      "erlier access to all content",
+      "earlier access to all content",
     ],
     checkoutUrl: "https://buy.stripe.com/test_4gweY4beMaAh9UY4gl",
   },

@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import { planPrices } from "../utils"
 import { AiFillCheckCircle } from "react-icons/ai"
+import { Link } from "react-router-dom"
 import { useDataContext } from "../context//DataContext"
+import { planPrices } from "../utils"
+import {motion} from 'framer-motion'
 
 export const Plans = () => {
   const [selectedPlan, setSelectedPlan] = useState(null)
@@ -18,7 +19,7 @@ export const Plans = () => {
       </p>
       <div className="flex flex-col md:flex-row justify-center items-center gap-[1rem]">
         {planPrices.map((item, index) => (
-          <div
+          <motion.div whileHover={{scale: 1.05}}
             onClick={() => setSelectedPlan(item.id)}
             key={index}
             className={`flex-1 min-w-[300px] lg:max-w-[300px] min-h-[375px]
@@ -28,24 +29,26 @@ export const Plans = () => {
             } border-2 rounded-md cursor-pointer hover:border-[#389Fdd]`}
           >
             <div>
-              <h3 className="text-[2rem] text-center font-medium uppercase mb-[1rem]">
+              <h3 className="pt-5 pb-1 text-[2rem] text-center font-medium uppercase mb-[1rem]">
                 {item.name}
               </h3>
-              <p className="text-[1.5rem] uppercase mb-[1rem]">
-                &#8369;{item.price}/
-                <span className="text-[1rem] lowercase">month</span>
-              </p>
-              <ul className="flex flex-col gap-[.6rem]">
-                {item.benefits.map((list, i) => (
-                  <li
-                    key={i}
-                    className="capitalize text-[.82rem] list-image-none flex items-center gap-2"
-                  >
-                    <AiFillCheckCircle color="gray" />
-                    {list}
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-1">
+                <p className="text-[1.5rem] uppercase pl-4">
+                  &#8369;{item.price}/
+                  <span className="text-[1rem] lowercase">month</span>
+                </p>
+                <ul className="flex flex-col gap-[.6rem] pl-6">
+                  {item.benefits.map((list, i) => (
+                    <li
+                      key={i}
+                      className="capitalize text-[.82rem] list-image-none flex items-center gap-2"
+                    >
+                      <AiFillCheckCircle color="gray" />
+                      {list}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <Link
               to={location === "/" ? "/signup" : item.checkoutUrl}
@@ -54,7 +57,7 @@ export const Plans = () => {
             >
               {location === "/" ? "proceed sign up" : "proceed checkout"}
             </Link>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

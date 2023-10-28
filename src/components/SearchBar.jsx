@@ -35,10 +35,6 @@ export const Searchbar = () => {
   }
 
   return (
-    // <form
-    //   //   onSubmit={handleSubmit}
-    //   className="relative flex items-center justify-end"
-    // >
     <div className="relative flex items-center justify-end backdrop-blur-none group">
       <input
         type="text"
@@ -49,11 +45,6 @@ export const Searchbar = () => {
         onKeyDown={searchEnter}
         className="w-full ps-[1rem] outline-none border-0 backdrop-blur-none"
       />
-      {/* <Link
-        // to={`/search?q=${search}`}
-        to={search !== "" ? `/Search/${search}` : null}
-        className="px-[.5rem] py-[.5rem]"
-      ></Link> */}
       <Link
         className="text-white absolute pr-3"
         to={search !== "" ? `/search?q=${search}` : pathname}
@@ -63,7 +54,6 @@ export const Searchbar = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </motion.div>
       </Link>
-      {/* </form> */}
     </div>
   );
 };

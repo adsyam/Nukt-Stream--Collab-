@@ -30,3 +30,9 @@ body {
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+.dashboard-bg {
+  background-image: url("./assets/BG.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
