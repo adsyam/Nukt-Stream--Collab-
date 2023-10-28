@@ -1,5 +1,5 @@
-import { SignUpForm } from "./Forms"
 import { Footer } from "./Footer"
+import { SignUpForm } from "./SignUpForm"
 
 export const SignUp = () => {
   return (

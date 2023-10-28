@@ -1,9 +1,3 @@
-import {
-  AiOutlineFacebook,
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-} from "react-icons//ai"
-import { BiLogoTiktok } from "react-icons/bi"
 import { BsFillSendFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
 import { nukt_logo } from "../assets/index"

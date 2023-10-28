@@ -6,6 +6,7 @@ import CategoryToggle from "./CategoryToggle"
 import { ChannelCard } from "./ChannelCard"
 import { CoverPhoto } from "./CoverPhoto"
 import { Dashboard } from "./Dashboard"
+import { EmailInput } from "./EmailInput"
 import EpisodeList from "./EpisodeList"
 import { FAQs } from "./FAQs"
 import Feed from "./Feed"
@@ -14,6 +15,7 @@ import { ForgotPassword } from "./ForgotPassword"
 import GenreMap from "./GenreMap"
 import { Hero } from "./Hero"
 import { History } from "./History"
+import { Library } from "./Library"
 import { Login } from "./Login"
 import MediaDetails from "./MediaDetails"
 import MediaFrame from "./MediaFrame"
@@ -35,6 +37,7 @@ import { Profile_Home } from "./Profile_Home"
 import { Profile_Playlist } from "./Profile_Playlist"
 import { ProtectedRoute } from "./ProtectedRoute"
 import { RedirectRoute } from "./RedirectRoute"
+import { ReportPage } from "./ReportPage"
 import { Reviews } from "./Reviews"
 import { Searchbar } from "./SearchBar"
 import SearchMovie from "./SearchMovie"
@@ -55,8 +58,6 @@ import { VideoDescriptions } from "./VideoDescription"
 import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
-import { ReportPage } from "./ReportPage"
-import { Library } from "./Library"
 
 export {
   Banner,
@@ -66,6 +67,7 @@ export {
   ChannelCard,
   CoverPhoto,
   Dashboard,
+  EmailInput,
   EpisodeList,
   FAQs,
   Feed,
@@ -74,6 +76,7 @@ export {
   GenreMap,
   Hero,
   History,
+  Library,
   Login,
   MediaDetails,
   MediaFrame,
@@ -95,6 +98,7 @@ export {
   Profile_Playlist,
   ProtectedRoute,
   RedirectRoute,
+  ReportPage,
   Reviews,
   SearchMovie,
   SearchPage,
@@ -116,6 +120,4 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
-  ReportPage,
-  Library,
-};
+}

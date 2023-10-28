@@ -1,4 +1,4 @@
-import { LoginForm } from "./Forms"
+import { LoginForm } from "./LoginForm"
 import { Footer } from "./index"
 
 export const Login = () => {
@@ -8,7 +8,7 @@ export const Login = () => {
         className="text-white items-center bg-black/60 backdrop-blur-sm w-full h-screen relative
         flex flex-col gap-[15rem] pt-20"
       >
-        <LoginForm />
+      <LoginForm />
         <Footer />
       </div>
     </section>

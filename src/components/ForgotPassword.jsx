@@ -1,4 +1,5 @@
-import { ResetPasswordForm } from "./Forms"
+import { ResetPasswordForm } from "./ResetPasswordForm"
+
 
 export const ForgotPassword = () => {
   return (

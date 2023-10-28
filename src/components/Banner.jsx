@@ -1,5 +1,5 @@
-import { EmailInput } from "./Forms"
 import { nukt_logo } from "../assets"
+import { EmailInput } from "./EmailInput"
 
 export const Banner = () => {
   return (
@@ -17,8 +17,8 @@ export const Banner = () => {
           Get Started with Streaming – Sign Up and Dive into Endless
           Entertainment!
         </p>
-        <EmailInput />
       </div>
+      <EmailInput />
     </header>
   )
 }
