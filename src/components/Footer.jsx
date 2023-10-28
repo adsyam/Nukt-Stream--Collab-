@@ -11,14 +11,19 @@ import { BsFillSendFill } from "react-icons/bs";
 import { useDataContext } from "../context/DataContext";
 
 export const Footer = () => {
-  const { sidebar } = useDataContext()
-
+  const { sidebar } = useDataContext();
 
   return (
-    <footer className={`w-full min-h-full text-white bg-transparent font-fig px-[2rem]`}>
+    <footer
+      className={`w-full min-h-full text-white bg-transparent font-fig px-[2rem]`}
+    >
       <section
         className={`flex flex-col xl:flex-row justify-around items-start
-        xl:items-center py-[5rem] ${sidebar ? "relative right-[-10.2%] mr-20" : ""}`}
+        xl:items-center py-[5rem] ${
+          sidebar
+            ? "translate-x-[11rem] origin-left duration-300 w-[90%]"
+            : "translate-x-0 origin-right duration-300 w-full"
+        }`}
       >
         <Link to="/home" className="flex gap-3 items-center pb-[2rem] xl:pb-0">
           <img src={nukt_logo} className="w-[100px]" />
@@ -57,7 +62,7 @@ export const Footer = () => {
               </h2>
               <ul className="flex gap-4 items-center">
                 <li>
-                  <Link className="hover:text-[#389FDD] hover:scale-[1.5]">
+                  <Link className="hover:text-[#389FDD]">
                     <AiOutlineInstagram size={40} />
                   </Link>
                 </li>

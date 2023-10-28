@@ -39,11 +39,11 @@ export const VideoDescriptions = ({ videoDetail }) => {
 
   return (
     <>
-      <h1 className="text-white text-[1.3rem] md:text-[1.5rem] font-bold px-[1rem] py-[1rem]">
+      <h1 className="text-white text-[1.2rem] md:text-[1.5rem] font-bold px-[1rem] py-[1rem]">
         {title}
       </h1>
       <div className="flex flex-col gap-3 justify-between text-white px-[1rem]">
-        <div className="flex justify-between">
+        <div className="flex flex-col gap-3 md:flex-row md:justify-between">
           <div className="flex gap-4">
             <Link
               to={`/profile/${channelId}`}
@@ -54,7 +54,7 @@ export const VideoDescriptions = ({ videoDetail }) => {
             </Link>
             <button
               onClick={() => setSubscribe(!subscribe)}
-              className={`px-2 rounded-md capitalize ${
+              className={`px-2 rounded-md capitalize py-2 ${
                 subscribe ? "bg-[#389FDD]" : "bg-white/50"
               }`}
             >
@@ -65,7 +65,7 @@ export const VideoDescriptions = ({ videoDetail }) => {
             <p className="text-slate-300 border-2 py-[.45rem] px-3 rounded-md">
               {parseInt(viewCount).toLocaleString() || 0} views
             </p>
-            <div className="flex gap-3 items-center border-2 py-1 px-3 rounded-md">
+            <div className="flex gap-3 items-center border-2 py-1 px-2 rounded-md">
               <p className="text-slate-300">
                 {like
                   ? (parseInt(likeCount) + 1).toLocaleString()
@@ -73,17 +73,19 @@ export const VideoDescriptions = ({ videoDetail }) => {
               </p>
               <hr className="h-[30px] border-[1px] border-white/20" />
               {like ? (
-                <AiFillLike
-                  onClick={() => setLike(!like)}
-                  size={25}
-                  className="cursor-pointer"
-                />
+                <div className="text-[1.5rem]">
+                  <AiFillLike
+                    onClick={() => setLike(!like)}
+                    className="cursor-pointer"
+                  />
+                </div>
               ) : (
-                <AiOutlineLike
-                  onClick={() => setLike(!like)}
-                  size={25}
-                  className="cursor-pointer"
-                />
+                <div className="text-[1.5rem]">
+                  <AiOutlineLike
+                    onClick={() => setLike(!like)}
+                    className="cursor-pointer"
+                  />
+                </div>
               )}
             </div>
           </div>

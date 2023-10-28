@@ -12,11 +12,13 @@ export const VideoFeed = () => {
   return (
     <motion.section
       className={`${
-        sidebar ? "translate-x-[10rem] md:translate-x-[14rem]" : "translate-x-0"
-      } flex flex-row w-full min-h-[100vh] bg-black p-[3rem]`}
+        sidebar
+          ? "translate-x-[10rem] md:translate-x-[12rem] origin-left duration-300"
+          : "translate-x-0 origin-right duration-300"
+      } flex flex-row w-full min-h-[100vh] p-[3rem]`}
     >
       <div
-        className={`${sidebar ? "w-[67%] lg:w-[77%] xl:w-[87%]" : "w-full"}`}
+        className={`${sidebar ? "w-[67%] lg:w-[77%] xl:w-[90%]" : "w-full"}`}
       >
         {feedCategories.map((item, index) => (
           <motion.div

@@ -1,42 +1,41 @@
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Player } from "@lottiefiles/react-lottie-player"
-import axios from "axios"
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { loader_Geometric } from "../assets"
-import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
-import CategoryCard from "./CategoryCard"
-import MediaTypeButton from "./MediaTypeButton"
-import { useDataContext } from "../context/DataContext"
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Player } from "@lottiefiles/react-lottie-player";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { loader_Geometric } from "../assets";
+import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig";
+import CategoryCard from "./CategoryCard";
+import MediaTypeButton from "./MediaTypeButton";
+import { useDataContext } from "../context/DataContext";
 
 const Trending = () => {
-  const [data, setData] = useState([])
-  const [isloading, setIsLoading] = useState(true)
-  const [mediaType, setMediaType] = useState("tv")
-  const { sidebar } = useDataContext()
+  const [data, setData] = useState([]);
+  const [isloading, setIsLoading] = useState(true);
+  const [mediaType, setMediaType] = useState("tv");
+  const { sidebar } = useDataContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}`
-        )
+        );
 
-        setData(response.data.results)
+        setData(response.data.results);
         setTimeout(() => {
-          setIsLoading(false)
-        }, 1300)
+          setIsLoading(false);
+        }, 1300);
       } catch (error) {
-        console.error("Error fetching data:", error)
-        setIsLoading(false)
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [mediaType])
-
+    fetchData();
+  }, [mediaType]);
 
   return (
     <>
@@ -45,11 +44,15 @@ const Trending = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7 }}
         viewport={{ once: true, amount: 0.1 }}
-        className={`flex justify-center ${
-          sidebar ? "relative right-[-100px] mx-10" : ""
-        }`}
+        className={`flex justify-center`}
       >
-        <div className="text-white py-12 w-full gap-1">
+        <div
+          className={`text-white py-12 gap-1 ${
+            sidebar
+              ? "translate-x-[6rem] origin-left duration-300 w-[98%]"
+              : "translate-x-0 origin-right duration-300 w-full"
+          }`}
+        >
           <div className="flex items-center px-2 justify-between mx-32">
             {isloading ? null : (
               <>
@@ -103,7 +106,7 @@ const Trending = () => {
         </div>
       </motion.section>
     </>
-  )
-}
+  );
+};
 
-export default Trending
+export default Trending;

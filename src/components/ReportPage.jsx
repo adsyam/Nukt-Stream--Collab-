@@ -2,14 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Footer } from "./Footer";
+import { useDataContext } from "../context/DataContext";
 
 const icon =
   "https://cdn3d.iconscout.com/3d/premium/thumb/report-6073861-4996978.png";
 
 export const ReportPage = () => {
+  const { sidebar } = useDataContext();
+
   return (
     <>
-      <section className="w-full min-h-[100vh] bg-black text-white p-[2rem]">
+      <section
+        className={`min-h-[100vh] bg-black text-white p-[2rem] ${
+          sidebar
+            ? "translate-x-[14rem] origin-left duration-300 w-[89%]"
+            : "w-full origin-right duration-300"
+        }`}
+      >
         <div className="translate-y-[5rem] w-full flex flex-col md:flex-row justify-around items-center">
           <div className="w-full md:max-w-[50%] order-2 mb-[2rem]">
             <h2 className="text-[2rem] font-medium mb-3">
