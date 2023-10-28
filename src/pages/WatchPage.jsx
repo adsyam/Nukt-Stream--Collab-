@@ -11,6 +11,7 @@ import {
 } from "../Hooks/customHooks";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useDataContext } from "../context/DataContext";
 
 export const WatchPage = () => {
   const id = new URLSearchParams(window.location.search).get("v");
@@ -18,6 +19,7 @@ export const WatchPage = () => {
   const videos = useFetchRelatedVideos(id);
   const comments = useFetchVideoComments(id);
   const location = useLocation().search;
+  const { sidebar } = useDataContext();
 
   useEffect(() => {
     const jsonString = JSON.stringify(videoDetails);
@@ -34,7 +36,13 @@ export const WatchPage = () => {
 
   return (
     <>
-      <section className="min-h-[100vh] bg-black">
+      <section
+        className={`min-h-[100vh] bg-black ${
+          sidebar
+            ? "translate-x-[15rem] origin-left duration-300 w-[87%]"
+            : "w-full origin-right duration-300"
+        }`}
+      >
         <div className="flex flex-col gap-3 pt-[5rem]">
           <div className="flex-1">
             <div className="w-full p-[1rem]">

@@ -30,7 +30,7 @@ export const Reviews = ({ comments }) => {
         <h2 className="font-bold">{comments.length} Reviews</h2>
         <div className="flex gap-3">
           <img
-            src={user ? user.photoURL : "https://i.pravatar.cc/50"}
+            src={user.photoURL ? user.photoURL : "https://i.pravatar.cc/50"}
             alt=""
             className="rounded-full h-[50px]"
           />

@@ -8,7 +8,7 @@ export const ProfileNav = ({ id }) => {
   return (
     <>
       <nav className="w-[430px] md:w-full translate-y-4 md:-translate-y-[5rem] overflow-x-auto">
-        <ul className="flex justify-center items-start gap-[2rem]">
+        <ul className="grid grid-flow-col place-items-center w-full md:w-[700px] mx-auto">
           {ProfileNavs.map((item, index) => (
             <li key={index} className="uppercase">
               <Link

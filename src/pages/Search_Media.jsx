@@ -7,6 +7,7 @@ import { SearchMovie, SearchTVSeries } from "../components";
 import { VideoCategories } from "../components/index";
 import { TOKEN_AUTH } from "../constants/apiConfig";
 import { searchFilters } from "../utils/index";
+import { useDataContext } from "../context/DataContext";
 
 export default function SearchPage() {
   const { query } = useParams();
@@ -16,6 +17,7 @@ export default function SearchPage() {
   const [animationKey, setAnimationKey] = useState(0);
   const [filter, setFilter] = useState("");
   const searchParams = new URLSearchParams(window.location.search).get("q");
+  const { sidebar } = useDataContext();
 
   useEffect(() => {
     const options = {
@@ -61,7 +63,13 @@ export default function SearchPage() {
       {/* <Navbar /> */}
       {!loading ? (
         <>
-          <section className="w-full min-h-[100vh] flex flex-col pt-[7rem] px-[3rem] text-white">
+          <section
+            className={`min-h-[100vh] flex flex-col pt-[7rem] px-[3rem] text-white ${
+              sidebar
+                ? "translate-x-[11rem] origin-left duration-300 w-[89%]"
+                : "w-full origin-right duration-300"
+            }`}
+          >
             <div className="flex gap-[1rem] justify-center items-center">
               {searchFilters.map((item, index) => (
                 <button
