@@ -55,9 +55,9 @@ export const Login = () => {
       >
         <div
           className="text-white ring-0 p-[2rem] rounded-md
-          flex flex-col gap-3 justify-center items-center font-fig max-w-[350px] w-full"
+          flex flex-col gap-2 justify-center items-center font-fig max-w-[350px] w-full"
         >
-          <h2 className="font-bold text-[1.8rem] mb-[1rem]">SIGN IN</h2>
+          <h2 className="font-bold text-[1.8rem] mb-[0.2rem]">SIGN IN</h2>
           {errorMsg && (
             <div
               className="text-red-500 bg-red-500/30 border-[1px] border-red-500 font-medium
@@ -66,7 +66,7 @@ export const Login = () => {
               {errorMsg}
             </div>
           )}
-          <div className="relative w-full mb-[0.5rem]">
+          <div className="relative w-full">
             <label className="pl-2 opacity-90 font-thin">Email</label>
             <input
               type="email"
@@ -80,7 +80,7 @@ export const Login = () => {
               Please input a valid email
             </p>
           </div>
-          <div className="relative w-full mb-[0.5rem]">
+          <div className="relative w-full">
             <label className="pl-2 opacity-90 font-thin">Password</label>
             <input
               type="password"
@@ -117,7 +117,7 @@ export const Login = () => {
             onClick={handleSignIn}
             className="bg-transparent mb-[1rem] border-2 border-[#D9D9D990] uppercase
             py-[.5rem] px-[1.5rem] rounded-md hover:bg-[#D9D9D920]
-            transition-all duration-300"
+            transition-all duration-300 w-full"
           >
             {loading ? "signing in..." : "sign in"}
           </button>

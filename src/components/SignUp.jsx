@@ -70,7 +70,7 @@ export const SignUp = () => {
         <form
           onSubmit={(e) => validateInput(e)}
           className="text-white p-[2rem] ring-0 rounded-md
-          flex flex-col gap-0 justify-center items-center font-fig max-w-[350px] md:max-w-[400px] w-full"
+          flex flex-col gap-2 justify-center items-center font-fig max-w-[350px] md:max-w-[400px] w-full"
         >
           <h2 className="font-bold text-[1.8rem] mb-[1rem]">
             CREATE AN ACCOUNT
