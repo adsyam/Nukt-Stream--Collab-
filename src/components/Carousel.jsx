@@ -1,62 +1,61 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import axios from "axios";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import "swiper/css";
-import "swiper/css/effect-fade";
-import { Autoplay, EffectFade } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { loader_Cine } from "../assets/index";
-import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig";
-import { useDataContext } from "../context/DataContext";
-import GenreMap from "./GenreMap";
+import { Player } from "@lottiefiles/react-lottie-player"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
+import "swiper/css"
+import "swiper/css/effect-fade"
+import { Autoplay, EffectFade } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { loader_Cine } from "../assets/index"
+import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
+import { useDataContext } from "../context/DataContext"
+import GenreMap from "./GenreMap"
 
 const Carousel = ({ mediaType }) => {
-  const [data, setData] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
+  const [data, setData] = useState([])
+  const [isloading, setIsLoading] = useState(true)
   const [url, setUrl] = useState(
     `${TMDB_BASE_URL}/trending/all/day?api_key=${API_KEY}`
-  );
-  const { sidebar } = useDataContext();
+  )
+  const { sidebar } = useDataContext()
 
-  const location = useLocation();
-  const pathname = location.pathname;
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
     const url = {
       url1: `${TMDB_BASE_URL}/trending/all/day?api_key=${API_KEY}`,
       url2: `${TMDB_BASE_URL}/${mediaType}/popular?api_key=${API_KEY}&page=1`,
       url3: `${TMDB_BASE_URL}/${mediaType}/top_rated?api_key=${API_KEY}&page=1`,
-    };
-    if (pathname.includes("home/popular")) {
-      setUrl(url.url2);
-    } else if (pathname.includes("home/trending")) {
-      setUrl(url.url1);
-    } else if (pathname.includes("home/toprated")) {
-      setUrl(url.url3);
-    } else {
-      setUrl(url.url1);
     }
-  }, [mediaType, pathname]);
+    if (pathname.includes("home/popular")) {
+      setUrl(url.url2)
+    } else if (pathname.includes("home/trending")) {
+      setUrl(url.url1)
+    } else if (pathname.includes("home/toprated")) {
+      setUrl(url.url3)
+    } else {
+      setUrl(url.url1)
+    }
+  }, [mediaType, pathname])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${url}`);
+        const response = await axios.get(`${url}`)
 
-        setData(response.data.results);
+        setData(response.data.results)
         setTimeout(() => {
-          setIsLoading(false);
-        }, 1600);
+          setIsLoading(false)
+        }, 1600)
       } catch (error) {
-        console.error("Error fething data (CAROUSEL):", error);
-        setIsLoading(false);
+        console.error("Error fething data (CAROUSEL):", error)
+        setIsLoading(false)
       }
-    };
+    }
 
-    fetchData();
-  }, [url]);
+    fetchData()
+  }, [url])
 
   return (
     <>
@@ -144,15 +143,23 @@ const Carousel = ({ mediaType }) => {
             ))}
         </Swiper>
       ) : (
-        <Player
-          autoplay
-          loop
-          src={loader_Cine}
-          className="flex items-center justify-center h-[70vh]"
-        ></Player>
+        <div
+          className={`${
+            sidebar
+              ? "translate-x-[15rem] origin-left duration-300 w-[85%]"
+              : "w-full origin-right duration-300"
+          }`}
+        >
+          <Player
+            autoplay
+            loop
+            src={loader_Cine}
+            className="flex items-center justify-center h-[70vh]"
+          />
+        </div>
       )}
     </>
   )
-};
+}
 
-export default Carousel;
+export default Carousel

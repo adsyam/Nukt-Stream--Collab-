@@ -126,12 +126,20 @@ export default function WatchTVSeries() {
           <Footer />
         </>
       ) : (
-        <Player
-          autoplay
-          loop
-          src={loader_Geometric}
-          className="h-[35vh] flex items-center justify-center"
-        />
+        <div
+          className={`${
+            sidebar
+              ? "translate-x-[15rem] origin-left duration-300 w-[85%]"
+              : "w-full origin-right duration-300"
+          }`}
+        >
+          <Player
+            autoplay
+            loop
+            src={loader_Geometric}
+            className="h-[35vh] flex items-center justify-center"
+          />
+        </div>
       )}
     </>
   )
