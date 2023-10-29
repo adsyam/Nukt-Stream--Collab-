@@ -9,10 +9,10 @@ import { useDataContext } from "../context/DataContext"
 import CategoryCard from "./CategoryCard"
 import MediaTypeButton from "./MediaTypeButton"
 
-const TopRated = () => {
+function AiringTodayTV() {
   const { sidebar } = useDataContext()
-  const { data, isloading, mediaType, setMediaType, page, setPage } =
-    useFetchTMDB("tv", 1, "top_rated")
+  const { data, isloading, mediaType, setMediaType, page, setPage, category } =
+    useFetchTMDB("tv", 1, "airing_today")
 
   return (
     <>
@@ -30,22 +30,27 @@ const TopRated = () => {
               : "translate-x-0 origin-right duration-300 w-full"
           }`}
         >
-          <div className="flex items-center px-2 justify-between mx-32">
+          <div className={`flex items-center px-2 justify-between mx-32`}>
             <div className="flex gap-2 items-center">
-              <h1 className="text-2xl mb-1 font-medium">Top Rated</h1>
+              <h1 className="text-2xl mb-1 font-medium">Airing Today</h1>
               <div className="flex gap-2 px-3 py-1 rounded-md">
                 <MediaTypeButton
                   setMediaType={setMediaType}
                   mediaType={mediaType}
+                  category={category}
                 />
               </div>
             </div>
-            <Link className="flex items-center gap-1" to={`/home/toprated`}>
+            <Link className="flex items-center gap-1" to={`/home/popular`}>
               <p>See all </p>
               <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
             </Link>
           </div>
-          <div className="grid grid-cols-8 mx-32 gap-4">
+          <div
+            className={`grid ${
+              sidebar ? "grid-cols-8" : "grid-cols-8"
+            } mx-32 gap-4`}
+          >
             {!isloading
               ? data
                   .filter((d) => d.poster_path && d.backdrop_path)
@@ -61,11 +66,12 @@ const TopRated = () => {
                       releaseDate={d.release_date}
                       firstAirDate={d.first_air_date}
                       mediaType={mediaType}
+                      rating={d.vote_average}
                     />
                   ))
               : data
                   .filter((d) => d.poster_path && d.backdrop_path)
-                  .slice(0, 20)
+                  .slice(0, 16)
                   .map((d, index) => (
                     <Player
                       autoplay
@@ -82,4 +88,4 @@ const TopRated = () => {
   )
 }
 
-export default TopRated
+export default AiringTodayTV

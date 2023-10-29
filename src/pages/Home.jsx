@@ -1,11 +1,12 @@
 import {
+//   AiringTodayTV,
   Carousel,
-  Popular,
-  Trending,
-  TopRated,
   Footer,
+  Popular,
+  TopRated,
+  Trending,
   VideoFeed,
-} from "../components";
+} from "../components"
 
 // import PopularMovie from "../components/Popular"
 
@@ -14,6 +15,7 @@ export default function Home() {
     <div className="overflow-x-hidden">
       <Carousel />
       <div>
+        {/* <AiringTodayTV /> */}
         <Popular />
         <Trending />
         <TopRated />
@@ -21,5 +23,5 @@ export default function Home() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }

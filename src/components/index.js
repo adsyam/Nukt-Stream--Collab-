@@ -58,6 +58,7 @@ import { VideoDescriptions } from "./VideoDescription"
 import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
+import AiringTodayTV from "./AiringTodayTV.jsx"
 
 export {
   Banner,
@@ -120,4 +121,5 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
+  AiringTodayTV
 }

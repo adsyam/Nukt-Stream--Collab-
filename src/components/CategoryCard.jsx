@@ -50,15 +50,11 @@ export default function CategoryCard({
               ""
             ) : (
               <motion.div
-                // initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
-                // exit={{ opacity: 1 }}
                 className="absolute z-10 pt-1 ps-1 bottom-0 right-1 flex gap-1 items-center"
               >
                 <p className="text-[12px] font-normal">{rating}</p>
-                {/* <FontAwesomeIcon icon={faStar} className="text-sm text-yellow-500"/> */}
                 <motion.img
-                //   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   src="https://img.icons8.com/?size=512&id=12246&format=png"
                   alt=""

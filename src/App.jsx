@@ -143,6 +143,22 @@ export const AppRouter = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
+          {
+            path: "airingtoday",
+            element: (
+              <ProtectedRoute>
+                <AllCategory />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "intheatre",
+            element: (
+              <ProtectedRoute>
+                <AllCategory />
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
       {
@@ -290,4 +306,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-]);
+])

@@ -1,41 +1,21 @@
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Player } from "@lottiefiles/react-lottie-player";
-import axios from "axios";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { loader_Geometric } from "../assets";
-import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig";
-import CategoryCard from "./CategoryCard";
-import MediaTypeButton from "./MediaTypeButton";
-import { useDataContext } from "../context/DataContext";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Player } from "@lottiefiles/react-lottie-player"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { loader_Geometric } from "../assets"
+import { useDataContext } from "../context/DataContext"
+import CategoryCard from "./CategoryCard"
+import MediaTypeButton from "./MediaTypeButton"
+import useFetchTrendingTMDB from "../Hooks/useFetchTrendingTMDB"
 
 const Trending = () => {
-  const [data, setData] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
-  const [mediaType, setMediaType] = useState("tv");
-  const { sidebar } = useDataContext();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}`
-        );
-
-        setData(response.data.results);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1300);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [mediaType]);
+  const { sidebar } = useDataContext()
+  const { isloading, mediaType, setMediaType, data } = useFetchTrendingTMDB(
+    "tv",
+    1,
+    "trending"
+  )
 
   return (
     <>
@@ -106,7 +86,7 @@ const Trending = () => {
         </div>
       </motion.section>
     </>
-  );
-};
+  )
+}
 
-export default Trending;
+export default Trending

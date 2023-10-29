@@ -17,8 +17,8 @@ export const Banner = () => {
           Get Started with Streaming – Sign Up and Dive into Endless
           Entertainment!
         </p>
-      </div>
       <EmailInput />
+      </div>
     </header>
   )
 }

@@ -15,6 +15,10 @@ export default function CategoryToggle() {
         navigate("/home/toprated")
       } else if (pathname.includes("toprated")) {
         navigate("/home/popular")
+      } else if (pathname.includes("airingtoday")) {
+        navigate("/home/airingtoday")
+      } else if (pathname.includes("intheatre")) {
+        navigate("/home/intheatre")
       }
   }
 
@@ -34,10 +38,14 @@ export default function CategoryToggle() {
           ? "TRENDING"
           : pathname.includes("toprated")
           ? "TOP RATED"
+          : pathname.includes("airingtoday")
+          ? "AIRING TODAY"
+          : pathname.includes("intheatre")
+          ? "IN THEATRES"
           : null}
       </h2>
       <motion.button
-        whileTap={{x: 5 }}
+        whileTap={{ x: 5 }}
         onClick={() => categoryToggle()}
         className="text-white px-1 py-1 text-sm"
       >

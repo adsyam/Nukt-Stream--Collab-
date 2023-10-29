@@ -1,41 +1,18 @@
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Player } from "@lottiefiles/react-lottie-player";
-import axios from "axios";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { loader_Geometric } from "../assets";
-import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig";
-import { useDataContext } from "../context/DataContext";
-import CategoryCard from "./CategoryCard";
-import MediaTypeButton from "./MediaTypeButton";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Player } from "@lottiefiles/react-lottie-player"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { loader_Geometric } from "../assets"
+import useFetchTMDB from "../Hooks/useFetchTMDB"
+import { useDataContext } from "../context/DataContext"
+import CategoryCard from "./CategoryCard"
+import MediaTypeButton from "./MediaTypeButton"
 
 const Popular = () => {
-  const [data, setData] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
-  const [mediaType, setMediaType] = useState("tv");
-  const [page, setPage] = useState(1);
-  const { sidebar } = useDataContext();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${TMDB_BASE_URL}/${mediaType}/popular?api_key=${API_KEY}&page=${page}`
-        );
-
-        setData(response.data.results);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1300);
-      } catch (error) {
-        console.error("Error fething data (POPULAR):", error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [mediaType, page]);
+  const { sidebar } = useDataContext()
+  const { data, isloading, mediaType, setMediaType, page, setPage } =
+    useFetchTMDB("tv", 1, "popular")
 
   return (
     <>
@@ -107,7 +84,7 @@ const Popular = () => {
         </div>
       </motion.section>
     </>
-  );
-};
+  )
+}
 
-export default Popular;
+export default Popular
