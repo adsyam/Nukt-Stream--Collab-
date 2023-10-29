@@ -1,3 +1,5 @@
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { useNavigate } from "react-router"
@@ -6,6 +8,11 @@ import { useAuthContext } from "../context/AuthContext"
 import { Footer } from "./index"
 
 export const Login = () => {
+  const [showPassword1, setShowPassword1] = useState(false)
+  function passwordToggle(isShow) {
+    if (isShow) return "text"
+    if (!isShow) return "password"
+  }
   const navigate = useNavigate()
   const [loginDetail, setLoginDetail] = useState({
     email: "",
@@ -82,14 +89,31 @@ export const Login = () => {
           </div>
           <div className="relative w-full">
             <label className="pl-2 opacity-90 font-thin">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={loginDetail.password}
-              onChange={handleChange}
-              className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
-            />
+            <div className="flex items-center justify-end">
+              <input
+                type={passwordToggle(showPassword1)}
+                name="password"
+                placeholder="Enter your password"
+                value={loginDetail.password}
+                onChange={handleChange}
+                className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
+              />
+              {showPassword1 ? (
+                <FontAwesomeIcon
+                  onClick={() => setShowPassword1(!showPassword1)}
+                  icon={faEye}
+                  className="absolute z-10 pr-3"
+                  role="button"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  onClick={() => setShowPassword1(!showPassword1)}
+                  icon={faEyeSlash}
+                  className="absolute z-10 pr-3"
+                  role="button"
+                />
+              )}
+            </div>
             <p className="text-red-500 text-[.8rem] font-extralight italic hidden">
               Password must be 8 to 40 characters
             </p>
