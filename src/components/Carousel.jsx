@@ -15,7 +15,6 @@ import GenreMap from "./GenreMap";
 const Carousel = ({ mediaType }) => {
   const [data, setData] = useState([]);
   const [isloading, setIsLoading] = useState(true);
-  const [category, setCategory] = useState("trending");
   const [url, setUrl] = useState(
     `${TMDB_BASE_URL}/trending/all/day?api_key=${API_KEY}`
   );
@@ -77,7 +76,18 @@ const Carousel = ({ mediaType }) => {
           }`}
         >
           {data
-            .filter((d) => d.media_type === "tv" || "movie")
+            .filter((d) => {
+              if (pathname.includes("trending")) {
+                if (mediaType === "tv") {
+                  return d.media_type === "tv"
+                } else if (mediaType === "movie") {
+                  return d.media_type === "movie"
+                }
+              } else {
+                return true
+              }
+              return false
+            })
             .map((d) => (
               <SwiperSlide key={d.id} className="text-white">
                 <img
@@ -142,7 +152,7 @@ const Carousel = ({ mediaType }) => {
         ></Player>
       )}
     </>
-  );
+  )
 };
 
 export default Carousel;

@@ -89,7 +89,7 @@ export default function SearchPage() {
             </p>
             <section className="mb-12 ">
               <h2 className="mx-12">Movie</h2>
-              <div className="grid grid-cols-10 mx-12 gap-4">
+              <div className="grid grid-cols-8 mx-12 gap-4">
                 {movieData
                   .filter((md) => md.poster_path && md.backdrop_path)
                   .map((md, index) => (
@@ -109,7 +109,7 @@ export default function SearchPage() {
             </section>
             <section className="mb-12 ">
               <h2 className="mx-12">TV Series</h2>
-              <div className="grid grid-cols-10 mx-12 gap-4">
+              <div className="grid grid-cols-8 mx-12 gap-4">
                 {tvData
                   .filter((tv) => tv.poster_path && tv.backdrop_path)
                   .map((tv, index) => (

@@ -68,6 +68,7 @@ const Trending = () => {
                       releaseDate={d.release_date}
                       firstAirDate={d.first_air_date}
                       mediaType={mediaType}
+                      rating={d.vote_average.toFixed(1)}
                     />
                   ))
               : data
