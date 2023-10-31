@@ -17,7 +17,6 @@ export default function CategoryCard({
     visible: { opacity: 1 },
   }
 
-
   return (
     <>
       <Link
@@ -41,30 +40,33 @@ export default function CategoryCard({
             }}
             className="relative"
           >
-            <motion.img
-              src={`https://image.tmdb.org/t/p/original/${poster}`}
-              alt={`${title || name} backdrop`}
-              width={215}
-              className="rounded-[5px] w-fit border-transparent box-border border-white relative brightness-[0.85]"
-            />
-            {rating === 0 ? (
-              ""
-            ) : (
-              <motion.div
-              initial={{opacity: 0}}
-                whileHover={{ opacity: 1 }}
-                className="absolute z-10 pt-1 ps-1 bottom-0 right-1 flex gap-1 items-center"
-              >
-                <p className="text-[12px] font-normal">{rating}</p>
-                <motion.img
-                //   whileHover={{ opacity: 1 }}
-                  src="https://img.icons8.com/?size=512&id=12246&format=png"
-                  alt=""
-                  width={27}
-                  className="h-fit"
-                />
-              </motion.div>
-            )}
+            <motion.div whileHover={{ filter: "brightness(0.8)" }}>
+              <motion.img
+                src={`https://image.tmdb.org/t/p/original/${poster}`}
+                alt={`${title || name} backdrop`}
+                width={215}
+                className="rounded-[5px] w-fit border-transparent box-border border-white relative brightness-[0.85]"
+              />
+              {rating === 0 ? (
+                ""
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  className="absolute z-50 pt-1 ps-1 bottom-0 right-1 flex gap-1 justify-end items-end w-full h-full"
+                >
+                  <div className="flex items-center gap-2">
+                    <p className="text-[12px] font-normal">{rating}</p>
+                    <motion.img
+                      src="https://img.icons8.com/?size=512&id=12246&format=png"
+                      alt=""
+                      width={27}
+                      className="h-fit"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
           </motion.div>
           <div>
             <h2 className="word-break text-[16px] font-normal truncate-text">
