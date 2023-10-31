@@ -1,7 +1,7 @@
-import { Player } from "@lottiefiles/react-lottie-player"
-import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
-import { loader_Geometric } from "../assets"
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router";
+import { loader_Geometric } from "../assets";
 
 import {
   EpisodeList,
@@ -10,19 +10,19 @@ import {
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
-} from "../components"
-import { useDataContext } from "../context/DataContext"
+} from "../components";
+import { useDataContext } from "../context/DataContext";
 
 export default function WatchTVSeries() {
-  const { id, season, episode } = useParams()
-  const [loading, setLoading] = useState(true)
-  const [path, setPath] = useState()
-  const [server, setServer] = useState("Server1")
-  const [currentServer, setCurrentServer] = useState()
+  const { id, season, episode } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [path, setPath] = useState();
+  const [server, setServer] = useState("Server1");
+  const [currentServer, setCurrentServer] = useState();
 
-  const location = useLocation()
-  const pathname = location.pathname
-  const { sidebar } = useDataContext()
+  const location = useLocation();
+  const pathname = location.pathname;
+  const { sidebar, history } = useDataContext();
 
   useEffect(() => {
     const servers = {
@@ -31,28 +31,30 @@ export default function WatchTVSeries() {
       Server3: `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`,
       Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
       Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
-    }
+    };
     if (server in servers) {
-      setCurrentServer(servers[server])
+      setCurrentServer(servers[server]);
     }
 
-    //===== this code is for watch history =======
-    const storedSeriesIdsJSON = localStorage.getItem("seriesIds")
-    const storedSeriesIds = storedSeriesIdsJSON
-      ? JSON.parse(storedSeriesIdsJSON)
-      : []
+    if (history) {
+      //===== this code is for watch history =======
+      const storedSeriesIdsJSON = localStorage.getItem("seriesIds");
+      const storedSeriesIds = storedSeriesIdsJSON
+        ? JSON.parse(storedSeriesIdsJSON)
+        : [];
 
-    if (!storedSeriesIds.includes(id)) {
-      storedSeriesIds.push(id)
-      localStorage.setItem("seriesIds", JSON.stringify(storedSeriesIds))
+      if (!storedSeriesIds.includes(id)) {
+        storedSeriesIds.push(id);
+        localStorage.setItem("seriesIds", JSON.stringify(storedSeriesIds));
+      }
     }
 
-    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
+    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie");
 
     setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-  }, [server, path, id, season, episode, pathname])
+      setLoading(false);
+    }, 2000);
+  }, [server, path, id, season, episode, pathname]);
 
   return (
     <>
@@ -142,5 +144,5 @@ export default function WatchTVSeries() {
         </div>
       )}
     </>
-  )
+  );
 }

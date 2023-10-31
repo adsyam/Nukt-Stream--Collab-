@@ -1,15 +1,15 @@
-import { faBookmark } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { useEffect, useState } from "react";
 // import { useLocation } from "react-router"
-import { TOKEN_AUTH } from "../constants/apiConfig"
-import TrailerModal from "./TrailerModal"
+import { TOKEN_AUTH } from "../constants/apiConfig";
+import TrailerModal from "./TrailerModal";
 
 export default function MovieDetails({ id, Season, Episode, path }) {
-  const [movieDetail, setMovieDetail] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [trailerData, setTrailerData] = useState([])
+  const [movieDetail, setMovieDetail] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [trailerData, setTrailerData] = useState([]);
 
   useEffect(() => {
     const options = {
@@ -20,17 +20,17 @@ export default function MovieDetails({ id, Season, Episode, path }) {
         accept: "application/json",
         Authorization: TOKEN_AUTH,
       },
-    }
+    };
 
     axios
       .request(options)
       .then(function (response) {
-        setMovieDetail(response.data)
+        setMovieDetail(response.data);
       })
       .catch(function (error) {
-        console.error(error)
-      })
-  }, [id, path])
+        console.error(error);
+      });
+  }, [id, path]);
 
   useEffect(() => {
     const options = {
@@ -41,17 +41,46 @@ export default function MovieDetails({ id, Season, Episode, path }) {
         accept: "application/json",
         Authorization: TOKEN_AUTH,
       },
-    }
+    };
 
     axios
       .request(options)
       .then(function (response) {
-        setTrailerData(response.data.results)
+        setTrailerData(response.data.results);
       })
       .catch(function (error) {
-        console.error(error)
-      })
-  }, [id, path])
+        console.error(error);
+      });
+  }, [id, path]);
+
+  //===== this code is for library =======
+  const storeInLibrary = (id) => {
+    if (path === "movie") {
+      let storedIds = localStorage.getItem("movieLibrary");
+      if (storedIds) {
+        storedIds = JSON.parse(storedIds);
+      } else {
+        storedIds = [];
+      }
+
+      if (!storedIds.includes(id)) {
+        storedIds.push(id);
+        localStorage.setItem("movieLibrary", JSON.stringify(storedIds));
+      }
+    } else {
+      let storedIds = localStorage.getItem("seriesLibrary");
+      if (storedIds) {
+        storedIds = JSON.parse(storedIds);
+      } else {
+        storedIds = [];
+      }
+
+      if (!storedIds.includes(id)) {
+        storedIds.push(id);
+        localStorage.setItem("seriesLibrary", JSON.stringify(storedIds));
+      }
+    }
+  };
 
   return (
     <div>
@@ -136,7 +165,11 @@ export default function MovieDetails({ id, Season, Episode, path }) {
                     onClose={() => setIsOpen(false)}
                   />
                 ))}
-              <button className="rounded-md px-3 py-1 bg-[#ffffff10] border border-[#ffe9e950] hover:bg-[#ffffff20] transition-all text-center align-middle">
+              <button
+                onClick={() => storeInLibrary(id)}
+                className="rounded-md px-3 py-1 bg-[#ffffff10] border border-[#ffe9e950] 
+                hover:bg-[#ffffff20] transition-all text-center align-middle"
+              >
                 <FontAwesomeIcon icon={faBookmark} />
                 &nbsp;ADD TO THE LIBRARY
               </button>
@@ -145,5 +178,5 @@ export default function MovieDetails({ id, Season, Episode, path }) {
         </div>
       )}
     </div>
-  )
+  );
 }

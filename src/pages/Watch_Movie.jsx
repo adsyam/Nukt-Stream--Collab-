@@ -1,51 +1,54 @@
-import { Player } from "@lottiefiles/react-lottie-player"
-import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
-import { loader_Geometric } from "../assets"
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router";
+import { loader_Geometric } from "../assets";
 import {
   Footer,
   MediaDetails,
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
-} from "../components"
-import { useDataContext } from "../context/DataContext"
+} from "../components";
+import { useDataContext } from "../context/DataContext";
 
 export default function WatchMovie() {
-  const { id } = useParams()
-  const [loading, setLoading] = useState(true)
-  const [path, setPath] = useState()
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [path, setPath] = useState();
   const [server, setServer] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
-  )
-  const location = useLocation()
-  const pathname = location.pathname
-  const { sidebar } = useDataContext()
+  );
+  const location = useLocation();
+  const pathname = location.pathname;
+  const { sidebar, history } = useDataContext();
 
-  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
-  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}`
-  const server3 = `https://vidsrc.to/embed/${path}/${id}/`
-  const server4 = `https://2embed.org/series.php?id=${id}/`
-  const server5 = `https://www.2embed.cc/embed/${id}/`
+  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`;
+  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}`;
+  const server3 = `https://vidsrc.to/embed/${path}/${id}/`;
+  const server4 = `https://2embed.org/series.php?id=${id}/`;
+  const server5 = `https://www.2embed.cc/embed/${id}/`;
 
   useEffect(() => {
-    //===== this code is for watch history =======
-    const storedMovieIdsJSON = localStorage.getItem("movieIds")
-    const storedMovieIds = storedMovieIdsJSON
-      ? JSON.parse(storedMovieIdsJSON)
-      : []
+    if (history) {
+      //===== this code is for watch history =======
+      const storedMovieIdsJSON = localStorage.getItem("movieIds");
+      const storedMovieIds = storedMovieIdsJSON
+        ? JSON.parse(storedMovieIdsJSON)
+        : [];
 
-    if (!storedMovieIds.includes(id)) {
-      storedMovieIds.push(id)
-      localStorage.setItem("movieIds", JSON.stringify(storedMovieIds))
+      if (!storedMovieIds.includes(id)) {
+        storedMovieIds.push(id);
+        localStorage.setItem("movieIds", JSON.stringify(storedMovieIds));
+      }
+      //===== this code is for watch history =======
     }
-    //===== this code is for watch history =======
-    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
+
+    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie");
 
     setTimeout(() => {
-      setLoading(false)
-    }, 2000)
-  }, [pathname, id])
+      setLoading(false);
+    }, 2000);
+  }, [pathname, id]);
 
   return (
     <>
@@ -111,5 +114,5 @@ export default function WatchMovie() {
         </div>
       )}
     </>
-  )
+  );
 }

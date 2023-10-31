@@ -16,6 +16,7 @@ export const DataProvider = ({ children }) => {
   const [isActive, setIsActive] = useState(false); //state of navbar
   const [dropDown, setDropDown] = useState(false); //state of dropdown
   const [modal, setModal] = useState(false); //state of feedback modal
+  const [history, setHistory] = useState(true);
   const location = useLocation().pathname; //get the current page location
   const searchParams = new URLSearchParams(window.location.search);
 
@@ -48,6 +49,8 @@ export const DataProvider = ({ children }) => {
         searchParams,
         modal,
         setModal,
+        history,
+        setHistory,
       }}
     >
       {children}

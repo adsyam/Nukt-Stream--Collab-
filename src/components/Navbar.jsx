@@ -2,7 +2,11 @@
 import { Link } from "react-router-dom";
 //import components
 // import logo and icons
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faMagnifyingGlass,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiFillBell } from "react-icons/ai";
 import { nukt_logo } from "../assets";
@@ -12,6 +16,8 @@ import { Searchbar } from "./SearchBar";
 import { Sidebar } from "./Sidebar";
 import { UserSidebar } from "./UserSideBar";
 import { FeedbackModal } from "./FeedbackModal";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 // import { Searchbar, Sidebar, UserSidebar } from "./index"
 
@@ -25,6 +31,30 @@ export const Navbar = () => {
     modal,
   } = useDataContext();
   const { user } = useAuthContext();
+  const [searchMobile, setSearchMobile] = useState(false);
+  const [showSearchbar, setShowSearchbar] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+      if (screenWidth < 640) {
+        setSearchMobile(true);
+      } else {
+        setSearchMobile(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenWidth]);
+
+  const onClose = () => {
+    setShowSearchbar(!showSearchbar);
+  };
 
   return (
     <>
@@ -35,7 +65,7 @@ export const Navbar = () => {
             : "bg-transparent"
         } py-2 flex items-center justify-between px-5 fixed top-0 right-0 left-0 z-10 text-white`}
       >
-        <div className="flex gap-5">
+        <div className="flex gap-3 md:gap-5">
           <button
             className={`px-[.6rem] rounded-md ${user ? "" : "hidden"}`}
             onClick={showSidebar}
@@ -54,12 +84,22 @@ export const Navbar = () => {
               />
             )}
           </button>
-          <Link to={"/home"} className="flex items-center gap-2">
-            <img src={nukt_logo} alt="" width={35} height={41} />
-            <p className="text-white font-bold">Nukt</p>
-          </Link>
+          {!showSearchbar && (
+            <Link to={"/home"} className="w-max flex items-center gap-2">
+              <img src={nukt_logo} alt="" width={35} height={41} />
+              <p className="text-white font-bold hidden md:block">Nukt</p>
+            </Link>
+          )}
         </div>
-        {!user ? "" : <Searchbar />}
+        {!user ? (
+          ""
+        ) : (
+          <Searchbar
+            searchMobile={searchMobile}
+            showSearchbar={showSearchbar}
+            onClose={onClose}
+          />
+        )}
         <div className="flex items-center gap-2">
           {user === null ? (
             <Link to="/login" className="bg-black/50 rounded-md p-[.5rem]">
@@ -67,7 +107,21 @@ export const Navbar = () => {
             </Link>
           ) : (
             <>
-              <AiFillBell size={30} />
+              {screenWidth < 640 && (
+                <motion.div
+                  whileHover={{ scale: 1.15 }}
+                  className={`${
+                    showSearchbar ? "hidden" : "block"
+                  } cursor-pointer`}
+                >
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className="w-[22px] h-[22px]"
+                    onClick={() => setShowSearchbar(!showSearchbar)}
+                  />
+                </motion.div>
+              )}
+              {!showSearchbar && <AiFillBell size={30} />}
               <button
                 onClick={showUserSidebar}
                 className="bg-black/50 rounded-full border-[1px]"

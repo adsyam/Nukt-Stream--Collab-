@@ -19,16 +19,28 @@ export const WatchPage = () => {
   const videos = useFetchRelatedVideos(id);
   const comments = useFetchVideoComments(id);
   const location = useLocation().search;
-  const { sidebar } = useDataContext();
+  const { sidebar, history } = useDataContext();
+
+  console.log(history);
 
   useEffect(() => {
-    const jsonString = JSON.stringify(videoDetails);
-    localStorage.setItem(videoDetails?.id, jsonString);
+    if (!history) return;
+    let storedIds = localStorage.getItem("videoIds");
+    if (storedIds) {
+      storedIds = JSON.parse(storedIds);
+    } else {
+      storedIds = [];
+    }
+
+    if (!storedIds.includes(id)) {
+      storedIds.push(id);
+      localStorage.setItem("videoIds", JSON.stringify(storedIds));
+    }
   }, [videoDetails]);
 
   if (!videoDetails) {
     return (
-      <div className="w-full h-[100vh] bg-black grid place-items-center">
+      <div className="w-full h-[100vh] grid place-items-center">
         <h1 className="text-[2rem] text-white">Loading...</h1>
       </div>
     );

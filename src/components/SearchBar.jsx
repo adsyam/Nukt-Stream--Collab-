@@ -1,10 +1,11 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export const Searchbar = () => {
+export const Searchbar = ({ searchMobile, showSearchbar, onClose }) => {
   const [search, setSearch] = useState("");
   const location = useLocation();
   const pathname = location.pathname;
@@ -35,25 +36,43 @@ export const Searchbar = () => {
   }
 
   return (
-    <div className="relative flex items-center justify-end backdrop-blur-none group">
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search Movies, TV Series, and more"
-        style={searchStyle}
-        onKeyDown={searchEnter}
-        className="w-full ps-[1rem] outline-none border-0 backdrop-blur-none"
-      />
-      <Link
-        className="text-white absolute pr-3"
-        to={search !== "" ? `/search?q=${search}` : pathname}
-        onClick={() => setSearch("")}
+    <div
+      className={`${
+        searchMobile
+          ? showSearchbar
+            ? "w-full origin-center duration-500 overflow-hidden"
+            : "w-0 origin-center duration-500 overflow-hidden"
+          : "max-w-xl"
+      } flex items-center justify-center gap-2`}
+    >
+      <div
+        className={`relative flex items-center justify-end backdrop-blur-none group`}
       >
-        <motion.div whileHover={{ scale: 1.15 }} className="">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </motion.div>
-      </Link>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search Movies, TV Series, and more"
+          style={searchStyle}
+          onKeyDown={searchEnter}
+          className="w-[300px] md:w-[400px] ps-[1rem] outline-none border-0 backdrop-blur-none"
+        />
+        <Link
+          className="text-white absolute pr-3"
+          to={search !== "" ? `/search?q=${search}` : pathname}
+          onClick={() => setSearch("")}
+        >
+          <motion.div whileHover={{ scale: 1.15 }} className="">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </motion.div>
+        </Link>
+      </div>
+      <AiOutlineClose
+        onClick={onClose}
+        className={`${
+          searchMobile ? "block" : "hidden"
+        } cursor-pointer w-[22px] h-[22px]`}
+      />
     </div>
   );
 };
