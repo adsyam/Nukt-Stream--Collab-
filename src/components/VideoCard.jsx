@@ -41,7 +41,13 @@ export const VideoCard = ({ video, item, index }) => {
         </motion.div>
       </Link>
       <div className="h-[100px] md:h-[120px] text-wrap p-[.5rem] md:p-[1rem] flex flex-col justify-start gap-2">
-        <Link to={`/watch?v=${video?.id?.videoId}` || `/watch?v=${item?.id}`}>
+        <Link
+          to={
+            video?.id?.videoId
+              ? `/watch?v=${video?.id?.videoId}`
+              : `/watch?v=${item?.id}`
+          }
+        >
           <p className="text-sm md:text-[1rem] font-bold">
             {video?.snippet?.title.slice(0, 40) ||
               item?.snippet?.title.slice(0, 40)}
@@ -49,8 +55,9 @@ export const VideoCard = ({ video, item, index }) => {
         </Link>
         <Link
           to={
-            `/profile/${video?.snippet?.channelId}` ||
-            `/profile/${item?.snippet?.channelId}`
+            video?.id?.videoId
+              ? `/profile/${video?.snippet?.channelId}`
+              : `/profile/${item?.snippet?.channelId}`
           }
         >
           <div className="flex justify-start items-center gap-1 bg-slate-400/30 w-max px-[.4rem] rounded-md">
