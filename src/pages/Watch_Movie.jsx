@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
+import useFetchDetails from "../Hooks/useFetchDetails"
 import { loader_Geometric } from "../assets"
 import {
   Footer,
@@ -12,14 +12,12 @@ import {
 import { useDataContext } from "../context/DataContext"
 
 export default function WatchMovie() {
-  const { id } = useParams()
-  const [loading, setLoading] = useState(true)
+  const { id, isLoading, setIsLoading, pathname } = useFetchDetails()
   const [path, setPath] = useState()
+
   const [server, setServer] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
   )
-  const location = useLocation()
-  const pathname = location.pathname
   const { sidebar } = useDataContext()
 
   const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
@@ -43,14 +41,14 @@ export default function WatchMovie() {
     pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
 
     setTimeout(() => {
-      setLoading(false)
+      setIsLoading(false)
     }, 2000)
-  }, [pathname, id])
+  }, [pathname, id, setIsLoading])
 
   return (
     <>
       <MediaFrame id={id} server={server} />
-      {!loading ? (
+      {!isLoading ? (
         <>
           <div
             className={`${

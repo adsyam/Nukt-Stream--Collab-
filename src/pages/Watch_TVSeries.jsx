@@ -1,6 +1,5 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
 import { loader_Geometric } from "../assets"
 
 import {
@@ -12,23 +11,30 @@ import {
   MediaReviews,
 } from "../components"
 import { useDataContext } from "../context/DataContext"
+import useFetchDetails from "../Hooks/useFetchDetails"
 
 export default function WatchTVSeries() {
-  const { id, season, episode } = useParams()
-  const [loading, setLoading] = useState(true)
-  const [path, setPath] = useState()
+  const { id, season, episode, isLoading, setIsLoading, pathname, data } =
+    useFetchDetails()
+  const [mediaType, setMediaType] = useState()
   const [server, setServer] = useState("Server1")
   const [currentServer, setCurrentServer] = useState()
 
-  const location = useLocation()
-  const pathname = location.pathname
   const { sidebar } = useDataContext()
+
+//   useEffect(() => {
+//     if (data && data.original_name) {
+//       document.title = `Series | ${data.original_name}`
+//     } else if (!pathname.includes("TVSeries") || !pathname.includes("Movie")) {
+//       document.title = "Nukt"
+//     }
+//   }, [data, pathname])
 
   useEffect(() => {
     const servers = {
       Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
-      Server2: `https://vidsrc.me/embed/${path}?tmdb=${id}&season=${season}&episode=${episode}`,
-      Server3: `https://vidsrc.to/embed/${path}/${id}/${season}/${episode}/`,
+      Server2: `https://vidsrc.me/embed/${mediaType}?tmdb=${id}&season=${season}&episode=${episode}`,
+      Server3: `https://vidsrc.to/embed/${mediaType}/${id}/${season}/${episode}/`,
       Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
       Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
     }
@@ -47,12 +53,12 @@ export default function WatchTVSeries() {
       localStorage.setItem("seriesIds", JSON.stringify(storedSeriesIds))
     }
 
-    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
+    pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie")
 
     setTimeout(() => {
-      setLoading(false)
+      setIsLoading(false)
     }, 2000)
-  }, [server, path, id, season, episode, pathname])
+  }, [server, mediaType, id, season, episode, pathname, setIsLoading])
 
   return (
     <>
@@ -61,9 +67,9 @@ export default function WatchTVSeries() {
         season={season}
         episode={episode}
         server={currentServer}
-        path={path}
+        path={mediaType}
       />
-      {!loading ? (
+      {!isLoading ? (
         <>
           <div
             className={`${
@@ -117,7 +123,7 @@ export default function WatchTVSeries() {
                 id={id}
                 Season={season}
                 Episode={episode}
-                path={path}
+                path={mediaType}
               />
             </div>
             <MediaRecommendation id={id} />

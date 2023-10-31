@@ -3,34 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import axios from "axios"
 import { useEffect, useState } from "react"
 // import { useLocation } from "react-router"
+import useFetchDetails from "../Hooks/useFetchDetails"
 import { TOKEN_AUTH } from "../constants/apiConfig"
 import TrailerModal from "./TrailerModal"
 
-export default function MovieDetails({ id, Season, Episode, path }) {
-  const [movieDetail, setMovieDetail] = useState(null)
+export default function MediaDetails({ Season, Episode, path }) {
   const [isOpen, setIsOpen] = useState(false)
   const [trailerData, setTrailerData] = useState([])
-
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      url: `https://api.themoviedb.org/3/${path}/${id}`,
-      params: { language: "en-US" },
-      headers: {
-        accept: "application/json",
-        Authorization: TOKEN_AUTH,
-      },
-    }
-
-    axios
-      .request(options)
-      .then(function (response) {
-        setMovieDetail(response.data)
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }, [id, path])
+  const { data, id } = useFetchDetails()
 
   useEffect(() => {
     const options = {
@@ -55,18 +35,18 @@ export default function MovieDetails({ id, Season, Episode, path }) {
 
   return (
     <div>
-      {movieDetail && (
+      {data && (
         <div className="text-white bg-[#ffffff10] rounded-md  p-3">
           <div className="flex gap-2 items-center">
             <h2 className="text-4xl">
-              {movieDetail.original_title || movieDetail.original_name}
+              {data.original_title || data.original_name}
             </h2>
           </div>
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 rounded-md  py-1 ">
                 <div className="flex items-center gap-1 rounded-md px-3 bg-[#ffffff10]">
-                  <p className="">{movieDetail.vote_average.toFixed(1)}</p>
+                  <p>{data && data.vote_average ? data.vote_average.toFixed(1) : null}</p>
                   <img
                     src="https://img.icons8.com/?size=512&id=12246&format=png"
                     alt=""
@@ -76,7 +56,7 @@ export default function MovieDetails({ id, Season, Episode, path }) {
                 </div>
                 {path === "movie" ? (
                   <p className="rounded-md px-3 bg-[#ffffff10]">
-                    {movieDetail.runtime}min
+                    {data.runtime}min
                   </p>
                 ) : (
                   <div className="flex gap-2">
@@ -93,31 +73,38 @@ export default function MovieDetails({ id, Season, Episode, path }) {
             <div className="flex items-center gap-2">
               <h3>Genres:</h3>
               <ul className="flex gap-2">
-                {movieDetail.genres.map((genre) => (
-                  <li key={genre.id} className="rounded-md px-3 bg-[#ffffff10]">
-                    {genre.name}
-                  </li>
-                ))}
+                {data && data.genres
+                  ? data.genres.map((d) => (
+                      <li key={d.id} className="rounded-md px-3 bg-[#ffffff10]">
+                        {d.name}
+                      </li>
+                    ))
+                  : null}
               </ul>
             </div>
             <div className="flex items-center gap-2">
               <h3>Language:</h3>
               <p className="rounded-md px-3 bg-[#ffffff10]">
-                {movieDetail.original_language.toUpperCase()}
+                {data && data.original_language ? data.original_language.toUpperCase() : null}
               </p>
             </div>
             <div className="flex items-center gap-2">
               <h3>Production:</h3>
               <ul className="flex gap-2">
-                {movieDetail.production_companies.map((pc) => (
-                  <li key={pc.id} className="rounded-md px-3 bg-[#ffffff10]">
-                    {pc.name}
-                  </li>
-                ))}
+                {data && data.production_companies
+                  ? data.production_companies.map((pc) => (
+                      <li
+                        key={pc.id}
+                        className="rounded-md px-3 bg-[#ffffff10]"
+                      >
+                        {pc.name}
+                      </li>
+                    ))
+                  : null}
               </ul>
             </div>
             <p>SYNOPSIS:</p>
-            <p>{movieDetail.overview}</p>
+            <p>{data.overview}</p>
             <div className="flex gap-2 rounded-md">
               <button
                 onClick={() => setIsOpen(!isOpen)}

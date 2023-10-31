@@ -1,21 +1,22 @@
 //import link
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 //import components
 // import logo and icons
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AiFillBell } from "react-icons/ai";
-import { nukt_logo } from "../assets";
-import { useAuthContext } from "../context/AuthContext";
-import { useDataContext } from "../context/DataContext";
-import { Searchbar } from "./SearchBar";
-import { Sidebar } from "./Sidebar";
-import { UserSidebar } from "./UserSideBar";
-import { FeedbackModal } from "./FeedbackModal";
-
-// import { Searchbar, Sidebar, UserSidebar } from "./index"
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect } from "react"
+import { AiFillBell } from "react-icons/ai"
+import useFetchDetails from "../Hooks/useFetchDetails"
+import { nukt_logo } from "../assets"
+import { useAuthContext } from "../context/AuthContext"
+import { useDataContext } from "../context/DataContext"
+import { FeedbackModal } from "./FeedbackModal"
+import { Searchbar } from "./SearchBar"
+import { Sidebar } from "./Sidebar"
+import { UserSidebar } from "./UserSideBar"
 
 export const Navbar = () => {
+  const { data, pathname } = useFetchDetails()
   const {
     showSidebar,
     sidebar,
@@ -23,8 +24,25 @@ export const Navbar = () => {
     showUserSidebar,
     isActive,
     modal,
-  } = useDataContext();
-  const { user } = useAuthContext();
+  } = useDataContext()
+  const { user } = useAuthContext()
+
+  useEffect(() => {
+    if (!(pathname.includes("Movie") || pathname.includes("TVSeries"))) {
+      document.title = "Nukt"
+      return
+    }
+
+    if (!(data && (data.original_name || data.original_title))) {
+      return
+    }
+
+    if (pathname.includes("Movie")) {
+      document.title = `Movie | ${data.original_title}`
+    } else if (pathname.includes("TVSeries")) {
+      document.title = `Series | ${data.original_name}`
+    }
+  }, [data, pathname])
 
   return (
     <>
@@ -88,5 +106,5 @@ export const Navbar = () => {
       <Sidebar showSidebar={sidebar} />
       <FeedbackModal active={modal} />
     </>
-  );
-};
+  )
+}

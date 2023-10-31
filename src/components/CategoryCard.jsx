@@ -17,6 +17,7 @@ export default function CategoryCard({
     visible: { opacity: 1 },
   }
 
+
   return (
     <>
       <Link

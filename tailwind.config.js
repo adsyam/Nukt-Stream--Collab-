@@ -7,6 +7,10 @@ export default {
       backgroundImage: {
         "hero-pattern": "url('./assets/BG.jpg')",
       },
+      screens: {
+        "xsm": "510px",
+        "xxsm" : "370px"
+      }
     },
   },
   plugins: [],

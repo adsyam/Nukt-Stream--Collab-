@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Player } from "@lottiefiles/react-lottie-player"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-import { loader_Geometric } from "../assets"
 import useFetchTMDB from "../Hooks/useFetchTMDB"
+import { loader_Geometric } from "../assets"
 import { useDataContext } from "../context/DataContext"
 import CategoryCard from "./CategoryCard"
 import MediaTypeButton from "./MediaTypeButton"
@@ -30,7 +30,9 @@ const Popular = () => {
               : "translate-x-0 origin-right duration-300 w-full"
           }`}
         >
-          <div className={`flex items-center px-2 justify-between mx-32`}>
+          <div
+            className={`flex items-center px-2 justify-between mx-32 max-lg:mx-20 max-sm:mx-12`}
+          >
             <div className="flex gap-2 items-center">
               <h1 className="text-2xl mb-1 font-medium">Popular</h1>
               <div className="flex gap-2 px-3 py-1 rounded-md">
@@ -46,9 +48,7 @@ const Popular = () => {
             </Link>
           </div>
           <div
-            className={`grid ${
-              sidebar ? "grid-cols-8" : "grid-cols-8"
-            } mx-32 gap-4`}
+            className={`grid grid-cols-8 max-lg:grid-cols-6 max-md:grid-cols-5 mx-32 max-lg:mx-20 max-sm:mx-12  max-sm:grid-cols-4 max-xsm:grid-cols-3 max-xxsm:grid-cols-2 gap-4`}
           >
             {!isloading
               ? data
