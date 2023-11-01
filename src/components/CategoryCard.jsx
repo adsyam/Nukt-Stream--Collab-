@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
+import useFetchTMDB from "../Hooks/useFetchTMDB"
 
 export default function CategoryCard({
   mediaType,
@@ -12,6 +13,8 @@ export default function CategoryCard({
   firstAirDate,
   rating,
 }) {
+    const {data} = useFetchTMDB()
+
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },

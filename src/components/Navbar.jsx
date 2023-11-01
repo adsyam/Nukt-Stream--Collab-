@@ -28,7 +28,15 @@ export const Navbar = () => {
   const { user } = useAuthContext()
 
   useEffect(() => {
-    if (!(pathname.includes("Movie") || pathname.includes("TVSeries"))) {
+    if (
+      !(
+        pathname.includes("Movie") ||
+        pathname.includes("TVSeries") ||
+        pathname.includes("home/popular") ||
+        pathname.includes("home/trending") ||
+        pathname.includes("home/toprated")
+      )
+    ) {
       document.title = "Nukt"
       return
     }
@@ -40,6 +48,12 @@ export const Navbar = () => {
     if (pathname.includes("Movie")) {
       document.title = `Movie | ${data.original_title}`
     } else if (pathname.includes("TVSeries")) {
+      document.title = `Series | ${data.original_name}`
+    } else if (pathname.includes("/home/popular")) {
+      document.title = `meow`
+    } else if (pathname.includes("/home/trending")) {
+      document.title = `Series | ${data.original_name}`
+    } else if (pathname.includes("/home/toprated")) {
       document.title = `Series | ${data.original_name}`
     }
   }, [data, pathname])

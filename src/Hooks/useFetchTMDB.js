@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router"
+import { useLocation, useParams } from "react-router"
 import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
 
 export default function useFetchTMDB(
@@ -8,10 +8,11 @@ export default function useFetchTMDB(
   defPage = 1,
   category
 ) {
+  const { page } = useParams()
   const [data, setData] = useState([])
   const [isloading, setIsLoading] = useState(true)
   const [mediaType, setMediaType] = useState(defMediaType)
-  const [page, setPage] = useState(defPage)
+  const [pages, setPage] = useState(defPage)
   const location = useLocation()
   const pathname = location.pathname
 
@@ -21,11 +22,11 @@ export default function useFetchTMDB(
         let response
         if (pathname.includes("trending")) {
           response = await axios.get(
-            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${page}`
+            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${pages}`
           )
         } else {
           response = await axios.get(
-            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${page}`
+            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${pages}`
           )
         }
 

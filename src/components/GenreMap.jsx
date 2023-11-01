@@ -111,7 +111,7 @@ export default function GenreMap({ CarouselGenre }) {
   ]
 
   return (
-    <>
+    <div className="flex gap-2 flex-wrap">
       {genres
         .filter((g) => CarouselGenre.genre_ids.includes(g.id))
         .map((genre) => (
@@ -122,6 +122,6 @@ export default function GenreMap({ CarouselGenre }) {
             {genre.name}
           </p>
         ))}
-    </>
+    </div>
   )
 }

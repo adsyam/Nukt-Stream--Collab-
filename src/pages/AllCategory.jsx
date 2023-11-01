@@ -2,8 +2,14 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import useFetchTMDB from "../Hooks/useFetchTMDB"
+import useResponsive from "../Hooks/useResponsive"
 import { loader_Geometric } from "../assets"
-import { Carousel, CategoryCard, CategoryToggle } from "../components"
+import {
+  Carousel,
+  CategoryCard,
+  CategoryToggle,
+  PagingButton,
+} from "../components"
 import { Footer } from "../components/Footer"
 import MediaTypeButton from "../components/MediaTypeButton"
 import { useDataContext } from "../context/DataContext"
@@ -13,6 +19,7 @@ export default function AllCategory() {
   const location = useLocation()
   const pathname = location.pathname
   const { sidebar } = useDataContext()
+  const { responsiveGridCard } = useResponsive()
 
   const { data, mediaType, setMediaType, isloading, page, setPage, category } =
     useFetchTMDB("tv", 1, changeCategory)
@@ -41,13 +48,14 @@ export default function AllCategory() {
             : "w-full origin-right duration-300"
         }`}
       >
-        <div className="my-12 mx-32 flex flex-col items-center gap-4 justify-center text-white">
+        <div className="mt-12 mb-3 mx-32 flex flex-col items-center gap-4 justify-center text-white">
           <div className="flex items-center gap-4">
             <CategoryToggle category={category} />
           </div>
           <MediaTypeButton mediaType={mediaType} setMediaType={setMediaType} />
+        <PagingButton data={data} page={page} setPage={setPage} />
         </div>
-        <div className="grid grid-cols-8 gap-4 mx-32 text-white mb-12">
+        <div className={responsiveGridCard}>
           {!isloading
             ? data
                 .filter((d) => d.poster_path && d.backdrop_path)
@@ -79,7 +87,11 @@ export default function AllCategory() {
                   />
                 ))}
         </div>
-        {isloading ? null : <div className="text-white mb-12">sdsds</div>}
+        {isloading ? null : (
+          <div className="flex justify-center mt-12">
+            <PagingButton data={data} page={page} setPage={setPage} />
+          </div>
+        )}
       </div>
       <Footer />
     </>

@@ -1,4 +1,5 @@
 import { SearchPage } from "../pages/SearchPage"
+import AiringTodayTV from "./AiringTodayTV.jsx"
 import { Banner } from "./Banner"
 import Carousel from "./Carousel"
 import CategoryCard from "./CategoryCard"
@@ -49,6 +50,7 @@ import { SignUp } from "./SignUp"
 import { Subscriptions } from "./Subscriptions"
 import { Success } from "./Success"
 import TopRated from "./TopRated"
+import TrailerModal from "./TrailerModal"
 import Trending from "./Trending"
 import { User } from "./User"
 import { UserSidebar } from "./UserSideBar"
@@ -58,9 +60,10 @@ import { VideoDescriptions } from "./VideoDescription"
 import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
-import AiringTodayTV from "./AiringTodayTV.jsx"
+import PagingButton from "./PagingButton"
 
 export {
+  AiringTodayTV,
   Banner,
   Carousel,
   CategoryCard,
@@ -112,6 +115,7 @@ export {
   Subscriptions,
   Success,
   TopRated,
+  TrailerModal,
   Trending,
   User,
   UserSidebar,
@@ -121,5 +125,5 @@ export {
   VideoFeed,
   VideosGrid,
   VideosLinear,
-  AiringTodayTV
+  PagingButton,
 }

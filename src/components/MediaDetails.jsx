@@ -46,7 +46,11 @@ export default function MediaDetails({ Season, Episode, path }) {
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 rounded-md  py-1 ">
                 <div className="flex items-center gap-1 rounded-md px-3 bg-[#ffffff10]">
-                  <p>{data && data.vote_average ? data.vote_average.toFixed(1) : null}</p>
+                  <p>
+                    {data && data.vote_average
+                      ? data.vote_average.toFixed(1)
+                      : null}
+                  </p>
                   <img
                     src="https://img.icons8.com/?size=512&id=12246&format=png"
                     alt=""
@@ -60,10 +64,10 @@ export default function MediaDetails({ Season, Episode, path }) {
                   </p>
                 ) : (
                   <div className="flex gap-2">
-                    <p className="rounded-md px-3 bg-[#ffffff10] text-[#8934f1]">
+                    <p className="rounded-md px-3 bg-[#ffffff10] text-[#398FDD]">
                       Season {Season}
                     </p>
-                    <p className="rounded-md px-3 bg-[#ffffff10] text-[#8934f1]">
+                    <p className="rounded-md px-3 bg-[#ffffff10] text-[#398FDD]">
                       Episode {Episode}
                     </p>
                   </div>
@@ -85,7 +89,9 @@ export default function MediaDetails({ Season, Episode, path }) {
             <div className="flex items-center gap-2">
               <h3>Language:</h3>
               <p className="rounded-md px-3 bg-[#ffffff10]">
-                {data && data.original_language ? data.original_language.toUpperCase() : null}
+                {data && data.original_language
+                  ? data.original_language.toUpperCase()
+                  : null}
               </p>
             </div>
             <div className="flex items-center gap-2">

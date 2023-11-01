@@ -120,7 +120,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "popular",
+            path: "popular/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -128,7 +128,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "trending",
+            path: "trending/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -136,7 +136,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "toprated",
+            path: "toprated/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />

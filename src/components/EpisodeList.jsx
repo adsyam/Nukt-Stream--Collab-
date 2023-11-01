@@ -31,13 +31,13 @@ export default function EpisodeList({ id, Season }) {
   }, [id])
 
   return (
-    <div className="text-white border border-[#6b13d7] flex flex-col w-fit rounded-md">
+    <div className="text-white border border-[#398FDD] flex flex-col w-fit rounded-md">
       {data.seasons ? (
         <div className="p-2 rounded-md">
           <select
             onChange={(e) => setSelectedSeason(e.target.value)}
             value={selectedSeason}
-            className="bg-[#6b13d7] rounded-md px-1 text-white whitespace-nowrap"
+            className="bg-[#398FDD] rounded-md px-1 text-white whitespace-nowrap"
           >
             {data.seasons.map((season) => (
               <option key={season.id} value={season.season_number}>

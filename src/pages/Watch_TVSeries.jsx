@@ -22,14 +22,6 @@ export default function WatchTVSeries() {
 
   const { sidebar } = useDataContext()
 
-//   useEffect(() => {
-//     if (data && data.original_name) {
-//       document.title = `Series | ${data.original_name}`
-//     } else if (!pathname.includes("TVSeries") || !pathname.includes("Movie")) {
-//       document.title = "Nukt"
-//     }
-//   }, [data, pathname])
-
   useEffect(() => {
     const servers = {
       Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
@@ -80,9 +72,9 @@ export default function WatchTVSeries() {
           >
             <div className="flex mx-24 justify-center gap-4">
               <EpisodeList id={id} Season={season} server={currentServer} />
-              <div className="text-white border border-[#6b13d7] flex flex-col w-fit rounded-md">
+              <div className="text-white border border-[#398FDD] flex flex-col w-fit rounded-md">
                 <div className="p-2 rounded-md">
-                  <h2 className="bg-[#6b13d7] rounded-md px-1 text-white w-full whitespace-nowrap">
+                  <h2 className="bg-[#398FDD] rounded-md px-1 text-white w-full whitespace-nowrap">
                     Server List
                   </h2>
                   <ul className="flex flex-col items-center" role="button">

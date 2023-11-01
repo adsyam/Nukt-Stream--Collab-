@@ -11,7 +11,7 @@ import MediaTypeButton from "./MediaTypeButton"
 
 function AiringTodayTV() {
   const { sidebar } = useDataContext()
-  const { data, isloading, mediaType, setMediaType, page, setPage, category } =
+  const { data, isloading, mediaType, setMediaType, pages, setPage, category } =
     useFetchTMDB("tv", 1, "airing_today")
 
   return (

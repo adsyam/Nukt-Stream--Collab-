@@ -10,6 +10,7 @@ import { loader_Cine } from "../assets/index"
 import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
 import { useDataContext } from "../context/DataContext"
 import GenreMap from "./GenreMap"
+import TrailerModal from "./TrailerModal"
 
 const Carousel = ({ mediaType }) => {
   const [data, setData] = useState([])
@@ -68,7 +69,7 @@ const Carousel = ({ mediaType }) => {
           }}
           modules={[Autoplay, EffectFade]}
           effect="fade"
-          className={`mySwiper h-[70vh] flex justify-center ${
+          className={`mySwiper h-[70vh] max-xxsm:h-[60vh] flex justify-center ${
             sidebar
               ? "translate-x-[15rem] origin-left duration-300"
               : "translate-x-0 origin-right duration-300"
@@ -98,7 +99,7 @@ const Carousel = ({ mediaType }) => {
                 />
                 <div className="absolute z-10 bottom-0 m-10 w-full">
                   <div className="flex flex-col gap-3 w-full">
-                    <p className="text-[68px] font-bold break-words w-[70%]">
+                    <p className="text-[68px] max-xsm:text-[48px] font-bold break-words w-[70%]">
                       {d.original_title || d.original_name}
                     </p>
                     <div>
@@ -136,6 +137,7 @@ const Carousel = ({ mediaType }) => {
                       <button className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold text-black">
                         WATCH TRAILER
                       </button>
+                      <TrailerModal />
                     </div>
                   </div>
                 </div>

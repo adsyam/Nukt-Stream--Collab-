@@ -10,7 +10,7 @@ export default function MediaTypeButton({ setMediaType, mediaType, category }) {
         whileTap={{ scale: 1.1 }}
         onClick={() => setMediaType("tv")}
         className={`${
-          mediaType === "tv" ? "bg-[#ffffff30] px-3 py-1 rounded-md" : null
+          mediaType === "tv" ? "bg-[#ffffff30] rounded-md" : null
         } px-3 py-1 rounded-md text-white`}
       >
         Series
@@ -22,7 +22,7 @@ export default function MediaTypeButton({ setMediaType, mediaType, category }) {
           whileTap={{ scale: 1.1 }}
           onClick={() => setMediaType("movie")}
           className={`${
-            mediaType === "movie" ? "bg-[#ffffff30] px-3 py-1 rounded-md" : null
+            mediaType === "movie" ? "bg-[#ffffff30] rounded-md" : null
           } px-3 py-1 rounded-md text-white`}
         >
           Movie
@@ -38,7 +38,7 @@ export default function MediaTypeButton({ setMediaType, mediaType, category }) {
           whileTap={{ scale: 1.1 }}
           onClick={() => setMediaType("video")}
           className={`${
-            mediaType === "video" ? "bg-[#ffffff30] px-3 py-1 rounded-md" : null
+            mediaType === "video" ? "bg-[#ffffff30] rounded-md" : null
           } px-3 py-1 rounded-md text-white`}
         >
           Video
