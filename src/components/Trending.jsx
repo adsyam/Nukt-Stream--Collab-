@@ -43,7 +43,7 @@ const Trending = () => {
                   setMediaType={setMediaType}
                   mediaType={mediaType}
                 />
-                <Link className="flex items-center gap-1" to={`/home/trending`}>
+                <Link className="flex items-center gap-1" to={`/home/trending/1`}>
                   <p>See all </p>
                   <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
                 </Link>

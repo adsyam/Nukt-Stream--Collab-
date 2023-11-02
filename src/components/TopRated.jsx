@@ -40,7 +40,7 @@ const TopRated = () => {
                   setMediaType={setMediaType}
                   mediaType={mediaType}
                 />
-                <Link className="flex items-center gap-1" to={`/home/toprated`}>
+                <Link className="flex items-center gap-1" to={`/home/toprated/1`}>
                   <p>See all </p>
                   <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
                 </Link>
