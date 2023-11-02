@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive"
 
 export default function useResponsive() {
   const [maxCards, setMaxCards] = useState()
-  const screen = useMediaQuery({ maxWidth: 406 })
+  const screen = useMediaQuery({ maxWidth: 425 })
   const xxsm = useMediaQuery({ minWidth: 370, maxWidth: 509 })
   const xsm = useMediaQuery({ minWidth: 510, maxWidth: 640 })
   const sm = useMediaQuery({ minWidth: 640, maxWidth: 768 })
