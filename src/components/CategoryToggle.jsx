@@ -10,15 +10,15 @@ export default function CategoryToggle() {
 
   function categoryToggle() {
       if (pathname.includes("popular")) {
-        navigate("/home/trending")
+        navigate("/home/trending/1")
       } else if (pathname.includes("trending")) {
-        navigate("/home/toprated")
+        navigate("/home/toprated/1")
       } else if (pathname.includes("toprated")) {
-        navigate("/home/popular")
+        navigate("/home/popular/1")
       } else if (pathname.includes("airingtoday")) {
-        navigate("/home/airingtoday")
+        navigate("/home/airingtoday/1")
       } else if (pathname.includes("intheatre")) {
-        navigate("/home/intheatre")
+        navigate("/home/intheatre/1")
       }
   }
 

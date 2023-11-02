@@ -22,11 +22,19 @@ export default function useFetchTMDB(
         let response
         if (pathname.includes("trending")) {
           response = await axios.get(
-            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${pages}`
+            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${
+              page === null ? pages : page
+            }`
           )
         } else {
           response = await axios.get(
-            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${pages}`
+            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${
+              pathname.includes("home") &&
+              !pathname.includes("/home/popular") &&
+              !pathname.includes("/home/toprated")
+                ? pages
+                : page
+            }`
           )
         }
 
@@ -41,15 +49,16 @@ export default function useFetchTMDB(
     }
 
     fetchData()
-  }, [category, mediaType, page, pathname])
+  }, [category, mediaType, page, pages, pathname])
   return {
     data,
     isloading,
     mediaType,
     setMediaType,
-    page,
+    pages,
     setPage,
     category,
     pathname,
+    page,
   }
 }

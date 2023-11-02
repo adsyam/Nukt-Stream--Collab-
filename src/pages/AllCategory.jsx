@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router"
+import { useLocation, useParams } from "react-router"
 import useFetchTMDB from "../Hooks/useFetchTMDB"
 import useResponsive from "../Hooks/useResponsive"
 import { loader_Geometric } from "../assets"
@@ -21,7 +21,7 @@ export default function AllCategory() {
   const { sidebar } = useDataContext()
   const { responsiveGridCard } = useResponsive()
 
-  const { data, mediaType, setMediaType, isloading, page, setPage, category } =
+  const { data, mediaType, setMediaType, isloading, pages, page, setPage, category } =
     useFetchTMDB("tv", 1, changeCategory)
 
   useEffect(() => {
@@ -53,7 +53,6 @@ export default function AllCategory() {
             <CategoryToggle category={category} />
           </div>
           <MediaTypeButton mediaType={mediaType} setMediaType={setMediaType} />
-        <PagingButton data={data} page={page} setPage={setPage} />
         </div>
         <div className={responsiveGridCard}>
           {!isloading
@@ -89,7 +88,12 @@ export default function AllCategory() {
         </div>
         {isloading ? null : (
           <div className="flex justify-center mt-12">
-            <PagingButton data={data} page={page} setPage={setPage} />
+            <PagingButton
+              data={data}
+              pages={pages}
+              page={page}
+              setPage={setPage}
+            />
           </div>
         )}
       </div>

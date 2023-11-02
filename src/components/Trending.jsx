@@ -60,7 +60,7 @@ const Trending = () => {
                   />
                 </div>
               </div>
-              <Link className="flex items-center gap-1" to={`/home/trending`}>
+              <Link className="flex items-center gap-1" to={`/home/trending/1`}>
                 <p>See all </p>
                 <FontAwesomeIcon icon={faAngleRight} className="text-sm" />
               </Link>
@@ -87,7 +87,7 @@ const Trending = () => {
                   ))
               : data
                   .filter((d) => d.poster_path && d.backdrop_path)
-                  .slice(0, 16)
+                  .slice(0, maxCards)
                   .map((d, index) => (
                     <Player
                       autoplay

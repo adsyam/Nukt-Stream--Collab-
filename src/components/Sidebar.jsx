@@ -3,7 +3,8 @@ import { SidebarMenu, DropdownBtn } from "./Buttons";
 import { useLocation } from "react-router-dom";
 
 export const Sidebar = ({ showSidebar }) => {
-  const location = useLocation().pathname;
+  const location = useLocation()
+  const pathname = location.pathname
 
   return (
     <aside
@@ -16,12 +17,12 @@ export const Sidebar = ({ showSidebar }) => {
       {sidebarMenus1
         .filter((item) => {
           if (
-            location === "/home" &&
+            pathname === "/home" &&
             ["latest", "popular", "ongoing"].includes(item.name)
           ) {
             return false
           } else if (
-            location === "/search" &&
+            pathname === "/search" &&
             ["videos", "movies", "TV"].includes(item.name)
           ) {
             return false

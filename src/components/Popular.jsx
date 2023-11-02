@@ -13,7 +13,7 @@ import MediaTypeButton from "./MediaTypeButton"
 const Popular = () => {
   const { maxCards, responsiveGridCard, screen } = useResponsive()
   const { sidebar } = useDataContext()
-  const { data, isloading, mediaType, setMediaType, pages, setPage } =
+  const { data, isloading, mediaType, setMediaType } =
     useFetchTMDB("tv", 1, "popular")
 
   return (
@@ -87,7 +87,7 @@ const Popular = () => {
                   ))
               : data
                   .filter((d) => d.poster_path && d.backdrop_path)
-                  .slice(0, 16)
+                  .slice(0, maxCards)
                   .map((d, index) => (
                     <Player
                       autoplay
