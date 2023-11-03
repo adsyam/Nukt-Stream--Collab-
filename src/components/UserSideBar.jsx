@@ -14,7 +14,7 @@ export const UserSidebar = ({ showUserSidebar }) => {
 
   return (
     <aside
-      className={`absolute top-[4rem] right-[2rem] w-[300px]  bg-[#0A0E1790] p-[1rem]
+      className={`absolute top-[4rem] right-[2rem] w-[300px]  bg-[#7300FF10] p-[1rem]
     rounded-md shadow-sm border-2 border-[#ffffff30] shadow-white ${
       showUserSidebar
         ? "origin-top-right scale-1 duration-300 ease-in-out"
@@ -40,7 +40,7 @@ export const UserSidebar = ({ showUserSidebar }) => {
               <button
                 key={index}
                 onClick={item.name === "sign out" ? logout : toggleModal}
-                className="uppercase hover:text-[#389FDD] hover:font-bold text-start"
+                className="uppercase hover:text-[#7300FF] hover:font-bold text-start"
               >
                 {item.name}
               </button>
@@ -50,7 +50,7 @@ export const UserSidebar = ({ showUserSidebar }) => {
                 to={
                   item.name === "my profile" ? `/profile/${user.uid}` : item.url
                 }
-                className="uppercase hover:text-[#389FDD] hover:font-bold"
+                className="uppercase hover:text-[#7300FF] hover:font-bold"
               >
                 {item.name}
               </Link>

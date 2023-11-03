@@ -15,18 +15,19 @@ export const Plans = () => {
       <p className="text-center text-[1rem] mb-[2rem]">
         Begin with a Basic Account or kick off your membership with a
         complimentary{" "}
-        <span className="text-[#389FDD] font-semibold">7-day trial</span>.
+        <span className="text-[#7300FF] font-semibold">7-day trial</span>.
       </p>
       <div className="flex flex-col md:flex-row justify-center items-center gap-[1rem]">
         {planPrices.map((item, index) => (
-          <motion.div whileHover={{scale: 1.05}}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
             onClick={() => setSelectedPlan(item.id)}
             key={index}
             className={`flex-1 min-w-[300px] lg:max-w-[300px] min-h-[375px]
             flex flex-col justify-between px-[1.5rem] pb-[1.5rem]
             ${
-              selectedPlan === item.id ? "border-[#389FDD]" : ""
-            } border-2 rounded-md cursor-pointer hover:border-[#389Fdd]`}
+              selectedPlan === item.id ? "border-[#7300FF]" : ""
+            } border-2 rounded-md cursor-pointer hover:border-[#7300FF]`}
           >
             <div>
               <h3 className="pt-5 pb-1 text-[2rem] text-center font-medium uppercase mb-[1rem]">
@@ -53,7 +54,7 @@ export const Plans = () => {
             <Link
               to={location === "/" ? "/signup" : item.checkoutUrl}
               className="uppercase border-2 w-max mx-auto px-[1rem] py-[.7rem] rounded-md
-              hover:bg-[#389FDD] hover:border-[#389FDD] transition-all duration-300"
+              hover:bg-[#7300FF] hover:border-[#7300FF] transition-all duration-300"
             >
               {location === "/" ? "proceed sign up" : "proceed checkout"}
             </Link>

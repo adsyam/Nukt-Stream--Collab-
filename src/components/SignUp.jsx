@@ -217,7 +217,7 @@ export const SignUp = () => {
           </button>
           <p>
             Already have an account?{" "}
-            <Link to="/login" className="underline text-[#389FDD]">
+            <Link to="/login" className="underline text-[#7300FF]">
               Sign in
             </Link>{" "}
             now

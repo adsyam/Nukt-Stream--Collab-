@@ -85,7 +85,7 @@ export default function SearchPage() {
             </div>
             <p className="text-white text-center font-bold">
               Showing results for{" "}
-              <span className="text-[#398FDD]">&quot;{searchParams}&quot;</span>
+              <span className="text-[#7300FF]">&quot;{searchParams}&quot;</span>
             </p>
             <section className="mb-12 ">
               <h2 className="mx-12">Movie</h2>
@@ -141,5 +141,5 @@ export default function SearchPage() {
         </div>
       )}
     </>
-  );
+  )
 }

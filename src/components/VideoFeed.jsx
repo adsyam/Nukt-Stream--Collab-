@@ -30,7 +30,7 @@ export const VideoFeed = () => {
             className="text-white pb-[3rem]"
           >
             <div className="flex justify-between items-center mb-2">
-              <p className="text-xl md:text-2xl text-[#00ffff] font-medium capitalize">
+              <p className="text-xl md:text-2xl text-[#7300FF] font-medium capitalize">
                 {item.name}
                 <span className="text-white"> videos</span>
               </p>
@@ -50,5 +50,5 @@ export const VideoFeed = () => {
         ))}
       </div>
     </motion.section>
-  );
+  )
 };

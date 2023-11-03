@@ -44,7 +44,7 @@ export const Footer = () => {
                 {FooterLinks1.map((item, index) => (
                   <li
                     key={index}
-                    className="capitalize text-[1.2rem] hover:text-[#389FDD]"
+                    className="capitalize text-[1.2rem] hover:text-[#7300FF]"
                   >
                     <Link>{item.name}</Link>
                   </li>
@@ -54,7 +54,7 @@ export const Footer = () => {
                 {FooterLinks2.map((item, index) => (
                   <li
                     key={index}
-                    className="capitalize text-[1.2rem] hover:text-[#389FDD]"
+                    className="capitalize text-[1.2rem] hover:text-[#7300FF]"
                   >
                     <Link>{item.name}</Link>
                   </li>
@@ -71,7 +71,7 @@ export const Footer = () => {
                 </h2>
                 <ul className="flex gap-4 items-center">
                   <li>
-                    <Link className="hover:text-[#389FDD] hover:scale-[1.5]">
+                    <Link className="hover:text-[#7300FF] hover:scale-[1.5]">
                       <FontAwesomeIcon
                         icon={faInstagram}
                         className="text-[30px]"
@@ -79,7 +79,7 @@ export const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#389FDD]">
+                    <Link className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faTiktok}
                         className="text-[30px]"
@@ -87,7 +87,7 @@ export const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#389FDD]">
+                    <Link className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faFacebook}
                         className="text-[30px]"
@@ -95,7 +95,7 @@ export const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#389FDD]">
+                    <Link className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faXTwitter}
                         className="text-[30px]"
@@ -104,10 +104,10 @@ export const Footer = () => {
                   </li>
                 </ul>
                 <div className="flex flex-col items-center underline">
-                  <Link className="hover:text-[#389FDD]">
+                  <Link className="hover:text-[#7300FF]">
                     yambaoadrianne@gmail.com
                   </Link>
-                  <Link className="hover:text-[#389FDD]">
+                  <Link className="hover:text-[#7300FF]">
                     danemaas16@gmail.com
                   </Link>
                 </div>
@@ -137,7 +137,7 @@ export const Footer = () => {
       )}
 
       <section className="text-center">
-        <span className="text-[#389FDD] font-bold">Nukt</span> © Copyright-2023
+        <span className="text-[#7300FF] font-bold">Nukt</span> © Copyright-2023
         All Rights Reserved.
       </section>
     </footer>

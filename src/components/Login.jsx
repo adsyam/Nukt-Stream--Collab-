@@ -131,7 +131,7 @@ export const Login = () => {
             </div>
             <Link
               to="/login/forgot-password"
-              className="text-[.8rem] underline text-[#389FDD]"
+              className="text-[.8rem] underline text-[#b4afbb]"
             >
               forgot password?
             </Link>
@@ -163,7 +163,7 @@ export const Login = () => {
           </button>
           <p>
             New in Nukt?{" "}
-            <Link to="/signup" className="underline text-[#389FDD]">
+            <Link to="/signup" className="underline text-[#7300FF]">
               Sign up
             </Link>{" "}
             now

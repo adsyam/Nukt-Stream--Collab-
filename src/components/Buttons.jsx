@@ -1,12 +1,12 @@
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useDataContext } from "../context/DataContext";
-import { useAuthContext } from "../context/AuthContext";
+import { MdKeyboardArrowDown } from "react-icons/md"
+import { Link } from "react-router-dom"
+import { useAuthContext } from "../context/AuthContext"
+import { useDataContext } from "../context/DataContext"
 
 //create side bar buttons
 export const SidebarMenu = ({ name, icon, url, index }) => {
-  const { modal, setModal } = useDataContext();
-  const { user } = useAuthContext();
+  const { modal, setModal } = useDataContext()
+  const { user } = useAuthContext()
 
   return (
     <>
@@ -18,7 +18,7 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
           className={`font-fig basis-1 flex items-center justify-start
           cursor-pointer outline-none border-0 py-[.5rem] px-[.9rem]
           my-[.5rem] me-[1rem] rounded-full transition-all duration-300 ease-in-out group 
-          bg-transparent text-white hover:bg-[#398FDD]`}
+          bg-transparent text-white hover:bg-[#582d95]`}
           key={index}
         >
           <span className="me-[1rem] text-[1rem] md:text-[1.2rem]">{icon}</span>
@@ -36,12 +36,12 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
               ? url
               : name === "downloads" || name === "playlist"
               ? `profile/${user?.uid}/${url}`
-              : `${url}?q=${name}`
+              : `${url}`
           }
           className={`font-fig basis-1 flex items-center justify-start
           cursor-pointer outline-none border-0 py-[.5rem] px-[.9rem]
           my-[.5rem] me-[1rem] rounded-full transition-all duration-300 ease-in-out group 
-          bg-transparent text-white hover:bg-[#398FDD]`}
+          bg-transparent text-white hover:bg-[#582d95]`}
           key={index}
         >
           <span className="me-[1rem] text-[1rem] md:text-[1.2rem]">{icon}</span>
@@ -51,19 +51,19 @@ export const SidebarMenu = ({ name, icon, url, index }) => {
         </Link>
       )}
     </>
-  );
-};
+  )
+}
 
 //create the dropdown buttons
 export const DropdownBtn = ({ name, icon, list, index }) => {
-  const { handleDropDown, dropDown } = useDataContext();
+  const { handleDropDown, dropDown } = useDataContext()
 
   return (
     <>
       <button
         className={`font-fig flex items-center justify-between outline-none border-0
         py-[.5rem] px-[.9rem] my-[.5rem] me-[1rem] rounded-full transition-all 
-        duration-300 ease-in-out group bg-transparent text-white hover:bg-[#398FDD]`}
+        duration-300 ease-in-out group bg-transparent text-white hover:bg-[#7300FF]`}
         onClick={handleDropDown}
         key={index}
       >
@@ -84,7 +84,7 @@ export const DropdownBtn = ({ name, icon, list, index }) => {
               className={`w-[180px] font-fig basis-1 flex items-center justify-start gap-3
           cursor-pointer outline-none border-0 py-[.5rem] px-[.9rem]
           my-[.5rem] mx-[1rem] rounded-full transition-all duration-300 ease-in-out group 
-          bg-transparent text-white hover:bg-[#398FDD]`}
+          bg-transparent text-white hover:bg-[#582d95]`}
             >
               <span>{icon}</span>
               <span className="group-hover:text-black capitalize">
@@ -97,5 +97,5 @@ export const DropdownBtn = ({ name, icon, list, index }) => {
         ""
       )}
     </>
-  );
-};
+  )
+}

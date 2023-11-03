@@ -107,9 +107,7 @@ export default function MediaReviews({ id }) {
           placeholder="Write a review"
         />
       </div>
-      <div
-        className={`${!showReviews ? "" : "overflow-y-scroll h-[70vh]"}`}
-      >
+      <div className={`${!showReviews ? "" : "overflow-y-scroll h-[70vh]"}`}>
         {review.slice(0, showRest).map((r, index) => (
           <motion.div
             key={r.id}
@@ -134,7 +132,7 @@ export default function MediaReviews({ id }) {
                 <div className="flex flex-col">
                   <p className="font-bold text-xl">
                     A review by{" "}
-                    <span className="text-[#398FDD]">{r.author}</span>
+                    <span className="text-[#7300FF]">{r.author}</span>
                   </p>
                   <div className="flex items-center gap-2">
                     <p className="font-thin text-sm">
@@ -163,7 +161,7 @@ export default function MediaReviews({ id }) {
               <span
                 role="button"
                 onClick={() => toggleExpanded(r.id)}
-                className="text-[#398FDD] italic "
+                className="text-[#7300FF] italic "
               >
                 {expandedMap[r.id] ? (
                   <>
@@ -181,7 +179,11 @@ export default function MediaReviews({ id }) {
           </motion.div>
         ))}
       </div>
-      <button onClick={toggleShowAll} className="text-white" disabled={review.length <= 1}>
+      <button
+        onClick={toggleShowAll}
+        className="text-white"
+        disabled={review.length <= 1}
+      >
         {review.length !== 1
           ? review.length === 0
             ? "There are no reviews"

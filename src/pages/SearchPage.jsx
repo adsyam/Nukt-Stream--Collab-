@@ -25,11 +25,11 @@ export const SearchPage = () => {
         </div>
         <p className="text-white text-center font-bold">
           Showing results for{" "}
-          <span className="text-[#398FDD]">{searchParams}</span>
+          <span className="text-[#7300FF]">{searchParams}</span>
         </p>
         <VideoCategories catergoryName={searchParams} />
       </section>
       <Footer />
     </>
-  );
+  )
 };
