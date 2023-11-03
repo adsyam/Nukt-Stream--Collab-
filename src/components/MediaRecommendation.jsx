@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import { Link } from "react-router-dom"
+import useResponsive from "../Hooks/useResponsive"
 import { loader_Geometric } from "../assets"
 import { TOKEN_AUTH } from "../constants/apiConfig"
 
@@ -13,6 +14,7 @@ export default function MediaRecommendation({ id }) {
   const [path, setPath] = useState()
   const location = useLocation()
   const pathname = location.pathname
+  const { responsiveGridCard } = useResponsive()
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
@@ -53,11 +55,11 @@ export default function MediaRecommendation({ id }) {
   }, [id, path])
 
   return (
-    <div className="text-white mx-20 py-12">
-      <h1 className="mx-12 text-2xl mb-1 font-medium">
+    <div className="text-white mx-24 max-lg:mx-20 max-sm:mx-12 py-12">
+      <h1 className=" text-2xl mb-1 font-medium">
         Recommended {path === "tv" ? "Series" : "Movies"}
       </h1>
-      <div className="grid grid-cols-8 mx-12 gap-4">
+      <div className={`grid grid-cols-8 gap-4`}>
         {!loading
           ? recommend
               .filter((rec) => rec.poster_path && rec.backdrop_path)
@@ -83,7 +85,6 @@ export default function MediaRecommendation({ id }) {
                         alt={`${
                           rec.original_title || rec.original_name
                         } backdrop`}
-                        width={215}
                         className="rounded-[5px] w-fit border-transparent box-border border-white relative"
                       />
                       <motion.div
