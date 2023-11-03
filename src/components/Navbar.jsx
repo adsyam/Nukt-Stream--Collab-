@@ -1,22 +1,27 @@
 //import link
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 //import components
 // import logo and icons
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect } from "react"
-import { AiFillBell } from "react-icons/ai"
-import useFetchDetails from "../Hooks/useFetchDetails"
-import { nukt_logo } from "../assets"
-import { useAuthContext } from "../context/AuthContext"
-import { useDataContext } from "../context/DataContext"
-import { FeedbackModal } from "./FeedbackModal"
-import { Searchbar } from "./SearchBar"
-import { Sidebar } from "./Sidebar"
-import { UserSidebar } from "./UserSideBar"
+import {
+  faBars,
+  faMagnifyingGlass,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AiFillBell } from "react-icons/ai";
+import useFetchDetails from "../Hooks/useFetchDetails";
+import { nukt_logo } from "../assets";
+import { useAuthContext } from "../context/AuthContext";
+import { useDataContext } from "../context/DataContext";
+import { FeedbackModal } from "./FeedbackModal";
+import { Searchbar } from "./SearchBar";
+import { Sidebar } from "./Sidebar";
+import { UserSidebar } from "./UserSideBar";
 
 export const Navbar = () => {
-  const { data, pathname } = useFetchDetails()
+  const { data, pathname } = useFetchDetails();
   const {
     showSidebar,
     sidebar,
@@ -24,8 +29,11 @@ export const Navbar = () => {
     showUserSidebar,
     isActive,
     modal,
-  } = useDataContext()
-  const { user } = useAuthContext()
+  } = useDataContext();
+  const { user } = useAuthContext();
+  const [searchMobile, setSearchMobile] = useState(false);
+  const [showSearchbar, setShowSearchbar] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     if (
@@ -37,26 +45,47 @@ export const Navbar = () => {
         pathname.includes("home/toprated")
       )
     ) {
-      document.title = "Nukt"
-      return
+      document.title = "Nukt";
+      return;
     }
 
     if (!(data && (data.original_name || data.original_title))) {
-      return
+      return;
     }
 
     if (pathname.includes("Movie")) {
-      document.title = `Movie | ${data.original_title}`
+      document.title = `Movie | ${data.original_title}`;
     } else if (pathname.includes("TVSeries")) {
-      document.title = `Series | ${data.original_name}`
+      document.title = `Series | ${data.original_name}`;
     } else if (pathname.includes("/home/popular")) {
-      document.title = `meow`
+      document.title = `meow`;
     } else if (pathname.includes("/home/trending")) {
-      document.title = `Series | ${data.original_name}`
+      document.title = `Series | ${data.original_name}`;
     } else if (pathname.includes("/home/toprated")) {
-      document.title = `Series | ${data.original_name}`
+      document.title = `Series | ${data.original_name}`;
     }
-  }, [data, pathname])
+  }, [data, pathname]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+      if (screenWidth < 640) {
+        setSearchMobile(true);
+      } else {
+        setSearchMobile(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenWidth]);
+
+  const onClose = () => {
+    setShowSearchbar(!showSearchbar);
+  };
 
   return (
     <>
@@ -86,12 +115,22 @@ export const Navbar = () => {
               />
             )}
           </button>
-          <Link to={"/home"} className="flex items-center gap-2">
-            <img src={nukt_logo} alt="" width={35} height={41} />
-            <p className="text-white font-bold">Nukt</p>
-          </Link>
+          {!showSearchbar && (
+            <Link to={"/home"} className="w-max flex items-center gap-2">
+              <img src={nukt_logo} alt="" width={35} height={41} />
+              <p className="text-white font-bold hidden md:block">Nukt</p>
+            </Link>
+          )}
         </div>
-        {!user ? "" : <Searchbar />}
+        {!user ? (
+          ""
+        ) : (
+          <Searchbar
+            searchMobile={searchMobile}
+            showSearchbar={showSearchbar}
+            onClose={onClose}
+          />
+        )}
         <div className="flex items-center gap-2">
           {user === null ? (
             <Link to="/login" className="bg-black/50 rounded-md p-[.5rem]">
@@ -99,7 +138,21 @@ export const Navbar = () => {
             </Link>
           ) : (
             <>
-              <AiFillBell size={30} />
+              {screenWidth < 640 && (
+                <motion.div
+                  whileHover={{ scale: 1.15 }}
+                  className={`${
+                    showSearchbar ? "hidden" : "block"
+                  } cursor-pointer`}
+                >
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className="w-[22px] h-[22px]"
+                    onClick={() => setShowSearchbar(!showSearchbar)}
+                  />
+                </motion.div>
+              )}
+              {!showSearchbar && <AiFillBell size={30} />}
               <button
                 onClick={showUserSidebar}
                 className="bg-black/50 rounded-full border-[1px]"
@@ -120,5 +173,5 @@ export const Navbar = () => {
       <Sidebar showSidebar={sidebar} />
       <FeedbackModal active={modal} />
     </>
-  )
-}
+  );
+};
