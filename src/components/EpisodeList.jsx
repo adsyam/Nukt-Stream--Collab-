@@ -1,86 +1,34 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { API_KEY } from "../constants/apiConfig"
+import { motion } from "framer-motion"
+import { Link, useParams } from "react-router-dom"
+import useFetchDetails from "../Hooks/useFetchDetails"
 
-export default function EpisodeList({ id, Season }) {
-  const [data, setData] = useState({})
-  const defSeason = Season > 1 ? Season : "1"
-  const [selectedSeason, setSelectedSeason] = useState(defSeason)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/tv/${id}`,
-          {
-            params: {
-              api_key: API_KEY,
-              append_to_response: "season",
-            },
-          }
-        )
-
-        setData(response.data)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      }
-    }
-
-    fetchData()
-  }, [id])
+export default function EpisodeList() {
+  const { id, season, episode } = useParams()
+  const { data } = useFetchDetails()
 
   return (
-    <div className="text-white border border-[#398FDD] flex flex-col w-fit rounded-md">
-      {data.seasons ? (
-        <div className="p-2 rounded-md">
-          <select
-            onChange={(e) => setSelectedSeason(e.target.value)}
-            value={selectedSeason}
-            className="bg-[#398FDD] rounded-md px-1 text-white whitespace-nowrap"
-          >
-            {data.seasons.map((season) => (
-              <option key={season.id} value={season.season_number}>
-                Season {season.season_number}
-              </option>
-            ))}
-          </select>
-          {selectedSeason && (
-            <ul>
-              {data.seasons
-                .filter(
-                  (season) => season.season_number === Number(selectedSeason)
-                )
-                .map((season) => (
-                  <li key={season.id}>
-                    {season.episode_count > 0 && (
-                      <div style={{ maxHeight: "265px", overflowY: "auto" }}>
-                        <ul className="flex flex-col items-center whitespace-nowrap">
-                          {Array.from(
-                            { length: season.episode_count },
-                            (_, index) => (
-                              <Link
-                                to={`/TVSeries/${id}/${selectedSeason}/${
-                                  index + 1
-                                }`}
-                                key={index}
-                                className="px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]"
-                              >
-                                Episode {index + 1}
-                              </Link>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    )}
-                  </li>
-                ))}
-            </ul>
+    <div className="text-white mx-24 gap-4 grid grid-cols-20 w-fit whitespace-nowrap">
+      {data.seasons &&
+        data.seasons
+          .filter((ep) => ep.season_number === parseInt(season))
+          .map((ep, i) =>
+            parseInt(season) > ep.season_number ? (
+              <div key={i} className="text-white">
+                No episode available
+              </div>
+            ) : (
+              Array.from({ length: ep.episode_count }, (_, i) => (
+                <motion.div key={i} whileHover={{ scale: 1.05 }}>
+                  <Link
+                    to={`/TVSeries/${id}/${season}/${i + 1}`}
+                    className={`px-2 font-thin rounded-md hover:ring-[3px] ring-[#7300FF] ${
+                      parseInt(episode) === i + 1 ? "ring-[3px]" : ""
+                    }`}
+                  >{`EP ${i + 1}`}</Link>
+                </motion.div>
+              ))
+            )
           )}
-        </div>
-      ) : (
-        <p className="bg-black">Loading...</p>
-      )}
     </div>
   )
 }

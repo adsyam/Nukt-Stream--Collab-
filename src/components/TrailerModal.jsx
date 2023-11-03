@@ -11,11 +11,6 @@ export default function TrailerModal({ key, trailerKey, isOpen, onClose }) {
     visible: { opacity: 1, backdropFilter: "blur(2px)" },
   }
 
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 0.7 },
-  }
-
   const size = {
     height: "390",
     width: "640",
@@ -34,14 +29,14 @@ export default function TrailerModal({ key, trailerKey, isOpen, onClose }) {
           <span
             role="button"
             onClick={closeModal}
-            className="text-md border-2 border-[#398FDD] px-2 rounded-md  bg-gray-600/30"
+            className="text-md border-2 border-[#7300FF] px-2 rounded-md  bg-gray-600/30 overflow-hidden"
           >
             EXIT
           </span>
           <YouTube
             videoId={trailerKey}
             opts={size}
-            className="border-2 border-[#398FDD] rounded-md overflow-hidden"
+            className="border-2 border-[#7300FF90] rounded-md overflow-hidden"
           />
         </motion.div>
       )}

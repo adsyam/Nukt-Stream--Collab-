@@ -61,6 +61,7 @@ import { VideoFeed } from "./VideoFeed"
 import { VideosGrid } from "./VideosGrid"
 import { VideosLinear } from "./VideosLinear"
 import PagingButton from "./PagingButton"
+import SeasonCards from "./SeasonCards.jsx"
 
 export {
   AiringTodayTV,
@@ -126,4 +127,5 @@ export {
   VideosGrid,
   VideosLinear,
   PagingButton,
+  SeasonCards
 }

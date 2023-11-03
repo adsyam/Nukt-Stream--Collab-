@@ -6,6 +6,7 @@ import "swiper/css"
 import "swiper/css/effect-fade"
 import { Autoplay, EffectFade } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
+import useFetchTrailer from "../Hooks/useFetchTrailer"
 import { loader_Cine } from "../assets/index"
 import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
 import { useDataContext } from "../context/DataContext"
@@ -15,10 +16,13 @@ import TrailerModal from "./TrailerModal"
 const Carousel = ({ mediaType }) => {
   const [data, setData] = useState([])
   const [isloading, setIsLoading] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
+  const [getId, setGetId] = useState()
   const [url, setUrl] = useState(
     `${TMDB_BASE_URL}/trending/all/day?api_key=${API_KEY}`
   )
   const { sidebar } = useDataContext()
+  const { getTrailer } = useFetchTrailer(mediaType, getId)
 
   const location = useLocation()
   const pathname = location.pathname
@@ -131,13 +135,24 @@ const Carousel = ({ mediaType }) => {
                             : `/Movie/${d.id}`
                         }
                         scroll={true}
+                        onClick={() => setGetId(d.id)}
                       >
                         WATCH NOW
                       </Link>
-                      <button className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold text-black">
+                      <button
+                        className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold text-black"
+                        onClick={() => setIsOpen(true)}
+                      >
                         WATCH TRAILER
                       </button>
-                      <TrailerModal />
+                      {getTrailer.map((res, i) => (
+                        <TrailerModal
+                          key={i}
+                          trailerKey={res.key}
+                          isOpen={isOpen}
+                          onClose={() => setIsOpen(false)}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>

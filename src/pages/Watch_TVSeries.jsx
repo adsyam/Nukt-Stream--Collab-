@@ -2,6 +2,8 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
 import { loader_Geometric } from "../assets"
 
+import { motion } from "framer-motion"
+import useFetchDetails from "../Hooks/useFetchDetails"
 import {
   EpisodeList,
   Footer,
@@ -9,9 +11,9 @@ import {
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
+  SeasonCards,
 } from "../components"
 import { useDataContext } from "../context/DataContext"
-import useFetchDetails from "../Hooks/useFetchDetails"
 
 export default function WatchTVSeries() {
   const { id, season, episode, isLoading, setIsLoading, pathname, data } =
@@ -21,6 +23,14 @@ export default function WatchTVSeries() {
   const [currentServer, setCurrentServer] = useState()
 
   const { sidebar } = useDataContext()
+
+  const serverLength = [
+    "Server 1",
+    "Server 2",
+    "Server 3",
+    "Server 4",
+    "Server 5",
+  ]
 
   useEffect(() => {
     const servers = {
@@ -70,53 +80,30 @@ export default function WatchTVSeries() {
                 : "w-full origin-right duration-300"
             }`}
           >
-            <div className="flex mx-24 justify-center gap-4">
-              <EpisodeList id={id} Season={season} server={currentServer} />
-              <div className="text-white border border-[#398FDD] flex flex-col w-fit rounded-md">
-                <div className="p-2 rounded-md">
-                  <h2 className="bg-[#398FDD] rounded-md px-1 text-white w-full whitespace-nowrap">
-                    Server List
-                  </h2>
-                  <ul className="flex flex-col items-center" role="button">
-                    <li
-                      onClick={() => setServer("Server1")}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
-                    >
-                      Server 1
-                    </li>
-                    <li
-                      onClick={() => setServer("Server2")}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
-                    >
-                      Server 2
-                    </li>
-                    <li
-                      onClick={() => setServer("Server3")}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
-                    >
-                      Server 3
-                    </li>
-                    <li
-                      onClick={() => setServer("Server4")}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
-                    >
-                      Server 4
-                    </li>
-                    <li
-                      onClick={() => setServer("Server5")}
-                      className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20]`}
-                    >
-                      Server 5
-                    </li>
-                  </ul>
-                </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex mx-24 justify-center gap-4">
+                <MediaDetails
+                  id={id}
+                  Season={season}
+                  Episode={episode}
+                  mediaType={mediaType}
+                />
               </div>
-              <MediaDetails
-                id={id}
-                Season={season}
-                Episode={episode}
-                path={mediaType}
-              />
+              <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap mx-24">
+                {Array.from(serverLength).map((server, i) => (
+                  <motion.li
+                    whileHover={{ scale: 1.05 }}
+                    role="button"
+                    key={i}
+                    onClick={() => setServer(`Server${i + 1}`)}
+                    className="border-2 px-2 rounded-md"
+                  >
+                    {server}
+                  </motion.li>
+                ))}
+              </ul>
+              <EpisodeList />
+              <SeasonCards id={id} />
             </div>
             <MediaRecommendation id={id} />
             <MediaReviews id={id} />

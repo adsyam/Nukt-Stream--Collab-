@@ -59,7 +59,7 @@ export default function WatchMovie() {
           >
             <div className="flex mx-24 justify-center gap-4">
               <MediaDetails id={id} path={path} />
-              <div className="text-white border border-[#6b13d7] flex flex-col w-fit rounded-md">
+              <div className="text-white flex flex-col w-fit rounded-md">
                 <div className="p-2 rounded-md">
                   <h2 className="bg-[#6b13d7] rounded-md px-1 text-white w-full whitespace-nowrap">
                     Server List
