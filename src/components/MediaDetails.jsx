@@ -81,14 +81,14 @@ export default function MediaDetails({ Season, Episode, mediaType, id }) {
                     : null}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <h3>Production:</h3>
-                <ul className="flex gap-2">
+                <ul className="flex flex-wrap gap-2">
                   {data && data.production_companies
                     ? data.production_companies.map((pc) => (
                         <li
                           key={pc.id}
-                          className="rounded-md px-3 bg-[#ffffff10] flex flex-wrap"
+                          className="rounded-md px-3 bg-[#ffffff10] flex whitespace-nowrap"
                         >
                           {pc.name}
                         </li>

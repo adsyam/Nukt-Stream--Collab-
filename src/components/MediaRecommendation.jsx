@@ -54,34 +54,56 @@ export default function MediaRecommendation({ id }) {
 
   return (
     <div className="text-white mx-20 py-12">
-      <h1 className="mx-12 text-2xl mb-1 font-medium">Recommended {path === "tv" ? "Series" : "Movies"}</h1>
-      <div className="grid grid-cols-7 mx-12 gap-4">
+      <h1 className="mx-12 text-2xl mb-1 font-medium">
+        Recommended {path === "tv" ? "Series" : "Movies"}
+      </h1>
+      <div className="grid grid-cols-8 mx-12 gap-4">
         {!loading
           ? recommend
               .filter((rec) => rec.poster_path && rec.backdrop_path)
-              .slice(0, 14)
+              .slice(0, 16)
               .map((rec, index) => (
-                <Link key={index} to={path === "tv" ? `/TVSeries/${rec.id}/1/1` : `/Movie/${rec.id}`}>
+                <Link
+                  key={index}
+                  to={
+                    path === "tv"
+                      ? `/TVSeries/${rec.id}/1/1`
+                      : `/Movie/${rec.id}`
+                  }
+                >
                   <motion.div
                     variants={fadeInVariants}
                     initial="hidden"
                     animate="visible"
                     transition={{ delay: index * 0.07 }}
                   >
-                    <motion.img
-                      whileHover={{ scale: 1.05 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 10,
-                      }}
-                      src={`https://image.tmdb.org/t/p/original/${rec.poster_path}`}
-                      alt={`${
-                        rec.original_title || rec.original_name
-                      } backdrop`}
-                      width={215}
-                      className="rounded-[5px] w-fit border-transparent box-border border-white"
-                    />
+                    <motion.div whileHover={{ filter: "brightness(0.8)" }}>
+                      <motion.img
+                        src={`https://image.tmdb.org/t/p/original/${rec.poster_path}`}
+                        alt={`${
+                          rec.original_title || rec.original_name
+                        } backdrop`}
+                        width={215}
+                        className="rounded-[5px] w-fit border-transparent box-border border-white relative"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        className="absolute z-50 pt-1 ps-1 bottom-0 right-1 flex gap-1 justify-end items-end w-full h-full"
+                      >
+                        <div className="flex items-center gap-2 bg-[#7300FF30] border border-[#7300FF] px-2 rounded-md mb-1">
+                          <p className="text-[12px] font-normal ">
+                            {rec.vote_average.toFixed(1)}
+                          </p>
+                          <motion.img
+                            src="https://img.icons8.com/?size=512&id=12246&format=png"
+                            alt=""
+                            width={27}
+                            className="h-fit"
+                          />
+                        </div>
+                      </motion.div>
+                    </motion.div>
                     <div>
                       <p className="word-break text-[16px] font-normal truncate-text">
                         {rec.original_title || rec.original_name}
