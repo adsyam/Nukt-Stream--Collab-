@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router"
+import { useLocation } from "react-router"
 import useFetchTMDB from "../Hooks/useFetchTMDB"
 import useResponsive from "../Hooks/useResponsive"
 import { loader_Geometric } from "../assets"
@@ -8,10 +8,11 @@ import {
   Carousel,
   CategoryCard,
   CategoryToggle,
+  Footer,
+  MediaTypeButton,
   PagingButton,
 } from "../components"
-import { Footer } from "../components/Footer"
-import MediaTypeButton from "../components/MediaTypeButton"
+
 import { useDataContext } from "../context/DataContext"
 
 export default function AllCategory() {
@@ -21,8 +22,16 @@ export default function AllCategory() {
   const { sidebar } = useDataContext()
   const { responsiveGridCard } = useResponsive()
 
-  const { data, mediaType, setMediaType, isloading, pages, page, setPage, category } =
-    useFetchTMDB("tv", 1, changeCategory)
+  const {
+    data,
+    mediaType,
+    setMediaType,
+    isloading,
+    pages,
+    page,
+    setPage,
+    category,
+  } = useFetchTMDB("tv", 1, changeCategory)
 
   useEffect(() => {
     if (pathname.includes("home/popular")) {

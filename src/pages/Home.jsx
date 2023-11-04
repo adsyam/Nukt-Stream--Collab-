@@ -1,5 +1,4 @@
 import {
-//   AiringTodayTV,
   Carousel,
   Footer,
   Popular,
@@ -15,7 +14,6 @@ export default function Home() {
     <div className="overflow-x-hidden">
       <Carousel />
       <div>
-        {/* <AiringTodayTV /> */}
         <Popular />
         <Trending />
         <TopRated />

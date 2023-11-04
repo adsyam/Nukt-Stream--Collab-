@@ -1,23 +1,22 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { loader_Geometric } from "../assets";
-import { SearchMovie, SearchTVSeries } from "../components";
-import { VideoCategories } from "../components/index";
-import { TOKEN_AUTH } from "../constants/apiConfig";
-import { searchFilters } from "../utils/index";
-import { useDataContext } from "../context/DataContext";
+import { Player } from "@lottiefiles/react-lottie-player"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
+import { loader_Geometric } from "../assets"
+import { SearchMovie, SearchSeries, VideoCategories } from "../components"
+import { TOKEN_AUTH } from "../constants/apiConfig"
+import { useDataContext } from "../context/DataContext"
+import { searchFilters } from "../utils/index"
 
-export default function SearchPage() {
-  const { query } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [movieData, setMovieData] = useState([]);
-  const [tvData, setTvData] = useState([]);
-  const [animationKey, setAnimationKey] = useState(0);
-  const [filter, setFilter] = useState("");
-  const searchParams = new URLSearchParams(window.location.search).get("q");
-  const { sidebar } = useDataContext();
+export default function SearchMedia() {
+  const { query } = useParams()
+  const [loading, setLoading] = useState(true)
+  const [movieData, setMovieData] = useState([])
+  const [tvData, setTvData] = useState([])
+  const [animationKey, setAnimationKey] = useState(0)
+  const [filter, setFilter] = useState("")
+  const searchParams = new URLSearchParams(window.location.search).get("q")
+  const { sidebar } = useDataContext()
 
   useEffect(() => {
     const options = {
@@ -33,30 +32,30 @@ export default function SearchPage() {
         accept: "application/json",
         Authorization: TOKEN_AUTH,
       },
-    };
+    }
 
     axios
       .request(options)
       .then(function (response) {
         setMovieData(
           response.data.results.filter((md) => md.media_type === "movie")
-        );
-        setTvData(response.data.results.filter((md) => md.media_type === "tv"));
-        setAnimationKey((prevKey) => prevKey + 1);
+        )
+        setTvData(response.data.results.filter((md) => md.media_type === "tv"))
+        setAnimationKey((prevKey) => prevKey + 1)
         setTimeout(() => {
-          setLoading(false);
-        }, 1300);
+          setLoading(false)
+        }, 1300)
       })
       .catch(function (error) {
-        console.error(error);
-        setLoading(false);
-      });
-  }, [searchParams]);
+        console.error(error)
+        setLoading(false)
+      })
+  }, [searchParams])
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  };
+  }
 
   return (
     <>
@@ -113,7 +112,7 @@ export default function SearchPage() {
                 {tvData
                   .filter((tv) => tv.poster_path && tv.backdrop_path)
                   .map((tv, index) => (
-                    <SearchTVSeries
+                    <SearchSeries
                       key={index}
                       tvID={tv.id}
                       index={index}

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { VideoCategories, Footer } from "../components/index";
-import { searchFilters } from "../utils/index";
+import { useState } from "react"
+import { Footer, VideoCategories } from "../components"
+import { searchFilters } from "../utils/index"
 
-export const SearchPage = () => {
-  const [filter, setFilter] = useState("");
-  const searchParams = new URLSearchParams(window.location.search).get("q");
+export default function SearchPage() {
+  const [filter, setFilter] = useState("")
+  const searchParams = new URLSearchParams(window.location.search).get("q")
 
   return (
     <>
@@ -32,4 +32,4 @@ export const SearchPage = () => {
       <Footer />
     </>
   )
-};
+}
