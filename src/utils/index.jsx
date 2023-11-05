@@ -78,7 +78,7 @@ export const sidebarMenus1 = [
   { name: "library", icon: <MdOutlineVideoLibrary />, url: "/feed/library" },
   { name: "history", icon: <AiOutlineHistory />, url: "/feed/history" },
   { name: "downloads", icon: <BiDownload />, url: "downloads" },
-  { name: "playlist", icon: <MdPlaylistPlay />, url: "/" },
+  { name: "playlist", icon: <MdPlaylistPlay />, url: "playlist" },
   { name: "settings", icon: <AiOutlineSetting />, url: "/" },
   { name: "report", icon: <MdReportGmailerrorred />, url: "/report" },
   { name: "help", icon: <BiHelpCircle />, url: "/" },
