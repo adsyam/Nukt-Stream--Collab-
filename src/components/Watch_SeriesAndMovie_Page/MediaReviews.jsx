@@ -122,11 +122,9 @@ export default function MediaReviews({ id }) {
                   width={45}
                   height={45}
                   className="rounded-full"
-                  src={
-                    r.author_details.avatar_path === null
-                      ? `${userData}`
-                      : `https://secure.gravatar.com/avatar/${r.author_details.avatar_path}`
-                  }
+                  src={`https://xsgames.co/randomusers/assets/avatars/pixel/${
+                    index + 1
+                  }.jpg`}
                 />
                 <div className="flex flex-col">
                   <p className="font-bold text-xl">
