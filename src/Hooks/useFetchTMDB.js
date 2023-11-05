@@ -26,14 +26,20 @@ export default function useFetchTMDB(
               page === null ? pages : page
             }`
           )
+        } else if (pathname.includes("home/latest")) {
+          if (mediaType === "tv") {
+            response = await axios.get(
+              `${TMDB_BASE_URL}/tv/airing_today?api_key=${API_KEY}&page=${page}`
+            )
+          } else if (mediaType === "movie") {
+            response = await axios.get(
+              `${TMDB_BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}`
+            )
+          }
         } else {
           response = await axios.get(
             `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${
-              pathname.includes("home") &&
-              !pathname.includes("/home/popular") &&
-              !pathname.includes("/home/toprated")
-                ? pages
-                : page
+              pathname.includes(page) ? page : 1
             }`
           )
         }

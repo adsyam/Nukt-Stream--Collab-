@@ -35,7 +35,7 @@ export default function History() {
   //clear the data of localStorage
   const handleClear = () => {
     window.localStorage.clear();
-    setReload((prev) => true); //update reload value to rerender the component
+    setReload(true); //update reload value to rerender the component
   };
 
   const handleDelete = (key) => {

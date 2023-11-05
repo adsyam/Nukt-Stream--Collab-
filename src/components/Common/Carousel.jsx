@@ -32,6 +32,8 @@ export default function Carousel({ mediaType }) {
       url1: `${TMDB_BASE_URL}/trending/all/day?api_key=${API_KEY}`,
       url2: `${TMDB_BASE_URL}/${mediaType}/popular?api_key=${API_KEY}&page=1`,
       url3: `${TMDB_BASE_URL}/${mediaType}/top_rated?api_key=${API_KEY}&page=1`,
+      url4: `${TMDB_BASE_URL}/tv/airing_today?api_key=${API_KEY}&page=1`,
+      url5: `${TMDB_BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=1`,
     }
     if (pathname.includes("home/popular")) {
       setUrl(url.url2)
@@ -39,6 +41,9 @@ export default function Carousel({ mediaType }) {
       setUrl(url.url1)
     } else if (pathname.includes("home/toprated")) {
       setUrl(url.url3)
+    } else if (pathname.includes("home/latest")) {
+      if (mediaType === "tv") setUrl(url.url4)
+      else if (mediaType === "movie") setUrl(url.url5)
     } else {
       setUrl(url.url1)
     }
@@ -115,7 +120,8 @@ export default function Carousel({ mediaType }) {
                     <div className="flex gap-2 items-center">
                       {pathname.includes("popular") ||
                       pathname.includes("trending") ||
-                      pathname.includes("toprated") ? (
+                      pathname.includes("toprated") ||
+                      pathname.includes("latest") ? (
                         <p className="text-[18px] bg-[#DADADA40] py-1 px-2 rounded-[3px] font-medium">
                           {mediaType === "tv" ? "SERIES" : "MOVIE"}
                         </p>

@@ -40,7 +40,7 @@ export default function AllCategory() {
       setChangeCategory("trending")
     } else if (pathname.includes("home/toprated")) {
       setChangeCategory("top_rated")
-    } else if (pathname.includes("home/airingtoday")) {
+    } else if (pathname.includes("home/latest")) {
       setChangeCategory("airing_today")
     } else if (pathname.includes("home/intheatre")) {
       setChangeCategory("now_playing")

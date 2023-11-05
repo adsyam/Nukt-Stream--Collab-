@@ -12,7 +12,6 @@ export default function MediaReviews({ id }) {
   const [showReviews, setShowReviews] = useState(false)
   const [expandedMap, setExpandedMap] = useState({})
   const [showRest, setShowRest] = useState(1)
-  const [userData, setUserData] = useState(null)
   const [path, setPath] = useState()
 
   const location = useLocation()
@@ -63,27 +62,6 @@ export default function MediaReviews({ id }) {
         console.error(error)
       })
   }, [id, path])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (review.length > 0) {
-          const response = await fetch(
-            `https://xsgames.co/randomusers/assets/avatars/male/${review.index}`
-          )
-          if (response.ok) {
-            setUserData(response) // Assuming you want to store the first user data
-            console.log(response)
-          } else {
-            // Handle errors here
-          }
-        }
-      } catch (error) {
-        // Handle network or other errors
-      }
-    }
-    fetchData()
-  }, [review.index, review.length])
 
   const fadeInVariants = {
     hidden: { opacity: 0 },

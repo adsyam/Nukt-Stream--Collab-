@@ -136,7 +136,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "airingtoday/:page",
+            path: "latest/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -144,7 +144,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "intheatre/:page",
+            path: "cinema/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />

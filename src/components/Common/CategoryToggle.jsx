@@ -14,11 +14,11 @@ export default function CategoryToggle() {
       } else if (pathname.includes("trending")) {
         navigate("/home/toprated/1")
       } else if (pathname.includes("toprated")) {
+        navigate("/home/latest/1")
+      } else if (pathname.includes("latest")) {
         navigate("/home/popular/1")
-      } else if (pathname.includes("airingtoday")) {
-        navigate("/home/airingtoday/1")
-      } else if (pathname.includes("intheatre")) {
-        navigate("/home/intheatre/1")
+      } else if (pathname.includes("cinema")) {
+        navigate("/home/cinema/1")
       }
   }
 
@@ -38,10 +38,10 @@ export default function CategoryToggle() {
           ? "TRENDING"
           : pathname.includes("toprated")
           ? "TOP RATED"
-          : pathname.includes("airingtoday")
-          ? "AIRING TODAY"
-          : pathname.includes("intheatre")
-          ? "IN THEATRES"
+          : pathname.includes("latest")
+          ? "LATEST"
+          : pathname.includes("cinema")
+          ? "CINEMA"
           : null}
       </h2>
       <motion.button

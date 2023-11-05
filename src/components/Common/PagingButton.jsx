@@ -12,6 +12,7 @@ export default function PagingButton() {
     if (pathname.includes("popular")) setCategory("popular")
     if (pathname.includes("trending")) setCategory("trending")
     if (pathname.includes("toprated")) setCategory("toprated")
+    if (pathname.includes("latest")) setCategory("latest")
   }, [pathname])
 
   return (

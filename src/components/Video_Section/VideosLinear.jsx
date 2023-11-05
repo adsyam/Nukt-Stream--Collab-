@@ -53,7 +53,7 @@ export default function VideosLinear({ videos }) {
       {isLeftVisible && (
         <div
           className="absolute top-0 flex justify-start items-center
-          bg-gradient-to-r from-black/75 from-50% to-transparent w-24 h-full"
+          bg-gradient-to-r from-[#0d0d0d] from-50% to-transparent w-24 h-full"
         >
           <button
             className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
@@ -72,7 +72,7 @@ export default function VideosLinear({ videos }) {
       {isRightVisible && (
         <div
           className="absolute top-0 flex justify-end items-center right-0
-          bg-gradient-to-l from-black/75 from-50% to-transparent w-24 h-full"
+          bg-gradient-to-l from-[#0d0d0d] from-50% to-transparent w-24 h-full"
         >
           <button
             className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
