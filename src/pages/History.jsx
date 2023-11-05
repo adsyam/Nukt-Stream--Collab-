@@ -1,61 +1,57 @@
-import { useEffect, useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import {
-  MovieHistory,
-  SeriesHistory,
-  VideoCard,
-} from "../components/index"
-import { useDataContext } from "../context/DataContext"
+import { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { MovieHistory, SeriesHistory, VideoCard } from "../components/index";
+import { useDataContext } from "../context/DataContext";
 
 export default function History() {
-  const [videoDetails, setVideoDetails] = useState([])
-  const [reload, setReload] = useState(false)
-  const [keyToDelete, setKeyToDelete] = useState(null)
-  const { sidebar } = useDataContext()
+  const [videoDetails, setVideoDetails] = useState([]);
+  const [reload, setReload] = useState(false);
+  const [keyToDelete, setKeyToDelete] = useState(null);
+  const { sidebar } = useDataContext();
 
   useEffect(() => {
-    const dataStore = []
+    const dataStore = [];
 
-    for (const key in localStorage) {
+    for (const key in window.localStorage) {
       if (key !== "movieIds" && key !== "seriesIds") {
-        const value = localStorage.getItem(key)
+        const value = window.localStorage.getItem(key);
 
         try {
           // Attempt to parse the value as JSON
-          const parsedValue = JSON.parse(value)
+          const parsedValue = JSON.parse(value);
 
           if (parsedValue !== null) {
-            dataStore.push(parsedValue)
+            dataStore.push(parsedValue);
           }
         } catch (error) {
-          console.error(`Error parsing JSON for key '${key}':`, error)
+          console.error(`Error parsing JSON for key '${key}':`, error);
         }
       }
     }
 
-    setVideoDetails(dataStore)
-  }, [reload])
+    setVideoDetails(dataStore);
+  }, [reload]);
 
   //clear the data of localStorage
   const handleClear = () => {
-    localStorage.clear()
-    setReload(true) //update reload value to rerender the component
-  }
+    window.localStorage.clear();
+    setReload((prev) => true); //update reload value to rerender the component
+  };
 
   const handleDelete = (key) => {
-    localStorage.removeItem(key)
+    window.localStorage.removeItem(key);
 
     // update the videoDetails state by filtering out the deleted item
     setVideoDetails((prevVideoDetails) =>
       prevVideoDetails.filter((videoDetail) => videoDetail.id !== key)
-    )
-    setKeyToDelete(null) // reset the keyToDelete state
-  }
+    );
+    setKeyToDelete(null); // reset the keyToDelete state
+  };
 
   // filter out the deleted item when rendering
   const filteredVideoDetails = videoDetails.filter(
     (videoDetail) => videoDetail?.id !== keyToDelete
-  )
+  );
 
   return (
     <section
@@ -99,5 +95,5 @@ export default function History() {
         </div>
       </div>
     </section>
-  )
+  );
 }

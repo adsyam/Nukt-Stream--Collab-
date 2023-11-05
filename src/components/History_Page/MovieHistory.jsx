@@ -1,15 +1,15 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import { TOKEN_AUTH } from "../../constants/apiConfig"
-import SearchMovie from "../Search_Page/SearchMovie"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { TOKEN_AUTH } from "../../constants/apiConfig";
+import SearchMovie from "../Search_Page/SearchMovie";
 
 export default function MovieHistory({ reload }) {
-  const storedMovieIds = localStorage.getItem("movieIds")
-    ? JSON.parse(localStorage.getItem("movieIds"))
-    : []
-  const [movieDetails, setMovieDetails] = useState([])
-  const [itemToDelete, setItemToDelete] = useState(null)
+  const storedMovieIds = window.localStorage.getItem("movieIds")
+    ? JSON.parse(window.localStorage.getItem("movieIds"))
+    : [];
+  const [movieDetails, setMovieDetails] = useState([]);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -22,44 +22,44 @@ export default function MovieHistory({ reload }) {
           accept: "application/json",
           Authorization: TOKEN_AUTH,
         },
-      }
-      return axios.request(options)
-    })
+      };
+      return axios.request(options);
+    });
 
     //use Promise.all to fetch all movie details in parallel
     Promise.all(fetchMovieDetailsPromises)
       .then((responses) => {
         //responses will be an array of movie details based on the movie ids
-        const movieDetails = responses.map((response) => response.data)
-        setMovieDetails(movieDetails)
+        const movieDetails = responses.map((response) => response.data);
+        setMovieDetails(movieDetails);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }, [reload, storedMovieIds])
+        console.error(error);
+      });
+  }, [reload, storedMovieIds]);
 
   const handleDelete = (idToDelete) => {
-    const movieIds = JSON.parse(localStorage.getItem("movieIds")) || []
-    const indexToRemove = movieIds.indexOf(idToDelete.toString())
+    const movieIds = JSON.parse(window.localStorage.getItem("movieIds")) || [];
+    const indexToRemove = movieIds.indexOf(idToDelete.toString());
 
     if (indexToRemove !== -1) {
-      movieIds.splice(indexToRemove, 1)
+      movieIds.splice(indexToRemove, 1);
       setMovieDetails((prevMovieDetails) =>
         prevMovieDetails.filter((movieDetail) => movieDetail?.id !== idToDelete)
-      )
-      setItemToDelete(null)
-      localStorage.setItem("movieIds", JSON.stringify(movieIds))
+      );
+      setItemToDelete(null);
+      window.localStorage.setItem("movieIds", JSON.stringify(movieIds));
     }
-  }
+  };
 
   const filteredMovieDetails = movieDetails.filter(
     (movieDetail) => movieDetail?.id !== itemToDelete
-  )
+  );
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  }
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -88,5 +88,5 @@ export default function MovieHistory({ reload }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
