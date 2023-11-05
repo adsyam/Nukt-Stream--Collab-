@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react"
-import ProfileNav from "./ProfileNav"
+import { useEffect, useState } from "react";
+import ProfileNav from "./ProfileNav";
 
 export default function ProfileDetails({ channelDetail }) {
-  const [isUser, setIsUser] = useState(false)
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     if (!channelDetail.id) {
-      setIsUser(true)
+      setIsUser(true);
     } else {
-      setIsUser(false)
+      setIsUser(false);
     }
-  }, [channelDetail])
-
-  console.log(channelDetail)
+  }, [channelDetail]);
 
   return (
     <section className="px-[2rem]">
@@ -54,5 +52,5 @@ export default function ProfileDetails({ channelDetail }) {
       </div>
       <ProfileNav id={isUser ? channelDetail.uid : channelDetail.id} />
     </section>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom"
-import { useAuthContext } from "../../context/AuthContext"
-import { useDataContext } from "../../context/DataContext"
+import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDataContext } from "../../context/DataContext";
 
 export default function SidebarMenu({ name, icon, url, index }) {
-  const { modal, setModal } = useDataContext()
-  const { user } = useAuthContext()
+  const { modal, setModal } = useDataContext();
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -49,5 +49,5 @@ export default function SidebarMenu({ name, icon, url, index }) {
         </Link>
       )}
     </>
-  )
+  );
 }

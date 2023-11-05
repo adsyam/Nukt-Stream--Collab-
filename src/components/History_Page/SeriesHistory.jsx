@@ -1,16 +1,16 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import { TOKEN_AUTH } from "../../constants/apiConfig"
-import SearchTVSeries from "../Search_Page/SearchSeries"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { TOKEN_AUTH } from "../../constants/apiConfig";
+import SearchTVSeries from "../Search_Page/SearchSeries";
 
 export default function SeriesHistory({ reload }) {
-  const storedSeriesIds = localStorage.getItem("seriesIds")
-    ? JSON.parse(localStorage.getItem("seriesIds"))
-    : []
+  const storedSeriesIds = window.localStorage.getItem("seriesIds")
+    ? JSON.parse(window.localStorage.getItem("seriesIds"))
+    : [];
 
-  const [seriesDetails, setSeriesDetails] = useState([])
-  const [itemToDelete, setItemToDelete] = useState("")
+  const [seriesDetails, setSeriesDetails] = useState([]);
+  const [itemToDelete, setItemToDelete] = useState("");
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -23,46 +23,47 @@ export default function SeriesHistory({ reload }) {
           accept: "application/json",
           Authorization: TOKEN_AUTH,
         },
-      }
-      return axios.request(options)
-    })
+      };
+      return axios.request(options);
+    });
 
     //use Promise.all to fetch all movie details in parallel
     Promise.all(fetchSeriesDetailsPromises)
       .then((responses) => {
         //responses will be an array of movie details based on the movie ids
-        const seriesDetails = responses.map((response) => response.data)
-        setSeriesDetails(seriesDetails)
+        const seriesDetails = responses.map((response) => response.data);
+        setSeriesDetails(seriesDetails);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }, [reload])
+        console.error(error);
+      });
+  }, [reload]);
 
   const handleDelete = (idToDelete) => {
-    const seriesIds = JSON.parse(localStorage.getItem("seriesIds")) || []
-    const indexToRemove = seriesIds.indexOf(idToDelete.toString())
+    const seriesIds =
+      JSON.parse(window.localStorage.getItem("seriesIds")) || [];
+    const indexToRemove = seriesIds.indexOf(idToDelete.toString());
 
     if (indexToRemove !== -1) {
-      seriesIds.splice(indexToRemove, 1)
+      seriesIds.splice(indexToRemove, 1);
       setSeriesDetails((prevSeriesDetails) =>
         prevSeriesDetails.filter(
           (seriesDetail) => seriesDetail?.id !== idToDelete
         )
-      )
-      setItemToDelete(null)
-      localStorage.setItem("seriesIds", JSON.stringify(seriesIds))
+      );
+      setItemToDelete(null);
+      window.localStorage.setItem("seriesIds", JSON.stringify(seriesIds));
     }
-  }
+  };
 
   const filteredSeriesDetails = seriesDetails.filter(
     (seriesDetail) => seriesDetail?.id !== itemToDelete
-  )
+  );
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  }
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -91,5 +92,5 @@ export default function SeriesHistory({ reload }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
