@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { ProfileNavs } from "../../utils"
 
 export default function ProfileNav({ id }) {
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState("home")
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function ProfileNav({ id }) {
                 onClick={() => setSelected(item.name)}
                 className={`${
                   selected === item.name
-                    ? "border-b-2 border-[#389FDD] duration-300"
+                    ? "border-b-2 border-[#7300FF] duration-300"
                     : "border-b-2 border-transparent duration-300"
                 } text-[14px] md:text-[1.2rem] font-medium`}
               >

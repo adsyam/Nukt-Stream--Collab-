@@ -25,7 +25,7 @@ export default function UserProfile() {
 
   return (
     <section
-      className={`min-h-[100vh] bg-black text-white ${
+      className={`min-h-[100vh] bg-[#0d0d0d] text-white ${
         sidebar
           ? "translate-x-[14rem] origin-left duration-300 w-[88%]"
           : "w-full origin-right duration-300"

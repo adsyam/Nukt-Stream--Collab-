@@ -51,7 +51,7 @@ export default function AllCategory() {
     <>
       <Carousel mediaType={mediaType} />
       <div
-        className={`${
+        className={`whitespace-nowrap ${
           sidebar
             ? "translate-x-[10rem] origin-left duration-300 w-[95%]"
             : "w-full origin-right duration-300"

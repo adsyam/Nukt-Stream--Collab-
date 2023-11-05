@@ -130,7 +130,7 @@ export default function Navbar() {
         )}
         <div className="flex items-center gap-2">
           {user === null ? (
-            <Link to="/login" className="bg-black/50 rounded-md p-[.5rem]">
+            <Link to="/login" className="bg-[#0d0d0d50] rounded-md p-[.5rem]">
               <span className="uppercase text-[.9rem]">sign in</span>
             </Link>
           ) : (
@@ -152,7 +152,7 @@ export default function Navbar() {
               {!showSearchbar && <AiFillBell size={30} />}
               <button
                 onClick={showUserSidebar}
-                className="bg-black/50 rounded-full border-[1px]"
+                className="bg-[#0d0d0d50] rounded-full border-2 border-[#ffffff70]"
               >
                 <img
                   src={`${user ? user.photoURL : "https://i.pravatar.cc/35"}`}

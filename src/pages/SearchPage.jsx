@@ -8,7 +8,7 @@ export default function SearchPage() {
 
   return (
     <>
-      <section className="w-full min-h-[100vh] bg-black flex flex-col pt-[7rem] px-[3rem]">
+      <section className="w-full min-h-[100vh] bg-[#0d0d0d] flex flex-col pt-[7rem] px-[3rem]">
         <div className="flex gap-[1rem] justify-center items-center text-white">
           {searchFilters.map((item, index) => (
             <button

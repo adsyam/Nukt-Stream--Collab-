@@ -75,7 +75,7 @@ export default function MediaReviews({ id }) {
   }
 
   return (
-    <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12">
+    <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12 p-3">
       <div className="flex items-center justify-center gap-2">
         <img src={defprofile} alt="" className="rounded-full max-w-[45px]" />
         <input

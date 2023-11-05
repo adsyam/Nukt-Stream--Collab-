@@ -57,35 +57,36 @@ export default function WatchMovie() {
                 : "w-full origin-right duration-300"
             }`}
           >
-            <div className="flex mx-24 justify-center gap-4">
-              <MediaDetails id={id} path={path} />
-              <div className="text-white flex flex-col w-fit rounded-md">
-                <div className="p-2 rounded-md">
-                  <h2 className="bg-[#6b13d7] rounded-md px-1 text-white w-full whitespace-nowrap">
-                    Server List
-                  </h2>
-                  <ul className="flex flex-col items-center">
-                    {[
-                      { name: "Server 1", url: server1 },
-                      { name: "Server 2", url: server2 },
-                      { name: "Server 3", url: server3 },
-                      { name: "Server 4", url: server4 },
-                      { name: "Server 5", url: server5 },
-                    ].map((server, index) => (
-                      <li
-                        role="button"
-                        key={index}
-                        onClick={() => setServer(server.url)}
-                        className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20] ${
-                          server.url === server ? "bg-[#ffffff20]" : ""
-                        }`}
-                      >
-                        {server.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="flex flex-col gap-4 mx-24 max-lg:mx-20 max-sm:mx-12">
+              <div className="flex gap-4">
+                <MediaDetails
+                  id={id}
+                  path={path}
+                  mediaType={pathname.includes("Movie") && "movie"}
+                />
               </div>
+            </div>
+            <div className="p-2 rounded-md mx-24 max-lg:mx-20 max-sm:mx-12 text-white flex flex-col gap-2">
+              <ul className="flex items-center gap-2 flex-wrap">
+                {[
+                  { name: "Server 1", url: server1 },
+                  { name: "Server 2", url: server2 },
+                  { name: "Server 3", url: server3 },
+                  { name: "Server 4", url: server4 },
+                  { name: "Server 5", url: server5 },
+                ].map((server, index) => (
+                  <li
+                    role="button"
+                    key={index}
+                    onClick={() => setServer(server.url)}
+                    className={`px-2 my-1 rounded-md w-fit hover:bg-[#ffffff20] border-2 ${
+                      server.url === server ? "bg-[#ffffff20]" : ""
+                    }`}
+                  >
+                    {server.name}
+                  </li>
+                ))}
+              </ul>
             </div>
             <MediaRecommendation id={id} />
             <MediaReviews id={id} />

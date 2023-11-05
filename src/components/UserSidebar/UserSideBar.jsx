@@ -14,7 +14,7 @@ export default function UserSidebar({ showUserSidebar }) {
 
   return (
     <aside
-      className={`absolute top-[4rem] right-[2rem] w-[300px]  bg-[#7300FF10] p-[1rem]
+      className={`absolute text-black font-medium top-[4rem] right-[2rem] w-[300px]  bg-[#ffffff90] p-[1rem]
     rounded-md shadow-sm border-2 border-[#ffffff30] shadow-white ${
       showUserSidebar
         ? "origin-top-right scale-1 duration-300 ease-in-out"
@@ -25,7 +25,7 @@ export default function UserSidebar({ showUserSidebar }) {
         <img
           src={user.photoURL || "https://i.pravatar.cc/40"}
           alt="user image"
-          className="w-[50px] rounded-full"
+          className="w-[50px] rounded-full border-2"
         />
         <div>
           <h2>{user.displayName || "Guest User"}</h2>

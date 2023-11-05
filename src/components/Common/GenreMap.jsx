@@ -116,7 +116,7 @@ export default function GenreMap({ CarouselGenre }) {
         .filter((g) => CarouselGenre.genre_ids.includes(g.id))
         .map((genre) => (
           <p
-            className="text-[18px] bg-[#DADADA40] py-1 px-2 rounded-[3px] font-medium"
+            className="text-[18px] bg-[#DADADA40] py-1 px-2 rounded-[3px] font-medium max-xsm:text-sm"
             key={genre.id}
           >
             {genre.name}

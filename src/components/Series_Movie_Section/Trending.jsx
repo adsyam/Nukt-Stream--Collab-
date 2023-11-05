@@ -29,11 +29,7 @@ export default function Trending() {
         className={`flex justify-center`}
       >
         <div
-          className={`text-white py-12 gap-1 ${
-            sidebar
-              ? "translate-x-[6rem] origin-left duration-300 w-[98%]"
-              : "translate-x-0 origin-right duration-300 w-full"
-          }`}
+          className={`text-white py-12 gap-1`}
         >
           {screen ? (
             <div className="mx-32 max-lg:mx-20 max-sm:mx-12">

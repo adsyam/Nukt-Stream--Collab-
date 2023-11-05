@@ -22,11 +22,11 @@ export default function FeedbackModal({ active }) {
     <section
       className={`${
         active ? "block" : "hidden overflow-auto"
-      } fixed top-0 left-0 z-[100] text-white bg-black/10 backdrop-blur-[2px]
+      } fixed top-0 left-0 z-[100] text-white bg-[#0d0d0d10] backdrop-blur-[2px]
         w-full h-full grid place-items-center`}
     >
       {!sendFeedback ? (
-        <div className="bg-black min-w-[400px] p-[1.5rem] flex flex-col gap-5">
+        <div className="bg-[#0d0d0d] min-w-[400px] p-[1.5rem] flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <img src={nukt_logo} className="w-[50px]" />
@@ -76,7 +76,7 @@ export default function FeedbackModal({ active }) {
           </form>
         </div>
       ) : (
-        <div className="bg-black min-w-[400px] p-[1.5rem] flex flex-col gap-[2rem]">
+        <div className="bg-[#0d0d0d] min-w-[400px] p-[1.5rem] flex flex-col gap-[2rem]">
           <img src={nukt_logo} className="w-[50px]" />
           <p className="text-[1.3rem] text-center">Thanks for the feedback!!</p>
           <button

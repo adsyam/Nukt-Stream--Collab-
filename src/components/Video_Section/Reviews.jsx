@@ -39,11 +39,11 @@ export default function Reviews({ comments }) {
             name=""
             cols="120"
             rows="2"
-            className="text-black resize-none outline-none rounded-md p-2"
+            className="text-black resize-none outline-none rounded-md p-2 w-[40vw]"
           ></textarea>
         </div>
         <div className="overflow-y-auto max-h-[1300px]">
-          {comments.slice(0, visible).map((comment) => (
+          {comments.slice(0, visible).map((comment, i) => (
             <>
               {containsHtmlTags(
                 comment?.snippet?.topLevelComment?.snippet?.textDisplay

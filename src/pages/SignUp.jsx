@@ -64,7 +64,7 @@ export default function SignUp() {
   return (
     <section className="w-full bg-hero-pattern bg-no-repeat bg-cover">
       <div
-        className="text-white bg-black/60 backdrop-blur-sm w-full
+        className="text-white bg-[#0d0d0d]/60 backdrop-blur-sm w-full
         flex flex-col justify-center items-center h-screen"
       >
         <form

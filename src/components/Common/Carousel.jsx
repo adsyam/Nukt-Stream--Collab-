@@ -108,12 +108,12 @@ export default function Carousel({ mediaType }) {
                 />
                 <div className="absolute z-10 bottom-0 m-10 w-full">
                   <div className="flex flex-col gap-3 w-full">
-                    <p className="text-[68px] max-xsm:text-[48px] font-bold break-words w-[70%]">
+                    <p className="text-[68px] font-bold break-words w-[70%] max-xsm:text-4xl">
                       {d.original_title || d.original_name}
                     </p>
                     <div>
-                      <p className="text-[18px]">SYNOPSIS:</p>
-                      <p className="text-[16px] break-words font-thin w-[60%] truncate-synopsis">
+                      <p className="text-[18px] max-xsm:text-md">SYNOPSIS:</p>
+                      <p className="text-[16px] max-xsm:text-sm break-words font-thin w-[60%] truncate-synopsis">
                         {d.overview}
                       </p>
                     </div>
@@ -132,7 +132,7 @@ export default function Carousel({ mediaType }) {
                       )}
                       <GenreMap CarouselGenre={d} />
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-wrap">
                       <Link
                         className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold cursor-pointer text-black"
                         to={
@@ -147,7 +147,7 @@ export default function Carousel({ mediaType }) {
                       </Link>
                       <button
                         className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold text-black"
-                        onClick={() => setIsOpen(true)}
+                        onClick={() => setIsOpen(!isOpen)}
                       >
                         WATCH TRAILER
                       </button>

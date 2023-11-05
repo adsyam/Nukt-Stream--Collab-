@@ -80,7 +80,7 @@ export default function WatchSeries() {
                 : "w-full origin-right duration-300"
             }`}
           >
-            <div className="flex flex-col gap-4 mx-24 max-lg:mx-20 max-sm:mx-12">
+            <div className="flex flex-col items-center justify-center gap-4 mx-24 max-lg:mx-20 max-sm:mx-12">
               <div className="flex gap-4">
                 <MediaDetails
                   id={id}
@@ -89,21 +89,23 @@ export default function WatchSeries() {
                   mediaType={mediaType}
                 />
               </div>
-              <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap">
-                {Array.from(serverLength).map((server, i) => (
-                  <motion.li
-                    whileHover={{ scale: 1.05 }}
-                    role="button"
-                    key={i}
-                    onClick={() => setServer(`Server${i + 1}`)}
-                    className="border-2 px-2 rounded-md"
-                  >
-                    {server}
-                  </motion.li>
-                ))}
-              </ul>
-              <EpisodeList />
-              <SeasonCards id={id} />
+              <div className="flex flex-col gap-4 p-3">
+                <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap">
+                  {Array.from(serverLength).map((server, i) => (
+                    <motion.li
+                      whileHover={{ scale: 1.05 }}
+                      role="button"
+                      key={i}
+                      onClick={() => setServer(`Server${i + 1}`)}
+                      className="border-2 px-2 rounded-md"
+                    >
+                      {server}
+                    </motion.li>
+                  ))}
+                </ul>
+                <EpisodeList />
+                <SeasonCards id={id} />
+              </div>
             </div>
             <MediaRecommendation id={id} />
             <MediaReviews id={id} />

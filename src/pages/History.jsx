@@ -1,61 +1,61 @@
-import { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { MovieHistory, SeriesHistory, VideoCard } from "../components/index";
-import { useDataContext } from "../context/DataContext";
+import { useEffect, useState } from "react"
+import { AiOutlineClose } from "react-icons/ai"
+import { MovieHistory, SeriesHistory, VideoCard } from "../components/index"
+import { useDataContext } from "../context/DataContext"
 
 export default function History() {
-  const [videoDetails, setVideoDetails] = useState([]);
-  const [reload, setReload] = useState(false);
-  const [keyToDelete, setKeyToDelete] = useState(null);
-  const { sidebar } = useDataContext();
+  const [videoDetails, setVideoDetails] = useState([])
+  const [reload, setReload] = useState(false)
+  const [keyToDelete, setKeyToDelete] = useState(null)
+  const { sidebar } = useDataContext()
 
   useEffect(() => {
-    const dataStore = [];
+    const dataStore = []
 
     for (const key in window.localStorage) {
       if (key !== "movieIds" && key !== "seriesIds") {
-        const value = window.localStorage.getItem(key);
+        const value = window.localStorage.getItem(key)
 
         try {
           // Attempt to parse the value as JSON
-          const parsedValue = JSON.parse(value);
+          const parsedValue = JSON.parse(value)
 
           if (parsedValue !== null) {
-            dataStore.push(parsedValue);
+            dataStore.push(parsedValue)
           }
         } catch (error) {
-          console.error(`Error parsing JSON for key '${key}':`, error);
+          console.error(`Error parsing JSON for key '${key}':`, error)
         }
       }
     }
 
-    setVideoDetails(dataStore);
-  }, [reload]);
+    setVideoDetails(dataStore)
+  }, [reload])
 
   //clear the data of localStorage
   const handleClear = () => {
-    window.localStorage.clear();
-    setReload(true); //update reload value to rerender the component
-  };
+    window.localStorage.clear()
+    setReload(true) //update reload value to rerender the component
+  }
 
   const handleDelete = (key) => {
-    window.localStorage.removeItem(key);
+    window.localStorage.removeItem(key)
 
     // update the videoDetails state by filtering out the deleted item
     setVideoDetails((prevVideoDetails) =>
       prevVideoDetails.filter((videoDetail) => videoDetail.id !== key)
-    );
-    setKeyToDelete(null); // reset the keyToDelete state
-  };
+    )
+    setKeyToDelete(null) // reset the keyToDelete state
+  }
 
   // filter out the deleted item when rendering
   const filteredVideoDetails = videoDetails.filter(
     (videoDetail) => videoDetail?.id !== keyToDelete
-  );
+  )
 
   return (
     <section
-      className={`min-h-[100vh] bg-black text-white px-[3rem] ${
+      className={`min-h-[100vh] bg-[#0d0d0d] text-white px-[3rem] ${
         sidebar
           ? "translate-x-[14rem] origin-left duration-300 w-[89%]"
           : "w-full origin-right duration-300"
@@ -79,12 +79,12 @@ export default function History() {
       </div>
       <div className="translate-y-[12rem] flex flex-col gap-3">
         {filteredVideoDetails.length < 1 ? "" : <h2>Videos</h2>}
-        <div className="flex gap-5">
+        <div className="flex gap-5 flex-wrap">
           {filteredVideoDetails.map((videoDetail) => (
             <div key={videoDetail?.id} className="relative group">
               <button
                 onClick={() => handleDelete(videoDetail?.id)}
-                className="absolute right-0 bg-black/40 p-[.5rem] rounded-full
+                className="absolute right-0 bg-[#0d0d0d]/40 p-[.5rem] rounded-full
               z-50 opacity-0 group-hover:opacity-100 duration-300"
               >
                 <AiOutlineClose size={25} />
@@ -95,5 +95,5 @@ export default function History() {
         </div>
       </div>
     </section>
-  );
+  )
 }

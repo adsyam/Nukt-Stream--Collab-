@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-import { useDataContext } from "../context/DataContext"
 import { Footer } from "../components"
+import { useDataContext } from "../context/DataContext"
 
 const icon =
   "https://cdn3d.iconscout.com/3d/premium/thumb/report-6073861-4996978.png"
@@ -12,7 +12,7 @@ export default function Report() {
   return (
     <>
       <section
-        className={`min-h-[100vh] bg-black text-white p-[2rem] ${
+        className={`min-h-[100vh] bg-[#0d0d0d] text-white p-[2rem] ${
           sidebar
             ? "translate-x-[14rem] origin-left duration-300 w-[89%]"
             : "w-full origin-right duration-300"

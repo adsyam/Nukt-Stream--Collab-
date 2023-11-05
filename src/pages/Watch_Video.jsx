@@ -23,7 +23,7 @@ export default function WatchVideo() {
 
   if (!videoDetails) {
     return (
-      <div className="w-full h-[100vh] bg-black grid place-items-center">
+      <div className="w-full h-[100vh] bg-[#0d0d0d] grid place-items-center">
         <h1 className="text-[2rem] text-white">Loading...</h1>
       </div>
     )
@@ -32,7 +32,7 @@ export default function WatchVideo() {
   return (
     <>
       <section
-        className={`min-h-[100vh] bg-black ${
+        className={`min-h-[100vh] bg-[#0d0d0d] ${
           sidebar
             ? "translate-x-[15rem] origin-left duration-300 w-[87%]"
             : "w-full origin-right duration-300"

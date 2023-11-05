@@ -4,7 +4,7 @@ export default function Dashboard() {
   return (
     <main className="w-full h-full dashboard-bg">
       <div
-        className="text-white bg-black/50 backdrop-blur-sm w-full h-full
+        className="text-white bg-[#0d0d0d]/50 backdrop-blur-sm w-full h-full
         flex flex-col justify-center items-center gap-[9rem]"
       >
         <Banner />

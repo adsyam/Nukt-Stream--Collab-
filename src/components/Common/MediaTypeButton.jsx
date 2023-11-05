@@ -30,10 +30,7 @@ export default function MediaTypeButton({ setMediaType, mediaType, category }) {
       )}
 
       {pathname.includes("popular") ||
-      pathname.includes("trending") ||
-      pathname.includes("toprated") ||
-      pathname.includes("airingtoday") ||
-      pathname.includes("intheatre") ? (
+      pathname.includes("trending") ? (
         <motion.button
           whileTap={{ scale: 1.1 }}
           onClick={() => setMediaType("video")}

@@ -24,7 +24,7 @@ export default function MediaRecommendation({ id }) {
   }, [pathname])
 
   return (
-    <div className="text-white mx-24 max-lg:mx-20 max-sm:mx-12 py-12">
+    <div className="text-white mx-24 max-lg:mx-20 max-sm:mx-12 py-12 px-3">
       <h1 className=" text-2xl mb-1 font-medium">
         Recommended {mediaType === "tv" ? "Series" : "Movies"}
       </h1>

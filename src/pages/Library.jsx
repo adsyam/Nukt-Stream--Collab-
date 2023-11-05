@@ -5,7 +5,7 @@ export default function Library() {
 
   return (
     <section
-      className={`min-h-[100vh] bg-black text-white px-[3rem] ${
+      className={`min-h-[100vh] bg-[#0d0d0d] text-white px-[3rem] ${
         sidebar
           ? "translate-x-[14rem] origin-left duration-300 w-[89%]"
           : "w-full origin-right duration-300"

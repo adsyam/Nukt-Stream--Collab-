@@ -72,7 +72,7 @@ export default function MovieHistory({ reload }) {
   return (
     <div className="flex flex-col gap-3">
       {storedMovieIds.length < 1 ? "" : <h2>Movies</h2>}
-      <div className="flex gap-5">
+      <div className="flex gap-5 flex-wrap">
         {filteredMovieDetails.map((movieDetail, index) => (
           <div key={movieDetail?.id} className="w-[200px] relative group">
             <SearchMovie
@@ -87,7 +87,7 @@ export default function MovieHistory({ reload }) {
             />
             <button
               onClick={() => handleDelete(movieDetail?.id)}
-              className="absolute top-0 right-0 bg-black/40 p-[.5rem] rounded-full
+              className="absolute top-0 right-0 bg-[#0d0d0d40] p-[.5rem] rounded-full
               z-50 opacity-0 group-hover:opacity-100 duration-300"
             >
               <AiOutlineClose size={25} />
