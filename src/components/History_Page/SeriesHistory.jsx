@@ -5,11 +5,13 @@ import { TOKEN_AUTH } from "../../constants/apiConfig"
 import SearchTVSeries from "../Search_Page/SearchSeries"
 
 export default function SeriesHistory({ reload }) {
+  const localStorageValue = window.localStorage.getItem("seriesIds")
+
   const storedSeriesIds = useMemo(() => {
     return window.localStorage.getItem("seriesIds")
       ? JSON.parse(window.localStorage.getItem("seriesIds"))
       : []
-  }, [])
+  }, [localStorageValue])
 
   const [seriesDetails, setSeriesDetails] = useState([])
   const [itemToDelete, setItemToDelete] = useState("")

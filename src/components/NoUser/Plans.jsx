@@ -1,16 +1,16 @@
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { AiFillCheckCircle } from "react-icons/ai"
-import { Link } from "react-router-dom"
-import { useDataContext } from "../../context/DataContext"
-import { planPrices } from "../../utils"
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useDataContext } from "../../context/DataContext";
+import { planPrices } from "../../utils";
 
 export default function Plans() {
-  const [selectedPlan, setSelectedPlan] = useState(null)
-  const { location } = useDataContext()
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const { location } = useDataContext();
 
   return (
-    <section className="font-fig w-full px-[2rem]">
+    <section className="font-fig w-full min-h-screen px-[2rem] py-[5rem]">
       <h2 className="text-center text-[1.5rem] font-semibold">Our Pricing</h2>
       <p className="text-center text-[1rem] mb-[2rem]">
         Begin with a Basic Account or kick off your membership with a
@@ -62,5 +62,5 @@ export default function Plans() {
         ))}
       </div>
     </section>
-  )
+  );
 }

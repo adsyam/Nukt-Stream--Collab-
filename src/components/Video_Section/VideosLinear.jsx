@@ -1,37 +1,37 @@
-import { useEffect, useRef, useState } from "react"
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi"
-import ChannelCard from "./ChannelCard"
-import VideoCard from "./VideoCard"
+import { useEffect, useRef, useState } from "react";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import ChannelCard from "./ChannelCard";
+import VideoCard from "./VideoCard";
 
 export default function VideosLinear({ videos }) {
   if (!videos?.length) {
-    return <section className="text-white">Loading...</section>
+    return <section className="text-white">Loading...</section>;
   }
 
-  const TRANSLATE_AMOUNT = 300
+  const TRANSLATE_AMOUNT = 300;
 
-  const [isLeftVisible, setIsLeftVisible] = useState(false)
-  const [isRightVisible, setIsRightVisible] = useState(false)
-  const [move, setMove] = useState(0)
-  const containerRef = useRef(null)
+  const [isLeftVisible, setIsLeftVisible] = useState(false);
+  const [isRightVisible, setIsRightVisible] = useState(false);
+  const [move, setMove] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (containerRef.current === null) return
+    if (containerRef.current === null) return;
 
     const observer = new ResizeObserver((entries) => {
-      const container = entries[0]?.target
-      if (container === null) return
+      const container = entries[0]?.target;
+      if (container === null) return;
 
-      setIsLeftVisible(move > 0)
-      setIsRightVisible(move + container.clientWidth < container.scrollWidth)
-    })
+      setIsLeftVisible(move > 0);
+      setIsRightVisible(move + container.clientWidth < container.scrollWidth);
+    });
 
-    observer.observe(containerRef.current)
+    observer.observe(containerRef.current);
 
     return () => {
-      observer.disconnect()
-    }
-  }, [move])
+      observer.disconnect();
+    };
+  }, [move]);
 
   return (
     <div ref={containerRef} className="w-full overflow-x-hidden relative">
@@ -59,10 +59,10 @@ export default function VideosLinear({ videos }) {
             className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
             onClick={() => {
               setMove((move) => {
-                let newTranslate = move - TRANSLATE_AMOUNT
-                if (newTranslate <= 0) return 0
-                return newTranslate
-              })
+                let newTranslate = move - TRANSLATE_AMOUNT;
+                if (newTranslate <= 0) return 0;
+                return newTranslate;
+              });
             }}
           >
             <BiChevronLeft />
@@ -78,15 +78,15 @@ export default function VideosLinear({ videos }) {
             className="bg-white text-black p-[.1rem] rounded-full text-[2rem]"
             onClick={() => {
               setMove((move) => {
-                if (containerRef.current === null) return move
-                const edge = containerRef.current.scrollWidth
-                const width = containerRef.current.clientWidth
-                const newTranslate = move + TRANSLATE_AMOUNT
+                if (containerRef.current === null) return move;
+                const edge = containerRef.current.scrollWidth;
+                const width = containerRef.current.clientWidth;
+                const newTranslate = move + TRANSLATE_AMOUNT;
                 if (newTranslate + width >= edge) {
-                  return edge - width
+                  return edge - width;
                 }
-                return newTranslate
-              })
+                return newTranslate;
+              });
             }}
           >
             <BiChevronRight />
@@ -94,5 +94,5 @@ export default function VideosLinear({ videos }) {
         </div>
       )}
     </div>
-  )
+  );
 }
