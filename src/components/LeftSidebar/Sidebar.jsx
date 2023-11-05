@@ -1,11 +1,20 @@
 import { useLocation } from "react-router-dom"
+import { useAuthContext } from "../../context/AuthContext"
 import { sidebarMenus1 } from "../../utils/index"
 import DropdownBtn from "./DropdownBtn"
 import SidebarMenu from "./SidebarMenu"
+import { useEffect } from "react"
+import { useDataContext } from "../../context/DataContext"
 
 export default function Sidebar({ showSidebar }) {
   const location = useLocation()
   const pathname = location.pathname
+  const { user } = useAuthContext()
+  const {setSidebar} = useDataContext()
+
+  useEffect(() => {
+    if (!user) setSidebar(false)
+  }, [user, setSidebar])
 
   return (
     <aside

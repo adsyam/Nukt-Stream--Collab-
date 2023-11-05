@@ -7,7 +7,7 @@ export default function ProfilePic({ image }) {
       -translate-y-[3rem] md:-translate-y-[7rem]"
     >
       <img
-        src={image || "https://i.pravatar.cc/52"}
+        src={image || "https://xsgames.co/randomusers/avatar.php?g=pixel"}
         alt="user profile pic"
         className="rounded-full w-[100px] md:w-52"
       />
