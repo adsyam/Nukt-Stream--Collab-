@@ -6,11 +6,15 @@ import SearchTVSeries from "../Search_Page/SearchSeries";
 import { useMemo } from "react";
 
 export default function SeriesHistory({ reload }) {
+  // const storedSeriesIds = window.localStorage.getItem("seriesIds")
+  //   ? JSON.parse(window.localStorage.getItem("seriesIds"))
+  //   : [];
+
   const storedSeriesIds = useMemo(() => {
     return window.localStorage.getItem("seriesIds")
       ? JSON.parse(window.localStorage.getItem("seriesIds"))
-      : []
-  }, [])
+      : [];
+  }, [window.localStorage.getItem("seriesIds")]);
 
   const [seriesDetails, setSeriesDetails] = useState([]);
   const [itemToDelete, setItemToDelete] = useState("");
@@ -40,7 +44,7 @@ export default function SeriesHistory({ reload }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [reload, storedSeriesIds]);
+  }, [reload]);
 
   const handleDelete = (idToDelete) => {
     const seriesIds =

@@ -1,66 +1,66 @@
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
-import { useNavigate } from "react-router"
-import { Link } from "react-router-dom"
-import { useSnapshot } from "valtio"
-import { user } from "../StateStore"
-import { Footer } from "../components"
-import { useAuthContext } from "../context/AuthContext"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { useSnapshot } from "valtio";
+import { user } from "../StateStore";
+import { Footer } from "../components";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function SignUp() {
-  const [showPassword1, setShowPassword1] = useState(false)
-  const [showPassword2, setShowPassword2] = useState(false)
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   function passwordToggle(isShow) {
-    if (isShow) return "text"
-    if (!isShow) return "password"
+    if (isShow) return "text";
+    if (!isShow) return "password";
   }
 
-  const createUser = useAuthContext()
+  const { createUser } = useAuthContext();
 
-  const userSnap = useSnapshot(user)
+  const userSnap = useSnapshot(user);
   const [firstName, setFirstName] = useState({
     input: "",
     isEmpty: false,
-  })
+  });
   const [lastName, setLastName] = useState({
     input: "",
     isEmpty: false,
-  })
-  const [error, setError] = useState(false)
-  const [errMsg, setErrMsg] = useState("")
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  });
+  const [error, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const validateInput = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (firstName.input === "" || lastName.input === "") {
       setFirstName({
         input: firstName.input,
         isEmpty: true,
-      })
+      });
       setLastName({
         input: lastName.input,
         isEmpty: true,
-      })
+      });
     }
 
     if (userSnap.password !== userSnap.confirm) {
-      setError(true)
+      setError(true);
     } else {
-      setError(false)
+      setError(false);
     }
 
     try {
-      setLoading(true)
-      await createUser(userSnap.email, userSnap.password)
-      return navigate("/signup/pricing")
+      setLoading(true);
+      await createUser(userSnap.email, userSnap.password);
+      return navigate("/signup/pricing");
     } catch (err) {
-      setErrMsg(err.code)
-      console.log(err)
+      setErrMsg(err.code);
+      console.log(err);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
   return (
     <section className="w-full bg-hero-pattern bg-no-repeat bg-cover">
       <div
@@ -89,7 +89,7 @@ export default function SignUp() {
                 className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
               />
               <p
-                className={`text-red-500 text-[.8rem] font-bold italic absolute ${
+                className={`text-red-500 text-[.8rem] right-0 font-bold italic absolute ${
                   firstName.isEmpty ? "block" : "hidden"
                 }`}
               >
@@ -109,7 +109,7 @@ export default function SignUp() {
                 className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
               />
               <p
-                className={`text-red-500 text-[.8rem] font-bold italic absolute ${
+                className={`text-red-500 text-[.8rem] right-0 font-bold italic absolute ${
                   lastName.isEmpty ? "block" : "hidden"
                 }`}
               >
@@ -129,7 +129,7 @@ export default function SignUp() {
               className="w-full outline-none border-2 border-[#D9D9D990] p-2 rounded-md bg-slate-50/10"
             />
             <p
-              className={`text-red-500 text-[.8rem] font-bold italic absolute ${
+              className={`text-red-500 text-[.8rem] right-0 font-bold italic absolute ${
                 errMsg.includes("email") ? "block" : "hidden"
               }`}
             >
@@ -163,7 +163,7 @@ export default function SignUp() {
               )}
             </div>
             <p
-              className={`text-red-500 text-[.8rem] font-bold italic absolute ${
+              className={`text-red-500 text-[.8rem] right-0 font-bold italic absolute ${
                 errMsg.includes("password") ? "block" : "hidden"
               }`}
             >
@@ -200,7 +200,7 @@ export default function SignUp() {
               )}
             </div>
             <p
-              className={`text-red-500 text-[.8rem] font-bold italic absolute ${
+              className={`text-red-500 text-[.8rem] right-0 font-bold italic absolute ${
                 error ? "block" : "hidden"
               }`}
             >
@@ -226,5 +226,5 @@ export default function SignUp() {
         <Footer />
       </div>
     </section>
-  )
+  );
 }

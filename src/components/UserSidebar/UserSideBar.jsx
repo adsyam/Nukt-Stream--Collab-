@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom"
-import { useAuthContext } from "../../context/AuthContext"
-import { useDataContext } from "../../context/DataContext"
-import { UserSidebarMenu } from "../../utils/index"
+import { Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDataContext } from "../../context/DataContext";
+import { UserSidebarMenu } from "../../utils/index";
 
 export default function UserSidebar({ showUserSidebar }) {
-  const { user, logout } = useAuthContext()
-  const { modal, setModal } = useDataContext()
+  const { user, logout } = useAuthContext();
+  const { modal, setModal } = useDataContext();
 
   const toggleModal = () => {
-    setModal(!modal)
-    return (document.body.style.overflow = "hidden")
-  }
+    setModal(!modal);
+    return (document.body.style.overflow = "hidden");
+  };
 
   return (
     <aside
@@ -23,7 +23,7 @@ export default function UserSidebar({ showUserSidebar }) {
     >
       <div className="flex items-center gap-4 mb-3">
         <img
-          src={user.photoURL || "https://i.pravatar.cc/40"}
+          src={user.photoURL || "/src/assets/profile-placeholder.svg"}
           alt="user image"
           className="w-[50px] rounded-full"
         />
@@ -59,5 +59,5 @@ export default function UserSidebar({ showUserSidebar }) {
         ))}
       </div>
     </aside>
-  )
+  );
 }
