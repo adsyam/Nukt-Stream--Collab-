@@ -20,7 +20,7 @@ export default function Footer() {
 
   return (
     <footer
-      className={`w-full text-white bg-transparent font-fig px-[2rem] ${
+      className={`w-full text-white bg-transparent flex flex-col font-fig px-[2rem] ${
         pathname.includes("login") || pathname.includes("signup")
           ? "absolute bottom-0 opacity-75"
           : ""
@@ -29,25 +29,22 @@ export default function Footer() {
       {(!user && pathname.includes("login")) ||
       pathname.includes("signup") ? null : (
         <section
-          className={`flex flex-col xl:flex-row justify-center gap-10 items-start
+          className={`flex justify-center max-lg:flex-col max-lg:items-center gap-10
         xl:items-center py-[5rem] ${
           sidebar ? "relative right-[-10.2%] mr-20" : ""
         }`}
         >
-          <Link
-            to="/home"
-            className="flex gap-3 items-center pb-[2rem] xl:pb-0"
-          >
+          <div className="flex items-center gap-4">
             <img src={nukt_logo} className="w-[100px]" />
             <h2 className="uppercase font-medium text-[2.5rem]">nukt</h2>
-          </Link>
+          </div>
           <div className="w-full xl:w-[70%] flex flex-col lg:flex-row items-center">
             <div className="flex-1 flex gap-[3rem] pb-[2rem] lg:pb-0 items-center justify-center">
               <ul className="flex flex-col gap-2">
                 {FooterLinks1.map((item, index) => (
                   <li
                     key={index}
-                    className="capitalize text-[1.2rem] hover:text-[#7300FF]"
+                    className="capitalize text-[1rem] hover:text-[#7300FF]"
                   >
                     <Link>{item.name}</Link>
                   </li>
@@ -57,7 +54,7 @@ export default function Footer() {
                 {FooterLinks2.map((item, index) => (
                   <li
                     key={index}
-                    className="capitalize text-[1.2rem] hover:text-[#7300FF]"
+                    className="capitalize text-[1rem] hover:text-[#7300FF]"
                   >
                     <Link>{item.name}</Link>
                   </li>
@@ -69,10 +66,10 @@ export default function Footer() {
             md:items-center gap-[2rem]"
             >
               <div className="w-full flex flex-col md:items-center gap-2">
-                <h2 className="text-[1.3rem] capitalize font-bold">
+                <h2 className="text-[1.3rem] capitalize font-bold text-center">
                   connect with us
                 </h2>
-                <ul className="flex gap-4 items-center">
+                <ul className="flex gap-4 items-center justify-center">
                   <li>
                     <Link className="hover:text-[#7300FF] hover:scale-[1.5]">
                       <FontAwesomeIcon

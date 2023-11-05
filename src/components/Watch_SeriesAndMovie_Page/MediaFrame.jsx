@@ -21,7 +21,7 @@ export default function MediaFrame({ server, id }) {
           : "origin-right duration-300"
       }`}
     >
-      <div className="flex items-center justify-center w-[90vw] h-[85vh] rounded-[10px] border-[#ffffff30] border-2 ">
+      <div className="flex items-center justify-center w-[90vw] h-[56.25%] rounded-[10px] border-[#ffffff30] border-2 ">
         {isLoading ? (
           <div className="flex items-center justify-center h-screen">
             <Ripples size={45} speed={2} color="#7300FF" />
@@ -32,7 +32,7 @@ export default function MediaFrame({ server, id }) {
             src={server}
             frameBorder={0}
             allowFullScreen
-            className="aspect-video w-full h-full rounded-[10px]"
+            className="aspect-video w-full h-[56.25%] rounded-[10px]"
           />
         )}
       </div>

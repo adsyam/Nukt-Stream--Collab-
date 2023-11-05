@@ -80,8 +80,8 @@ export default function WatchSeries() {
                 : "w-full origin-right duration-300"
             }`}
           >
-            <div className="flex flex-col gap-4">
-              <div className="flex mx-24 justify-center gap-4">
+            <div className="flex flex-col gap-4 mx-24 max-lg:mx-20 max-sm:mx-12">
+              <div className="flex gap-4">
                 <MediaDetails
                   id={id}
                   Season={season}
@@ -89,7 +89,7 @@ export default function WatchSeries() {
                   mediaType={mediaType}
                 />
               </div>
-              <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap mx-24">
+              <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap">
                 {Array.from(serverLength).map((server, i) => (
                   <motion.li
                     whileHover={{ scale: 1.05 }}

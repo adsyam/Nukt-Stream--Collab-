@@ -7,7 +7,7 @@ export default function SeasonCards({ id }) {
   const { data } = useFetchDetails()
 
   return (
-    <div className="text-white mx-24 flex flex-wrap gap-3">
+    <div className="text-white flex flex-wrap gap-3">
       {data.seasons &&
         data.seasons
           .filter((sea) => sea.season_number > 0)
@@ -15,7 +15,7 @@ export default function SeasonCards({ id }) {
             <Link
               key={i}
               role="button"
-              className={`flex relative items-center justify-center uppercase font-semibold text-lg border-2 rounded-lg overflow-hidden max-w-[10%] ${
+              className={`flex relative items-center justify-center uppercase font-semibold border-2 rounded-lg overflow-hidden max-w-[15%] text-lg max-md:max-w-[25%] max-lg:text-sm ${
                 parseInt(season) === i + 1
                   ? "border-[3px] border-[#7300FF]"
                   : ""
@@ -26,7 +26,7 @@ export default function SeasonCards({ id }) {
                 whileHover={{ scale: 1.05 }}
                 src={`https://image.tmdb.org/t/p/original/${sea.poster_path}`}
                 alt=""
-                className="object-cover object-top brightness-75 "
+                className="object-cover object-top brightness-75 h-full"
               />
               <Link
                 className="absolute"

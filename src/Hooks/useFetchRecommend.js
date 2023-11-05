@@ -1,17 +1,27 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { useLocation, useParams } from "react-router"
 import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
 
-export default function useFetchRecommend() {
+export default function useFetchRecommend(  ) {
   const { id } = useParams()
   const [data, setData] = useState([])
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
+    let mediaType
+
+    if (pathname.includes("Movie")) {
+      mediaType = "movie"
+    } else if (pathname.includes("TVSeries")) {
+      mediaType = "tv"
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${TMDB_BASE_URL}/3/${mediaType}/${id}/recommendations?api_key=${API_KEY}`
+          `${TMDB_BASE_URL}/${mediaType}/${id}/recommendations?api_key=${API_KEY}`
         )
 
         setData(response.data.results)
@@ -19,7 +29,9 @@ export default function useFetchRecommend() {
         console.error("Error Fetching Data:", error)
       }
     }
-  }, [id])
 
-  return
+    fetchData()
+  }, [id, pathname])
+
+  return { data, pathname }
 }

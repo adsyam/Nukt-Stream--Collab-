@@ -10,7 +10,7 @@ import { TOKEN_AUTH } from "../../constants/apiConfig"
 export default function MediaReviews({ id }) {
   const [review, setReview] = useState([])
   const [showReviews, setShowReviews] = useState(false)
-  const [expandedMap, setExpandedMap] = useState({})
+  const [expanded, setExpanded] = useState({})
   const [showRest, setShowRest] = useState(1)
   const [path, setPath] = useState()
 
@@ -26,7 +26,7 @@ export default function MediaReviews({ id }) {
   }, [pathname])
 
   const toggleExpanded = (reviewId) => {
-    setExpandedMap((prevMap) => ({
+    setExpanded((prevMap) => ({
       ...prevMap,
       [reviewId]: !prevMap[reviewId],
     }))
@@ -75,9 +75,9 @@ export default function MediaReviews({ id }) {
   }
 
   return (
-    <div className="my-12 mx-32 flex flex-col gap-2">
+    <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12">
       <div className="flex items-center justify-center gap-2">
-        <img src={defprofile} alt="" width={45} className="rounded-full" />
+        <img src={defprofile} alt="" className="rounded-full max-w-[45px]" />
         <input
           type="text"
           className="w-full px-3 py-2 rounded-md outline-none"
@@ -94,12 +94,10 @@ export default function MediaReviews({ id }) {
             animate="visible"
             transition={{ delay: index * 0.2 }}
           >
-            <div className="text-white flex gap-2 ml-16">
+            <div className="text-white flex gap-2 ml-16 max-xsm:ml-4 mt-3">
               <div className="flex gap-3">
                 <img
-                  width={45}
-                  height={45}
-                  className="rounded-full"
+                  className="rounded-full max-h-[45px]"
                   src={`https://xsgames.co/randomusers/assets/avatars/pixel/${
                     index + 1
                   }.jpg`}
@@ -123,8 +121,8 @@ export default function MediaReviews({ id }) {
                 </div>
               </div>
             </div>
-            <p className="text-white mx-32 font-thin opacity-80 mb-4">
-              {expandedMap[r.id] ? (
+            <div className="text-white font-thin opacity-80 mb-4 xsm:ml-32 max-xsm:ml-4">
+              {expanded[r.id] ? (
                 <div dangerouslySetInnerHTML={{ __html: r.content }}></div>
               ) : (
                 <div
@@ -136,9 +134,9 @@ export default function MediaReviews({ id }) {
               <span
                 role="button"
                 onClick={() => toggleExpanded(r.id)}
-                className="text-[#7300FF] italic "
+                className="text-[#7300FF] italic"
               >
-                {expandedMap[r.id] ? (
+                {expanded[r.id] ? (
                   <>
                     <span className="mr-1">&nbsp;</span>
                     <span className="underline">show less</span>
@@ -150,7 +148,7 @@ export default function MediaReviews({ id }) {
                   </>
                 )}
               </span>
-            </p>
+            </div>
           </motion.div>
         ))}
       </div>
