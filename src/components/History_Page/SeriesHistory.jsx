@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useMemo, useState } from "react"
 import { AiOutlineClose } from "react-icons/ai"
 import { TOKEN_AUTH } from "../../constants/apiConfig"
-import SearchTVSeries from "../Search_Page/SearchSeries"
+import CategoryCard from "../Common/CategoryCard"
 
 export default function SeriesHistory({ reload }) {
   const localStorageValue = window.localStorage.getItem("seriesIds")
@@ -74,7 +74,7 @@ export default function SeriesHistory({ reload }) {
       <div className="flex gap-5 flex-wrap">
         {filteredSeriesDetails.map((seriesDetail, index) => (
           <div key={seriesDetail?.id} className="w-[200px] relative group">
-            <SearchTVSeries
+            <CategoryCard
               tvID={seriesDetail?.id}
               index={index}
               poster={seriesDetail?.poster_path}

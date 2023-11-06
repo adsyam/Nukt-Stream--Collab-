@@ -7,7 +7,7 @@ import "swiper/css/effect-fade"
 import { Autoplay, EffectFade } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import useFetchTrailer from "../../Hooks/useFetchTrailer"
-import { loader_Cine } from "../../assets/index"
+import { loader_Cine, loader_Peek } from "../../assets/index"
 import { API_KEY, TMDB_BASE_URL } from "../../constants/apiConfig"
 import { useDataContext } from "../../context/DataContext"
 import TrailerModal from "../Modal/TrailerModal"
@@ -184,8 +184,8 @@ export default function Carousel({ mediaType }) {
           <Player
             autoplay
             loop
-            src={loader_Cine}
-            className="flex items-center justify-center h-[70vh]"
+            src={loader_Peek}
+            className="flex justify-center h-[70vh] w-[40vw]"
           />
         </div>
       )}

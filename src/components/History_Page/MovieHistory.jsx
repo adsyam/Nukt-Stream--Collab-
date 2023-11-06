@@ -1,21 +1,19 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { TOKEN_AUTH } from "../../constants/apiConfig";
-import SearchMovie from "../Search_Page/SearchMovie";
-import { useMemo } from "react";
+import axios from "axios"
+import { useEffect, useMemo, useState } from "react"
+import { AiOutlineClose } from "react-icons/ai"
+import { TOKEN_AUTH } from "../../constants/apiConfig"
+import CategoryCard from "../Common/CategoryCard"
 
 export default function MovieHistory({ reload }) {
-
-const localStorageValue = window.localStorage.getItem("seriesIds")
+  const localStorageValue = window.localStorage.getItem("seriesIds")
   const storedMovieIds = useMemo(() => {
     return window.localStorage.getItem("movieIds")
       ? JSON.parse(window.localStorage.getItem("movieIds"))
       : []
   }, [localStorageValue])
 
-  const [movieDetails, setMovieDetails] = useState([]);
-  const [itemToDelete, setItemToDelete] = useState(null);
+  const [movieDetails, setMovieDetails] = useState([])
+  const [itemToDelete, setItemToDelete] = useState(null)
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -28,44 +26,44 @@ const localStorageValue = window.localStorage.getItem("seriesIds")
           accept: "application/json",
           Authorization: TOKEN_AUTH,
         },
-      };
-      return axios.request(options);
-    });
+      }
+      return axios.request(options)
+    })
 
     //use Promise.all to fetch all movie details in parallel
     Promise.all(fetchMovieDetailsPromises)
       .then((responses) => {
         //responses will be an array of movie details based on the movie ids
-        const movieDetails = responses.map((response) => response.data);
-        setMovieDetails(movieDetails);
+        const movieDetails = responses.map((response) => response.data)
+        setMovieDetails(movieDetails)
       })
       .catch((error) => {
-        console.error(error);
-      });
-  }, [reload, storedMovieIds]);
+        console.error(error)
+      })
+  }, [reload, storedMovieIds])
 
   const handleDelete = (idToDelete) => {
-    const movieIds = JSON.parse(window.localStorage.getItem("movieIds")) || [];
-    const indexToRemove = movieIds.indexOf(idToDelete.toString());
+    const movieIds = JSON.parse(window.localStorage.getItem("movieIds")) || []
+    const indexToRemove = movieIds.indexOf(idToDelete.toString())
 
     if (indexToRemove !== -1) {
-      movieIds.splice(indexToRemove, 1);
+      movieIds.splice(indexToRemove, 1)
       setMovieDetails((prevMovieDetails) =>
         prevMovieDetails.filter((movieDetail) => movieDetail?.id !== idToDelete)
-      );
-      setItemToDelete(null);
-      window.localStorage.setItem("movieIds", JSON.stringify(movieIds));
+      )
+      setItemToDelete(null)
+      window.localStorage.setItem("movieIds", JSON.stringify(movieIds))
     }
-  };
+  }
 
   const filteredMovieDetails = movieDetails.filter(
     (movieDetail) => movieDetail?.id !== itemToDelete
-  );
+  )
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  };
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -73,7 +71,7 @@ const localStorageValue = window.localStorage.getItem("seriesIds")
       <div className="flex gap-5 flex-wrap">
         {filteredMovieDetails.map((movieDetail, index) => (
           <div key={movieDetail?.id} className="w-[200px] relative group">
-            <SearchMovie
+            <CategoryCard
               MovieID={movieDetail?.id}
               index={index}
               poster={movieDetail?.poster_path}
@@ -94,5 +92,5 @@ const localStorageValue = window.localStorage.getItem("seriesIds")
         ))}
       </div>
     </div>
-  );
+  )
 }

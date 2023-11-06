@@ -13,8 +13,6 @@ import Plans from "./NoUser/Plans.jsx"
 import Pricing from "./NoUser/Pricing.jsx"
 import ProtectedRoute from "./Route_Protection/ProtectedRoute.jsx"
 import RedirectRoute from "./Route_Protection/RedirectRoute.jsx"
-import SearchMovie from "./Search_Page/SearchMovie.jsx"
-import SearchSeries from "./Search_Page/SearchSeries.jsx"
 import Popular from "./Series_Movie_Section/Popular.jsx"
 import TopRated from "./Series_Movie_Section/TopRated.jsx"
 import Trending from "./Series_Movie_Section/Trending.jsx"
@@ -69,8 +67,6 @@ export {
   ProtectedRoute,
   RedirectRoute,
   Reviews,
-  SearchMovie,
-  SearchSeries,
   SeasonCards,
   SeriesHistory,
   TopRated,
