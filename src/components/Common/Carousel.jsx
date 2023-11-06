@@ -136,7 +136,15 @@ export default function Carousel({ mediaType }) {
                       <Link
                         className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold cursor-pointer text-black"
                         to={
-                          mediaType === "tv"
+                          pathname.includes("/home") &&
+                          !pathname.includes("/home/popular") &&
+                          !pathname.includes("/home/trending") &&
+                          !pathname.includes("/home/toprated") &&
+                          !pathname.includes("/home/latest")
+                            ? d.media_type === "tv"
+                              ? `/TVSeries/${d.id}/1/1`
+                              : `/Movie/${d.id}`
+                            : mediaType === "tv"
                             ? `/TVSeries/${d.id}/1/1`
                             : `/Movie/${d.id}`
                         }
