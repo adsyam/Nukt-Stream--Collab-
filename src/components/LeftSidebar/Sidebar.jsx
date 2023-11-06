@@ -12,9 +12,11 @@ export default function Sidebar({ showSidebar }) {
   const { user } = useAuthContext()
   const {setSidebar} = useDataContext()
 
-  useEffect(() => {
-    if (!user) setSidebar(false)
-  }, [user, setSidebar])
+    useEffect(() => {
+    if (!user) setSidebar(false);
+    if (pathname) setSidebar(false);
+  }, [user, setSidebar, pathname]);
+
 
   return (
     <aside

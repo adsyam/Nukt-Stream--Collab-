@@ -1,4 +1,5 @@
-import { faStar } from "@fortawesome/free-regular-svg-icons"
+// import { faStar } from "@fortawesome/free-regular-svg-icons"
+import { faStar } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { AiOutlineClose } from "react-icons/ai"
@@ -22,15 +23,15 @@ export default function FeedbackModal({ active }) {
     <section
       className={`${
         active ? "block" : "hidden overflow-auto"
-      } fixed top-0 left-0 z-[100] text-white bg-[#0d0d0d10] backdrop-blur-[2px]
+      } fixed top-0 left-0 z-[100] text-black bg-[#0d0d0d10] backdrop-blur-[2px]
         w-full h-full grid place-items-center`}
     >
       {!sendFeedback ? (
-        <div className="bg-[#0d0d0d] min-w-[400px] p-[1.5rem] flex flex-col gap-5">
+        <div className="bg-[#ffffff90] min-w-[400px] p-[1.5rem] flex flex-col gap-5 rounded-md">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <img src={nukt_logo} className="w-[50px]" />
-              <h2 className="capitalize">send a feedback to us</h2>
+              <h2 className="capitalize font-semibold">send a feedback to us</h2>
             </div>
             <button
               onClick={() => (
@@ -47,7 +48,7 @@ export default function FeedbackModal({ active }) {
                 key={index}
                 icon={faStar}
                 className="text-md cursor-pointer"
-                color={index + 1 <= (hover || rating) ? "#389FDD" : ""}
+                color={index + 1 <= (hover || rating) ? "#7300FF" : ""}
                 onMouseEnter={() => setHover(index + 1)}
                 onMouseLeave={() => setHover(null)}
                 onClick={() => setRating(index + 1)}
@@ -60,7 +61,7 @@ export default function FeedbackModal({ active }) {
               <textarea
                 cols="40"
                 rows="10"
-                className="resize-none text-black px-1"
+                className="resize-none text-black px-1 rounded-md"
               ></textarea>
               <p className="text-sm text-white/50">
                 **do not include any sensitive information
@@ -68,10 +69,10 @@ export default function FeedbackModal({ active }) {
             </div>
             <button
               onClick={() => setSendFeedback(!sendFeedback)}
-              className="capitalize border-2 py-1 hover:border-[#389FDD] hover:bg-[#389FDD]
+              className="capitalize border-2 py-1 hover:border-[#ffffff90] hover:bg-[#ffffff90]
               rounded-md mt-[2rem]"
             >
-              submit
+              SUBMIT
             </button>
           </form>
         </div>
