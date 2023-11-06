@@ -1,12 +1,16 @@
 //this file is mainly for our communication with firebase platform
 import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider } from "firebase/auth"
+// import 'dotenv/config'
 
 const firebaseConfig = {
   //FOR LOCAL
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+//   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   //FOR DEPLOYMENT
-//   apiKey: process.env.VITE_FIREBASE_API_KEY,
+  //   apiKey: process.env.VITE_FIREBASE_API_KEY,
+
+    apiKey: "AIzaSyBdvKedlvRIdhwlSkzWBPXHsE44pr2aSeY",
+
   authDomain: "nukt-999af.firebaseapp.com",
   projectId: "nukt-999af",
   storageBucket: "nukt-999af.appspot.com",
