@@ -3,7 +3,10 @@ import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider } from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBdvKedlvRIdhwlSkzWBPXHsE44pr2aSeY",
+  //FOR LOCAL
+  //   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  //FOR DEPLOYMENT
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
   authDomain: "nukt-999af.firebaseapp.com",
   projectId: "nukt-999af",
   storageBucket: "nukt-999af.appspot.com",

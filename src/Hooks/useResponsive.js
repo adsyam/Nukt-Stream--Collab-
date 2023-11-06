@@ -16,7 +16,6 @@ export default function useResponsive() {
   const responsiveGridCard = `grid grid-cols-8 max-xl:grid-cols-7 max-lg:grid-cols-6 max-md:grid-cols-5 mx-32 max-lg:mx-20 max-sm:mx-12 max-sm:grid-cols-4 max-xsm:grid-cols-3 max-xxsm:grid-cols-2 gap-4 text-white`
 
   const responsiveEpisodeList = `text-white w-fit whitespace-nowrap grid grid-cols-20 gap-2 max-xl:grid-cols-16 max-lg:grid-cols-10 gap-x-4 max-md:grid-cols-9 max-sm:grid-cols-7 max-xsm:grid-cols-5 max-xxsm:grid-cols-4`
-  // const responsiveEpisodeList = `text-white mx-24 w-fit whitespace-nowrap flex flex-wrap justify-evenly`
 
   useEffect(() => {
     if (xxsm) setMaxCards(9)
