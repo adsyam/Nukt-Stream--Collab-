@@ -1,20 +1,20 @@
-import axios from "axios"
-import { useEffect, useMemo, useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import { TOKEN_AUTH } from "../../constants/apiConfig"
-import CategoryCard from "../Common/CategoryCard"
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { TOKEN_AUTH } from "../../constants/apiConfig";
+import CategoryCard from "../Common/CategoryCard";
 
 export default function SeriesHistory({ reload }) {
-  const localStorageValue = window.localStorage.getItem("seriesIds")
+  const localStorageValue = window.localStorage.getItem("seriesIds");
 
   const storedSeriesIds = useMemo(() => {
     return window.localStorage.getItem("seriesIds")
       ? JSON.parse(window.localStorage.getItem("seriesIds"))
-      : []
-  }, [localStorageValue])
+      : [];
+  }, [localStorageValue]);
 
-  const [seriesDetails, setSeriesDetails] = useState([])
-  const [itemToDelete, setItemToDelete] = useState("")
+  const [seriesDetails, setSeriesDetails] = useState([]);
+  const [itemToDelete, setItemToDelete] = useState("");
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -27,46 +27,47 @@ export default function SeriesHistory({ reload }) {
           accept: "application/json",
           Authorization: TOKEN_AUTH,
         },
-      }
-      return axios.request(options)
-    })
+      };
+      return axios.request(options);
+    });
 
     //use Promise.all to fetch all movie details in parallel
     Promise.all(fetchSeriesDetailsPromises)
       .then((responses) => {
         //responses will be an array of movie details based on the movie ids
-        const seriesDetails = responses.map((response) => response.data)
-        setSeriesDetails(seriesDetails)
+        const seriesDetails = responses.map((response) => response.data);
+        setSeriesDetails(seriesDetails);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }, [reload, storedSeriesIds])
+        console.error(error);
+      });
+  }, [reload]);
 
   const handleDelete = (idToDelete) => {
-    const seriesIds = JSON.parse(window.localStorage.getItem("seriesIds")) || []
-    const indexToRemove = seriesIds.indexOf(idToDelete.toString())
+    const seriesIds =
+      JSON.parse(window.localStorage.getItem("seriesIds")) || [];
+    const indexToRemove = seriesIds.indexOf(idToDelete.toString());
 
     if (indexToRemove !== -1) {
-      seriesIds.splice(indexToRemove, 1)
+      seriesIds.splice(indexToRemove, 1);
       setSeriesDetails((prevSeriesDetails) =>
         prevSeriesDetails.filter(
           (seriesDetail) => seriesDetail?.id !== idToDelete
         )
-      )
-      setItemToDelete(null)
-      window.localStorage.setItem("seriesIds", JSON.stringify(seriesIds))
+      );
+      setItemToDelete(null);
+      window.localStorage.setItem("seriesIds", JSON.stringify(seriesIds));
     }
-  }
+  };
 
   const filteredSeriesDetails = seriesDetails.filter(
     (seriesDetail) => seriesDetail?.id !== itemToDelete
-  )
+  );
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  }
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -95,5 +96,5 @@ export default function SeriesHistory({ reload }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
