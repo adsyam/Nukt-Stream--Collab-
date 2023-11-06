@@ -65,7 +65,7 @@ export default function History() {
         <h1 className="text-[1.5rem] font-medium">History Feed</h1>
         <button
           onClick={handleClear}
-          className="capitalize font-medium bg-white/20 p-[.5rem] rounded-lg hover:bg-[#389FDD]"
+          className="capitalize font-medium bg-white/20 p-[.5rem] rounded-lg hover:bg-[#7300FF]"
         >
           clear history
         </button>
