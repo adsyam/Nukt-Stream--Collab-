@@ -25,7 +25,7 @@ export default function MediaFrame({ server, id }) {
         className={`flex items-center justify-center w-full h-[56.25%] mt-20 rounded-[10px] border-[#ffffff30] border-2`}
       >
         {isLoading ? (
-          <div className="flex items-center justify-center w-full h-[100%]">
+          <div className="flex items-center justify-center w-full h-[100%] aspect-video">
             <Ripples size={45} speed={2} color="#7300FF" />
           </div>
         ) : (
