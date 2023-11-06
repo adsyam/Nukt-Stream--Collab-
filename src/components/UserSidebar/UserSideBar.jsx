@@ -1,16 +1,22 @@
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
-import { useDataContext } from "../../context/DataContext";
-import { UserSidebarMenu } from "../../utils/index";
+import { useEffect } from "react"
+import { Link } from "react-router-dom"
+import useFetchDetails from "../../Hooks/useFetchDetails"
+import { useAuthContext } from "../../context/AuthContext"
+import { useDataContext } from "../../context/DataContext"
+import { UserSidebarMenu } from "../../utils/index"
 
 export default function UserSidebar({ showUserSidebar }) {
-  const { user, logout } = useAuthContext();
-  const { modal, setModal } = useDataContext();
+  const { user, logout } = useAuthContext()
+  const { modal, setModal, setUserSidebar } = useDataContext()
 
   const toggleModal = () => {
-    setModal(!modal);
-    return (document.body.style.overflow = "hidden");
-  };
+    setModal(!modal)
+    return (document.body.style.overflow = "hidden")
+  }
+
+  useEffect(() => {
+    if (logout) setUserSidebar(false)
+  }, [logout, setUserSidebar])
 
   return (
     <aside
@@ -59,5 +65,5 @@ export default function UserSidebar({ showUserSidebar }) {
         ))}
       </div>
     </aside>
-  );
+  )
 }
