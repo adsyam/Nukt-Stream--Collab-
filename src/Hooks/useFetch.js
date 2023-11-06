@@ -14,11 +14,11 @@ const options = {
   headers: {
     //FOR LOCAL
     // "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY_1,
-    // "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY_2,
+    "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY_2,
 
     //FOR DEPLOYMENT
     // "X-RapidAPI-Key": process.env.VITE_RAPID_API_KEY_1,
-    "X-RapidAPI-Key": process.env.VITE_RAPID_API_KEY_2,
+    // "X-RapidAPI-Key": process.env.VITE_RAPID_API_KEY_2,
 
     "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
   },
