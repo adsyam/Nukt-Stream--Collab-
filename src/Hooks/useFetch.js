@@ -5,9 +5,9 @@ import axios from "axios"
 
 
 const apiKeys = [
-  // "8f5e478a21msh9eb5ba222359471p1d1849jsn3faf4f30b90b",
-  // "e05035a5a5msheb07c768f5e3a59p16a60fjsncdc9b291ae84",
-  // "ed0a539809msh98aa1b35b247e32p1c34acjsn247e753f46e3",
+  import.meta.env.VITE_RAPID_API_KEY_1,
+  import.meta.env.VITE_RAPID_API_KEY_2,
+  import.meta.env.VITE_RAPID_API_KEY_3,
 ]
 
 let currentApiKeyIndex = 0
@@ -21,14 +21,6 @@ const options = {
     maxResults: "20",
   },
   headers: {
-    //FOR LOCAL
-    // "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY_1,
-    // "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY_2,
-
-    //FOR DEPLOYMENT
-    // "X-RapidAPI-Key": process.env.VITE_RAPID_API_KEY_1,
-    // "X-RapidAPI-Key": process.env.VITE_RAPID_API_KEY_2,
-
     "X-RapidAPI-Key": apiKeys[currentApiKeyIndex],
     "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
   },
