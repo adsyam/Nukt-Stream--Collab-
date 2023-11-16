@@ -9,6 +9,7 @@ import loader_Cine from './Cine_Loader.json'
 import loader_Gradient from './GradientLoader.json'
 import loader_Geometric from './GeometricLoader.json'
 import auth_bg from './BG.jpg'
+import loader_Peek from './Peek_Loader.json'
 // import loader_Cine_Lottie from './Cine_lottie.lottie'
 
-export {nukt_logo, defprofile, load1, loader_Melt, loader_Magnify, loader_Lava, loader_Wave, loader_Cine, loader_Gradient, loader_Geometric, auth_bg}
+export {nukt_logo, defprofile, load1, loader_Melt, loader_Magnify, loader_Lava, loader_Wave, loader_Cine, loader_Gradient, loader_Geometric, auth_bg, loader_Peek}

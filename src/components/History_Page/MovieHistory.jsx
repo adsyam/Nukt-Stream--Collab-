@@ -1,18 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { TOKEN_AUTH } from "../../constants/apiConfig";
-import SearchMovie from "../Search_Page/SearchMovie";
-import { useMemo } from "react";
+import CategoryCard from "../Common/CategoryCard";
 
 export default function MovieHistory({ reload }) {
+  const localStorageValue = window.localStorage.getItem("movieIds");
 
-const localStorageValue = window.localStorage.getItem("seriesIds")
   const storedMovieIds = useMemo(() => {
     return window.localStorage.getItem("movieIds")
       ? JSON.parse(window.localStorage.getItem("movieIds"))
-      : []
-  }, [localStorageValue])
+      : [];
+  }, [localStorageValue]);
 
   const [movieDetails, setMovieDetails] = useState([]);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -42,7 +41,7 @@ const localStorageValue = window.localStorage.getItem("seriesIds")
       .catch((error) => {
         console.error(error);
       });
-  }, [reload, storedMovieIds]);
+  }, [reload]);
 
   const handleDelete = (idToDelete) => {
     const movieIds = JSON.parse(window.localStorage.getItem("movieIds")) || [];
@@ -73,7 +72,7 @@ const localStorageValue = window.localStorage.getItem("seriesIds")
       <div className="flex gap-5 flex-wrap">
         {filteredMovieDetails.map((movieDetail, index) => (
           <div key={movieDetail?.id} className="w-[200px] relative group">
-            <SearchMovie
+            <CategoryCard
               MovieID={movieDetail?.id}
               index={index}
               poster={movieDetail?.poster_path}

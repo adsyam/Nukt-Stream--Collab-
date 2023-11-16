@@ -45,6 +45,7 @@ export const DataProvider = ({ children }) => {
         setSidebar,
         userSidebar,
         showUserSidebar,
+        setUserSidebar,
         isActive,
         location,
         dropDown,

@@ -85,6 +85,8 @@ export default function SearchMedia() {
                         animation={fadeInVariants}
                         rating={md.vote_average.toFixed(1)}
                         mediaType={"movie"}
+                        releaseDate={md.release_date}
+                        firstAirDate={md.first_air_date}
                       />
                     ))}
                 </div>
@@ -109,6 +111,8 @@ export default function SearchMedia() {
                         animation={fadeInVariants}
                         rating={tv.vote_average.toFixed(1)}
                         mediaType={"tv"}
+                        releaseDate={tv.release_date}
+                        firstAirDate={tv.first_air_date}
                       />
                     ))}
                 </div>

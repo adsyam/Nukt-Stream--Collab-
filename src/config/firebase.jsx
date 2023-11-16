@@ -1,6 +1,7 @@
 //this file is mainly for our communication with firebase platform
 import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider } from "firebase/auth"
+// import 'dotenv/config'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
