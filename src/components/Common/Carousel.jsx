@@ -52,7 +52,7 @@ export default function Carousel({ mediaType }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${url}`)
+        const response = await axios.get(url)
 
         setData(response.data.results)
         setTimeout(() => {
@@ -106,9 +106,9 @@ export default function Carousel({ mediaType }) {
                   src={`https://image.tmdb.org/t/p/original/${d.backdrop_path}`}
                   alt={`${d.original_title} backdrop`}
                 />
-                <div className="absolute z-10 bottom-0 m-10 w-full">
-                  <div className="flex flex-col gap-3 w-full">
-                    <p className="text-[68px] font-bold break-words w-[70%] max-xsm:text-4xl">
+                <div className="absolute bottom-0 z-10 w-full m-10">
+                  <div className="flex flex-col w-full gap-3">
+                    <p className={`text-6xl font-bold break-words w-[70%] max-xsm:text-4xl }`}>
                       {d.original_title || d.original_name}
                     </p>
                     <div>
@@ -117,7 +117,7 @@ export default function Carousel({ mediaType }) {
                         {d.overview}
                       </p>
                     </div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex items-center gap-2">
                       {pathname.includes("popular") ||
                       pathname.includes("trending") ||
                       pathname.includes("toprated") ||
@@ -132,7 +132,7 @@ export default function Carousel({ mediaType }) {
                       )}
                       <GenreMap CarouselGenre={d} />
                     </div>
-                    <div className="flex gap-3 flex-wrap">
+                    <div className="flex flex-wrap gap-3">
                       <Link
                         className="bg-white py-2 px-4 rounded-[3px] shadow-inner font-bold cursor-pointer text-black"
                         to={
