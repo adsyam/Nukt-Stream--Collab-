@@ -21,13 +21,13 @@ export default function Popular() {
 
   return (
     <>
-      <motion.section
+      {/* <motion.section
         initial={{ y: 200, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7 }}
         viewport={{ once: true, amount: 0.1 }}
         className={`flex justify-center`}
-      >
+      > */}
         <div
           className={`text-white py-12 gap-1`}
         >
@@ -49,9 +49,9 @@ export default function Popular() {
               </div>
             </div>
           ) : (
-            <div className="flex items-center px-2 justify-between mx-32 max-lg:mx-20 max-sm:mx-12">
-              <div className="flex gap-2 items-center">
-                <h1 className="text-2xl mb-1 font-medium">Popular</h1>
+            <div className="flex items-center justify-between px-2 mx-32 max-lg:mx-20 max-sm:mx-12">
+              <div className="flex items-center gap-2">
+                <h1 className="mb-1 text-2xl font-medium">Popular</h1>
                 <div className="flex gap-2 px-3 py-1 rounded-md">
                   <MediaTypeButton
                     setMediaType={setMediaType}
@@ -98,7 +98,7 @@ export default function Popular() {
                   ))}
           </div>
         </div>
-      </motion.section>
+      {/* </motion.section> */}
     </>
   )
 }
