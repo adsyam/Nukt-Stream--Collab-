@@ -15,10 +15,10 @@ export default function SeasonCards({ id }) {
             <Link
               key={i}
               role="button"
-              className={`flex relative items-center justify-center uppercase font-semibold border-2 rounded-lg overflow-hidden max-w-[15%] text-lg max-md:max-w-[25%] max-lg:text-sm ${
+              className={`flex relative items-center justify-center uppercase font-semibold border-2 rounded-md overflow-hidden max-w-[15%] text-lg max-md:max-w-[25%] max-lg:text-sm ${
                 parseInt(season) === i + 1
-                  ? "border-[3px] border-[#7300FF]"
-                  : ""
+                  ? "border-[2px] border-[#7300FF]"
+                  : "border-[#868686]"
               }`}
               to={`/TVSeries/${id}/${i + 1}/1`}
             >

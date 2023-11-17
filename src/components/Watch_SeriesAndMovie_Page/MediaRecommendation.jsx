@@ -24,8 +24,8 @@ export default function MediaRecommendation({ id }) {
   }, [pathname])
 
   return (
-    <div className="text-white mx-24 max-lg:mx-20 max-sm:mx-12 py-12 px-3">
-      <h1 className=" text-2xl mb-1 font-medium">
+    <div className={`text-white ${pathname.includes("Movie") ? "mt-10 mx-2" : "mx-24 max-lg:mx-20 max-sm:mx-12 py-12 px-3" } `}>
+      <h1 className="text-center uppercase text-2xl mb-4 font-medium">
         Recommended {mediaType === "tv" ? "Series" : "Movies"}
       </h1>
       <div

@@ -28,8 +28,8 @@ export default function WatchVideo() {
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
       (doc) => setHistoryToggle(doc.data().storeHistory)
-    );
-  }, []);
+    )
+  }, [user.uid])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -74,9 +74,9 @@ export default function WatchVideo() {
               <VideoDescriptions videoDetail={videoDetails} />
             </div>
           </div>
-          <div className="flex flex-1 flex-col lg:flex-row items-baseline w-full">
+          <div className="flex flex-col items-baseline flex-1 w-full lg:flex-row">
             <Reviews comments={comments} />
-            <div className="flex flex-1 flex-col">
+            <div className="flex flex-col flex-1">
               <p className="text-white text-center text-[1.5rem] font-medium">
                 Related Videos
               </p>

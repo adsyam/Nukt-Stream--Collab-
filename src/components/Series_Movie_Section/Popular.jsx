@@ -21,13 +21,6 @@ export default function Popular() {
 
   return (
     <>
-      {/* <motion.section
-        initial={{ y: 200, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true, amount: 0.1 }}
-        className={`flex justify-center`}
-      > */}
         <div
           className={`text-white py-12 gap-1`}
         >
@@ -98,7 +91,6 @@ export default function Popular() {
                   ))}
           </div>
         </div>
-      {/* </motion.section> */}
     </>
   )
 }

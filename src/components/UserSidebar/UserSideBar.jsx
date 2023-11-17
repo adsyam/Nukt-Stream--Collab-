@@ -1,35 +1,34 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { getDownloadURL, listAll, ref } from "firebase/storage"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
-import { UserSidebarMenu } from "../../utils/index";
-import useFetchDetails from "../../Hooks/useFetchDetails";
-import { useAuthContext } from "../../context/AuthContext";
-import { useDataContext } from "../../context/DataContext";
-import { fileDB } from "../../config/firebase";
+import { fileDB } from "../../config/firebase"
+import { useAuthContext } from "../../context/AuthContext"
+import { useDataContext } from "../../context/DataContext"
+import { UserSidebarMenu } from "../../utils/index"
 
 export default function UserSidebar({ showUserSidebar }) {
-  const { user, logout } = useAuthContext();
-  const { modal, setModal, setUserSidebar } = useDataContext();
-  const [imageUrl, setImageUrl] = useState(null);
+  const { user, logout } = useAuthContext()
+  const { modal, setModal, setUserSidebar } = useDataContext()
+  const [imageUrl, setImageUrl] = useState(null)
 
   const toggleModal = () => {
-    setModal(!modal);
-    return (document.body.style.overflow = "hidden");
-  };
+    setModal(!modal)
+    return (document.body.style.overflow = "hidden")
+  }
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profilePic/`);
+    const listRef = ref(fileDB, `${user?.uid}/profilePic/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, []);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   useEffect(() => {
-    if (logout) setUserSidebar(false);
-  }, [logout, setUserSidebar]);
+    if (logout) setUserSidebar(false)
+  }, [logout, setUserSidebar])
 
   return (
     <aside
@@ -80,5 +79,5 @@ export default function UserSidebar({ showUserSidebar }) {
         ))}
       </div>
     </aside>
-  );
+  )
 }

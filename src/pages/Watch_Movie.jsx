@@ -1,37 +1,35 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import { useEffect, useState } from "react";
-import useFetchDetails from "../Hooks/useFetchDetails";
-import { loader_Geometric } from "../assets";
+import { doc, onSnapshot } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import useFetchDetails from "../Hooks/useFetchDetails"
 import {
   Footer,
   MediaDetails,
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
-} from "../components";
-import { useDataContext } from "../context/DataContext";
-import { useAuthContext } from "../context/AuthContext";
-import { useDBContext } from "../context/DBContext";
-import { textDB } from "../config/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+} from "../components"
+import { textDB } from "../config/firebase"
+import { useAuthContext } from "../context/AuthContext"
+import { useDBContext } from "../context/DBContext"
+import { useDataContext } from "../context/DataContext"
 
 export default function WatchMovie() {
-  const { id, isLoading, setIsLoading, pathname } = useFetchDetails();
-  const [path, setPath] = useState();
-  const [historyToggle, setHistoryToggle] = useState(true);
+  const { id, isLoading, setIsLoading, pathname } = useFetchDetails()
+  const [path, setPath] = useState()
+  const [historyToggle, setHistoryToggle] = useState(true)
 
   const [server, setServer] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
-  );
-  const { sidebar } = useDataContext();
-  const { user } = useAuthContext();
-  const { addHistoryOrLibrary } = useDBContext();
+  )
+  const { sidebar } = useDataContext()
+  const { user } = useAuthContext()
+  const { addHistoryOrLibrary } = useDBContext()
 
-  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`;
-  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}`;
-  const server3 = `https://vidsrc.to/embed/${path}/${id}/`;
-  const server4 = `https://2embed.org/series.php?id=${id}/`;
-  const server5 = `https://www.2embed.cc/embed/${id}/`;
+  const server1 = `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
+  const server2 = `https://vidsrc.me/embed/${path}?tmdb=${id}`
+  const server3 = `https://vidsrc.to/embed/${path}/${id}/`
+  const server4 = `https://2embed.org/series.php?id=${id}/`
+  const server5 = `https://www.2embed.cc/embed/${id}/`
 
   //---this will be a listener for the toggle history
   useEffect(() => {
@@ -39,29 +37,41 @@ export default function WatchMovie() {
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
       (doc) => setHistoryToggle(doc.data().storeHistory)
-    );
-  }, []);
+    )
+  }, [])
 
   useEffect(() => {
     //===== this code is for watch history =======
     const timeout = setTimeout(() => {
       if (historyToggle) {
-        addHistoryOrLibrary(user?.uid, "history", "movies", id);
+        addHistoryOrLibrary(user?.uid, "history", "movies", id)
       }
-    }, 1000);
+    }, 1000)
     //===== this code is for watch history =======
-    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie");
+    pathname.includes("/TVSeries") ? setPath("tv") : setPath("movie")
 
     setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+      setIsLoading(false)
+    }, 2000)
 
-    return () => clearTimeout(timeout);
-  }, [pathname, id, setIsLoading]);
+    return () => clearTimeout(timeout)
+  }, [pathname, id, setIsLoading])
 
   return (
     <>
-      <MediaFrame id={id} server={server} />
+      <div className="flex gap-4 mx-10 mt-20">
+        <div className="flex flex-col w-full gap-4">
+          <MediaFrame id={id} server={server} />
+          <MediaRecommendation id={id} />
+        </div>
+        <MediaDetails
+          id={id}
+          mediaType={pathname.includes("Movie") && "movie"}
+        />
+      </div>
+      <MediaReviews id={id} />
+      <Footer />
+      {/* <MediaFrame id={id} server={server} />
       {!isLoading ? (
         <>
           <div
@@ -80,8 +90,8 @@ export default function WatchMovie() {
                 />
               </div>
             </div>
-            <div className="p-2 rounded-md mx-24 max-lg:mx-20 max-sm:mx-12 text-white flex flex-col gap-2">
-              <ul className="flex items-center gap-2 flex-wrap">
+            <div className="flex flex-col gap-2 p-2 mx-24 text-white rounded-md max-lg:mx-20 max-sm:mx-12">
+              <ul className="flex flex-wrap items-center gap-2">
                 {[
                   { name: "Server 1", url: server1 },
                   { name: "Server 2", url: server2 },
@@ -122,7 +132,7 @@ export default function WatchMovie() {
             className="h-[35vh] flex items-center justify-center"
           />
         </div>
-      )}
+      )} */}
     </>
-  );
+  )
 }

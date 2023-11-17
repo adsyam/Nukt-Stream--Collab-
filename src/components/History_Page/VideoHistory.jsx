@@ -20,8 +20,8 @@ export default function VideoHistory({ reload }) {
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
       (doc) => setVideoIds(doc.data().history.videos)
-    );
-  }, []);
+    )
+  }, [user.uid])
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -69,7 +69,7 @@ export default function VideoHistory({ reload }) {
   return (
     <section className="w-full min-h-max">
       {videoIds.length < 1 ? "" : <h2>Videos</h2>}
-      <div className="w-full flex items-center gap-5 flex-wrap relative">
+      <div className="relative flex flex-wrap items-center w-full gap-5">
         {videoDetails.map((video, index) => (
           <div key={index} className="relative group">
             <VideoCard key={index} item={video.items[0]} />

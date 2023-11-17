@@ -36,13 +36,13 @@ export default function Navbar() {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profilePic/`);
+    const listRef = ref(fileDB, `${user?.uid}/profilePic/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, []);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   useEffect(() => {
     if (
@@ -114,20 +114,20 @@ export default function Navbar() {
               <FontAwesomeIcon
                 role="button"
                 icon={faXmark}
-                className="text-white text-2xl"
+                className="text-2xl text-white"
               />
             ) : (
               <FontAwesomeIcon
                 role="button"
                 icon={faBars}
-                className="text-white text-2xl"
+                className="text-2xl text-white"
               />
             )}
           </button>
           {!showSearchbar && (
-            <Link to={"/home"} className="w-max flex items-center gap-2">
+            <Link to={"/home"} className="flex items-center gap-2 w-max">
               <img src={nukt_logo} alt="" width={35} height={41} />
-              <p className="text-white font-bold hidden md:block">Nukt</p>
+              <p className="hidden font-bold text-white md:block">Nukt</p>
             </Link>
           )}
         </div>

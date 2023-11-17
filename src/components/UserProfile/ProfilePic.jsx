@@ -24,13 +24,13 @@ export default function ProfilePic({ image }) {
   };
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profilePic/`);
+    const listRef = ref(fileDB, `${user?.uid}/profilePic/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, []);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   return (
     <div
@@ -40,7 +40,7 @@ export default function ProfilePic({ image }) {
       <img
         src={imageUrl || image || "../../assets/profile-placeholder.svg"}
         alt="user profile pic"
-        className="rounded-full w-full h-full object-cover"
+        className="object-cover w-full h-full rounded-full"
       />
       <div
         role="button"

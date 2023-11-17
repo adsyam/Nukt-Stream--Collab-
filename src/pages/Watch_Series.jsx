@@ -1,35 +1,33 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import { useEffect, useState } from "react";
-import { loader_Geometric } from "../assets";
+import { useEffect, useState } from "react"
 
-import { motion } from "framer-motion";
-import useFetchDetails from "../Hooks/useFetchDetails";
+import { doc, onSnapshot } from "firebase/firestore"
+import { motion } from "framer-motion"
+import useFetchDetails from "../Hooks/useFetchDetails"
 import {
   EpisodeList,
-  Footer,
   MediaDetails,
   MediaFrame,
+  SeasonCards,
   MediaRecommendation,
   MediaReviews,
-  SeasonCards,
-} from "../components";
-import { useDataContext } from "../context/DataContext";
-import { useAuthContext } from "../context/AuthContext";
-import { useDBContext } from "../context/DBContext";
-import { textDB } from "../config/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+  Footer
+} from "../components"
+import { textDB } from "../config/firebase"
+import { useAuthContext } from "../context/AuthContext"
+import { useDBContext } from "../context/DBContext"
+import { useDataContext } from "../context/DataContext"
 
 export default function WatchSeries() {
   const { id, season, episode, isLoading, setIsLoading, pathname, data } =
-    useFetchDetails();
-  const [mediaType, setMediaType] = useState();
-  const [server, setServer] = useState("Server1");
-  const [currentServer, setCurrentServer] = useState();
-  const [historyToggle, setHistoryToggle] = useState(true);
+    useFetchDetails()
+  const [mediaType, setMediaType] = useState()
+  const [server, setServer] = useState("Server1")
+  const [currentServer, setCurrentServer] = useState()
+  const [historyToggle, setHistoryToggle] = useState(true)
 
-  const { user } = useAuthContext();
-  const { sidebar } = useDataContext();
-  const { addHistoryOrLibrary } = useDBContext();
+  const { user } = useAuthContext()
+  const { sidebar } = useDataContext()
+  const { addHistoryOrLibrary } = useDBContext()
 
   const serverLength = [
     "Server 1",
@@ -37,7 +35,7 @@ export default function WatchSeries() {
     "Server 3",
     "Server 4",
     "Server 5",
-  ];
+  ]
 
   //===== this code is for watch history =======
   useEffect(() => {
@@ -45,18 +43,18 @@ export default function WatchSeries() {
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
       (doc) => setHistoryToggle(doc.data().storeHistory)
-    );
-  }, []);
+    )
+  }, [user.uid])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (historyToggle) {
-        addHistoryOrLibrary(user?.uid, "history", "series", id);
+        addHistoryOrLibrary(user?.uid, "history", "series", id)
       }
-    }, 1000);
+    }, 1000)
 
-    return () => clearTimeout(timeout);
-  }, []);
+    return () => clearTimeout(timeout)
+  }, [addHistoryOrLibrary, historyToggle, id, user?.uid])
 
   useEffect(() => {
     const servers = {
@@ -65,28 +63,64 @@ export default function WatchSeries() {
       Server3: `https://vidsrc.to/embed/${mediaType}/${id}/${season}/${episode}/`,
       Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
       Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
-    };
+    }
     if (server in servers) {
-      setCurrentServer(servers[server]);
+      setCurrentServer(servers[server])
     }
 
-    pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie");
+    pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie")
 
     setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, [server, mediaType, id, season, episode, pathname, setIsLoading]);
+      setIsLoading(false)
+    }, 2000)
+  }, [server, mediaType, id, season, episode, pathname, setIsLoading])
 
   return (
     <>
-      <MediaFrame
+      <div className="flex gap-4 mx-10 mt-20">
+        <div className="flex flex-col w-full gap-4">
+          <MediaFrame
+            id={id}
+            season={season}
+            episode={episode}
+            server={currentServer}
+            path={mediaType}
+          />
+          <div className="flex flex-col gap-4 border-2 border-[#86868650] p-3 pb-4 rounded-md">
+            <ul className="flex flex-wrap text-[#868686] gap-4">
+              {Array.from(serverLength).map((server, i) => (
+                <motion.li
+                  whileHover={{ scale: 1.05 }}
+                  role="button"
+                  key={i}
+                  onClick={() => setServer(`Server${i + 1}`)}
+                  className="px-2 border-2 border-[#86868680] rounded-md"
+                >
+                  {server}
+                </motion.li>
+              ))}
+            </ul>
+            <EpisodeList />
+            <SeasonCards id={id} />
+          </div>
+        </div>
+        <MediaDetails
+          id={id}
+          Season={season}
+          Episode={episode}
+          mediaType={mediaType}
+        />
+      </div>
+        <MediaRecommendation id={id} />
+        <MediaReviews id={id} />
+        <Footer />
+      {/* <MediaFrame
         id={id}
         season={season}
         episode={episode}
         server={currentServer}
         path={mediaType}
       />
-      {!isLoading ? (
         <>
           <div
             className={`${
@@ -105,14 +139,14 @@ export default function WatchSeries() {
                 />
               </div>
               <div className="flex flex-col gap-4 p-3">
-                <ul className="text-white gap-4 flex flex-wrap whitespace-nowrap">
+                <ul className="flex flex-wrap gap-4 text-white whitespace-nowrap">
                   {Array.from(serverLength).map((server, i) => (
                     <motion.li
                       whileHover={{ scale: 1.05 }}
                       role="button"
                       key={i}
                       onClick={() => setServer(`Server${i + 1}`)}
-                      className="border-2 px-2 rounded-md"
+                      className="px-2 border-2 rounded-md"
                     >
                       {server}
                     </motion.li>
@@ -141,8 +175,7 @@ export default function WatchSeries() {
             src={loader_Geometric}
             className="h-[35vh] flex items-center justify-center"
           />
-        </div>
-      )}
+        </div> */}
     </>
-  );
+  )
 }

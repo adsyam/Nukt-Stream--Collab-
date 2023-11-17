@@ -24,16 +24,16 @@ export default function CoverPhoto() {
   };
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/coverImage/`);
+    const listRef = ref(fileDB, `${user?.uid}/coverImage/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImage(url);
-      });
-    });
-  }, []);
+        setImage(url)
+      })
+    })
+  }, [user?.uid])
 
   return (
-    <div className="w-full relative">
+    <div className="relative w-full">
       <img
         src={image || `https://source.unsplash.com/random/landscape?sunset`}
         alt=""
@@ -46,7 +46,7 @@ export default function CoverPhoto() {
          hover:bg-white hover:text-black duration-300"
       >
         <AiOutlineCamera size={30} />{" "}
-        <span className="capitalize hidden md:block">
+        <span className="hidden capitalize md:block">
           change your cover photo
         </span>
         <input

@@ -15,14 +15,10 @@ export default function MediaFrame({ server, id }) {
 
   return (
     <div
-      className={`pb-12 ${
-        sidebar
-          ? "translate-x-[15rem] origin-left duration-300 justify-center w-[75vw]"
-          : "origin-right duration-300 justify-center mx-24 max-lg:mx-20 maxx-sm:mx-12"
-      }`}
+      className={`w-full`}
     >
       <div
-        className={`flex items-center justify-center w-full h-[56.25%] mt-20 rounded-[10px] border-[#ffffff30] border-2`}
+        className={`flex items-center justify-center rounded-md border-[#ffffff30] border-2`}
       >
         {isLoading ? (
           <div className="flex items-center justify-center w-full h-[100%] aspect-video">
