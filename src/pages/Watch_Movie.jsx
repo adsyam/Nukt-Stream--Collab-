@@ -18,7 +18,7 @@ export default function WatchMovie() {
   const [path, setPath] = useState()
   const [historyToggle, setHistoryToggle] = useState(true)
 
-  const [server, setServer] = useState(
+  const [servers, setServers] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
   )
   const { sidebar } = useDataContext()
@@ -61,7 +61,31 @@ export default function WatchMovie() {
     <>
       <div className="flex gap-4 mx-10 mt-20">
         <div className="flex flex-col w-full gap-4">
-          <MediaFrame id={id} server={server} />
+          <MediaFrame id={id} server={servers} />
+          <div className="">
+            <ul className="flex flex-wrap text-[#868686] gap-4">
+              {[
+                { name: "Server 1", url: server1 },
+                { name: "Server 2", url: server2 },
+                { name: "Server 3", url: server3 },
+                { name: "Server 4", url: server4 },
+                { name: "Server 5", url: server5 },
+              ].map((server, index) => (
+                <li
+                  role="button"
+                  key={index}
+                  onClick={() => setServers(server.url)}
+                  className={`px-2 border-2  rounded-md ${
+                    servers === server.url
+                      ? "border-[#7300FF90]"
+                      : "border-[#86868680]"
+                  }`}
+                >
+                  {server.name}
+                </li>
+              ))}
+            </ul>
+          </div>
           <MediaRecommendation id={id} />
         </div>
         <MediaDetails
