@@ -16,6 +16,8 @@ import Searchbar from "../Common/SearchBar";
 import Sidebar from "../LeftSidebar/Sidebar";
 import FeedbackModal from "../Modal/FeedbackModal";
 import UserSidebar from "../UserSidebar/UserSideBar";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { fileDB } from "../../config/firebase";
 
 export default function Navbar() {
   const { data, pathname } = useFetchDetails();
@@ -31,6 +33,16 @@ export default function Navbar() {
   const [searchMobile, setSearchMobile] = useState(false);
   const [showSearchbar, setShowSearchbar] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const listRef = ref(fileDB, `${user?.uid}/profilePic/`);
+    listAll(listRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setImageUrl(url);
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (
@@ -155,7 +167,11 @@ export default function Navbar() {
                 className="bg-[#0d0d0d50] rounded-full border-2 border-[#ffffff70]"
               >
                 <img
-                  src={user.photoURL || "/src/assets/profile-placeholder.svg"}
+                  src={
+                    imageUrl ||
+                    user.photoURL ||
+                    "/src/assets/profile-placeholder.svg"
+                  }
                   alt=""
                   className="rounded-full"
                   width={35}

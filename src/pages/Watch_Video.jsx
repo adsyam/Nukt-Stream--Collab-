@@ -1,32 +1,52 @@
-import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useEffect, useRef, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+
 import {
   useFetchRelatedVideos,
   useFetchStats,
   useFetchVideoComments,
-} from "../Hooks/customHooks"
-import { Footer, Reviews, VideoDescriptions, VideosGrid } from "../components"
-import { useDataContext } from "../context/DataContext"
+} from "../Hooks/customHooks";
+import { Footer, Reviews, VideoDescriptions, VideosGrid } from "../components";
+import { useDataContext } from "../context/DataContext";
+import { useDBContext } from "../context/DBContext";
+import { useAuthContext } from "../context/AuthContext";
+import { textDB } from "../config/firebase";
 
 export default function WatchVideo() {
-  const id = new URLSearchParams(window.location.search).get("v")
-  const videoDetails = useFetchStats(id)
-  const videos = useFetchRelatedVideos(id)
-  const comments = useFetchVideoComments(id)
-  const location = useLocation().search
-  const { sidebar } = useDataContext()
+  const id = new URLSearchParams(window.location.search).get("v");
+  const [historyToggle, setHistoryToggle] = useState(true);
+  const videoDetails = useFetchStats(id);
+  const videos = useFetchRelatedVideos(id);
+  const comments = useFetchVideoComments(id);
+  const { user } = useAuthContext();
+  const { sidebar } = useDataContext();
+  const { addHistoryOrLibrary } = useDBContext();
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    const jsonString = JSON.stringify(videoDetails)
-    localStorage.setItem(videoDetails?.id, jsonString)
-  }, [videoDetails])
+    const unsubscribe = onSnapshot(
+      doc(textDB, "Users", user.uid),
+      { includeMetadataChanges: true },
+      (doc) => setHistoryToggle(doc.data().storeHistory)
+    );
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (historyToggle) {
+        addHistoryOrLibrary(user?.uid, "history", "videos", id);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [videoDetails]);
 
   if (!videoDetails) {
     return (
       <div className="w-full h-[100vh] bg-[#0d0d0d] grid place-items-center">
         <h1 className="text-[2rem] text-white">Loading...</h1>
       </div>
-    )
+    );
   }
 
   return (
@@ -43,6 +63,7 @@ export default function WatchVideo() {
             <div className="w-full p-[1rem]">
               <div className="">
                 <iframe
+                  ref={videoRef}
                   key={id}
                   src={`https://www.youtube.com/embed/${id}`}
                   allowFullScreen
@@ -68,5 +89,5 @@ export default function WatchVideo() {
       </section>
       <Footer />
     </>
-  )
+  );
 }

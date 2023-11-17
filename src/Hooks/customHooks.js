@@ -1,5 +1,6 @@
 //custom hooks for fetching different kinds of video queries and parameters
 
+import axios from "axios";
 import { useFetch } from "./useFetch";
 import { useEffect, useState } from "react";
 
@@ -83,4 +84,80 @@ export const useFetchVideoComments = (param) => {
   }, [param]);
 
   return comments;
+};
+
+export const useFetchSubsVideos = (subChannels) => {
+  const [videos, setVideos] = useState(null);
+
+  useEffect(() => {
+    //create an array of promises for fetching movie details
+    const fetchVideoDetailsPromises = subChannels.map((channelId) => {
+      const options = {
+        method: "GET",
+        url: "https://youtube-v31.p.rapidapi.com/search",
+        params: {
+          channelId: channelId,
+          part: "snippet,id",
+          order: "date",
+          maxResults: "10",
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "87fb168a06msh5f3e5ad900266aap1fb264jsn25b67766afd2",
+          "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
+        },
+      };
+      return axios.request(options);
+    });
+
+    //use Promise.all to fetch all movie details in parallel
+    Promise.all(fetchVideoDetailsPromises)
+      .then((responses) => {
+        //responses will be an array of movie details based on the movie ids
+        const results = responses.map((response) => response.data.items);
+        setVideos(results);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [subChannels]);
+
+  return videos;
+};
+
+export const useFetchSubChannels = (subChannels) => {
+  const [channels, setChannels] = useState(null);
+
+  useEffect(() => {
+    //create an array of promises for fetching movie details
+    const fetchVideoDetailsPromises = subChannels.map((channelId) => {
+      const options = {
+        method: "GET",
+        url: "https://youtube-v31.p.rapidapi.com/channels",
+        params: {
+          id: channelId,
+          part: "snippet",
+        },
+        headers: {
+          "X-RapidAPI-Key":
+            "87fb168a06msh5f3e5ad900266aap1fb264jsn25b67766afd2",
+          "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
+        },
+      };
+      return axios.request(options);
+    });
+
+    //use Promise.all to fetch all movie details in parallel
+    Promise.all(fetchVideoDetailsPromises)
+      .then((responses) => {
+        //responses will be an array of movie details based on the movie ids
+        const results = responses.map((response) => response.data.items);
+        setChannels(results);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [subChannels]);
+
+  return channels;
 };
