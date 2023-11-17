@@ -5,12 +5,12 @@ import { motion } from "framer-motion"
 import useFetchDetails from "../Hooks/useFetchDetails"
 import {
   EpisodeList,
+  Footer,
   MediaDetails,
   MediaFrame,
-  SeasonCards,
   MediaRecommendation,
   MediaReviews,
-  Footer
+  SeasonCards,
 } from "../components"
 import { textDB } from "../config/firebase"
 import { useAuthContext } from "../context/AuthContext"
@@ -21,7 +21,7 @@ export default function WatchSeries() {
   const { id, season, episode, isLoading, setIsLoading, pathname, data } =
     useFetchDetails()
   const [mediaType, setMediaType] = useState()
-  const [server, setServer] = useState("Server1")
+  const [serverState, setServerState] = useState("Server1")
   const [currentServer, setCurrentServer] = useState()
   const [historyToggle, setHistoryToggle] = useState(true)
 
@@ -29,13 +29,13 @@ export default function WatchSeries() {
   const { sidebar } = useDataContext()
   const { addHistoryOrLibrary } = useDBContext()
 
-  const serverLength = [
-    "Server 1",
-    "Server 2",
-    "Server 3",
-    "Server 4",
-    "Server 5",
-  ]
+  const servers = {
+    Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
+    Server2: `https://vidsrc.me/embed/${mediaType}?tmdb=${id}&season=${season}&episode=${episode}`,
+    Server3: `https://vidsrc.to/embed/${mediaType}/${id}/${season}/${episode}/`,
+    Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
+    Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
+  }
 
   //===== this code is for watch history =======
   useEffect(() => {
@@ -57,15 +57,8 @@ export default function WatchSeries() {
   }, [addHistoryOrLibrary, historyToggle, id, user?.uid])
 
   useEffect(() => {
-    const servers = {
-      Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
-      Server2: `https://vidsrc.me/embed/${mediaType}?tmdb=${id}&season=${season}&episode=${episode}`,
-      Server3: `https://vidsrc.to/embed/${mediaType}/${id}/${season}/${episode}/`,
-      Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
-      Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
-    }
-    if (server in servers) {
-      setCurrentServer(servers[server])
+    if (serverState in servers) {
+      setCurrentServer(servers[serverState])
     }
 
     pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie")
@@ -73,7 +66,7 @@ export default function WatchSeries() {
     setTimeout(() => {
       setIsLoading(false)
     }, 2000)
-  }, [server, mediaType, id, season, episode, pathname, setIsLoading])
+  }, [serverState, mediaType, id, season, episode, pathname, setIsLoading])
 
   return (
     <>
@@ -88,15 +81,19 @@ export default function WatchSeries() {
           />
           <div className="flex flex-col gap-4 border-2 border-[#86868650] p-3 pb-4 rounded-md">
             <ul className="flex flex-wrap text-[#868686] gap-4">
-              {Array.from(serverLength).map((server, i) => (
+              {[...Array(5)].map((server, i) => (
                 <motion.li
                   whileHover={{ scale: 1.05 }}
                   role="button"
                   key={i}
-                  onClick={() => setServer(`Server${i + 1}`)}
-                  className="px-2 border-2 border-[#86868680] rounded-md"
+                  onClick={() => setServerState(`Server${i + 1}`)}
+                  className={`px-2 border-2 border-[#86868680] rounded-md ${
+                    serverState === Object.keys(servers)[0]
+                      ? "border-[#7300FF90]"
+                      : "border-[#86868680]"
+                  }`}
                 >
-                  {server}
+                  {`Server ${i + 1}`}
                 </motion.li>
               ))}
             </ul>
@@ -111,9 +108,9 @@ export default function WatchSeries() {
           mediaType={mediaType}
         />
       </div>
-        <MediaRecommendation id={id} />
-        <MediaReviews id={id} />
-        <Footer />
+      <MediaRecommendation id={id} />
+      <MediaReviews id={id} />
+      <Footer />
       {/* <MediaFrame
         id={id}
         season={season}
