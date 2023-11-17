@@ -69,7 +69,7 @@ export default function Carousel({ mediaType }) {
 
   return (
     <>
-      {!isloading ? (
+      {/* {!isloading ? ( */}
         <Swiper
           centeredSlides={true}
           autoplay={{
@@ -173,7 +173,7 @@ export default function Carousel({ mediaType }) {
               </SwiperSlide>
             ))}
         </Swiper>
-      ) : (
+      {/* ) : (
         <div
           className={`${
             sidebar
@@ -184,11 +184,11 @@ export default function Carousel({ mediaType }) {
           <Player
             autoplay
             loop
-            src={loader_Peek}
+            // src={loader_Peek}
             className="flex justify-center h-[70vh] w-[40vw]"
           />
         </div>
-      )}
+      )} */}
     </>
   )
 }
