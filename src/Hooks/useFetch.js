@@ -49,5 +49,3 @@ export const useFetch = async (url) => {
 
   return response.data
 }
-
-

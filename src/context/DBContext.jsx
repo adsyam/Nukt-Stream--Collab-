@@ -15,7 +15,7 @@ export const useDBContext = () => {
 
 export const DBProvider = ({ children }) => {
   //function call for adding user data to database
-  const addUser = async (userId, username) => {
+  const addUser = async (userId, username, email) => {
     const userDocRef = doc(textDB, "Users", userId); //user document reference
     const docSnap = await getDoc(userDocRef); //snapshot of the user document in the database
 
@@ -25,7 +25,12 @@ export const DBProvider = ({ children }) => {
       return await setDoc(userDocRef, {
         id: userId,
         username: username || "",
-        subscriptions: [],
+        email: email,
+        subscriptions: {
+          users: [],
+          channels: [],
+        },
+        subscribers: [],
         library: {
           movies: [],
           series: [],
@@ -85,42 +90,57 @@ export const DBProvider = ({ children }) => {
 
   //this function is for the subscription feature.
   //this will add the channel id that the user is subscribed at
-  const addSubcription = async (userId, channelId) => {
+  const addSubcription = async (userId, type, id) => {
     const userDocRef = doc(textDB, "Users", userId);
     const userDocSnapshot = await getDoc(userDocRef);
-    const subscriptions = userDocSnapshot.data().subscriptions;
+    const subscriptions = userDocSnapshot.data()?.subscriptions;
 
     //this will check if the channel id is not yet in the array
-    if (!subscriptions.includes(channelId)) {
+    if (!subscriptions[type].includes(id)) {
       //insures that there are no empty array in the list
-      let newSub = subscriptions.filter((item) => item != "");
-      newSub.push(channelId); //add the channel id in the list
+      let newSub = subscriptions[type].filter((item) => item != "");
+      newSub.push(id); //add the channel id in the list
 
       //update the document in the database with the new lists of subscriptions
       updateDoc(userDocRef, {
         ...userDocSnapshot.data(),
-        subscriptions: newSub,
+        subscriptions: { ...subscriptions, [type]: newSub },
       });
     }
   };
 
   //this function is for unsubscribing the profile or channel
-  const removeSubscription = async (userId, channelId) => {
+  const removeSubscription = async (userId, type, id) => {
     const userDocRef = doc(textDB, "Users", userId);
     const userDocSnapshot = await getDoc(userDocRef);
     const subscriptions = userDocSnapshot.data().subscriptions;
 
     //check if the channel id that user want to unsubscribe is in the list
-    if (subscriptions.includes(channelId)) {
+    if (subscriptions[type].includes(id)) {
       //filter the old list with the channel id that user want to unsubscribe
-      let newSub = subscriptions.filter((item) => item != channelId);
+      let newSub = subscriptions[type].filter((item) => item != id);
 
       //update the document in the database with the new lists of subscriptions
       updateDoc(userDocRef, {
         ...userDocSnapshot.data(),
-        subscriptions: newSub,
+        subscriptions: { ...subscriptions, [type]: newSub },
       });
     }
+  };
+
+  const addSubscribers = async (userId, id) => {
+    const userDocRef = doc(textDB, "Users", userId); //user doc reference
+    const userDocSnapshot = await getDoc(userDocRef); //snapshot of the document
+    const subs = userDocSnapshot.data().subscribers;
+
+    if (!subs.includes(id)) {
+      subs.push(id);
+    }
+
+    updateDoc(userDocRef, {
+      ...userDocSnapshot.data(),
+      subscribers: subs,
+    });
   };
 
   //this is for toggling the history status
@@ -220,6 +240,7 @@ export const DBProvider = ({ children }) => {
         addImage,
         addSubcription,
         removeSubscription,
+        addSubscribers,
         switchHistory,
         addHistoryOrLibrary,
         updateHistoryOrLibrary,
