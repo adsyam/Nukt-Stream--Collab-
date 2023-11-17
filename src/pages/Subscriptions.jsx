@@ -19,7 +19,7 @@ export default function Subscriptions() {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setSubChannels(doc.data().subscriptions)
+      (doc) => setSubChannels(doc.data()?.subscriptions?.channels)
     );
   }, []);
 

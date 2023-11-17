@@ -1,34 +1,37 @@
-import { getDownloadURL, listAll, ref } from "firebase/storage"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
 
-import { fileDB } from "../../config/firebase"
-import { useAuthContext } from "../../context/AuthContext"
-import { useDataContext } from "../../context/DataContext"
-import { UserSidebarMenu } from "../../utils/index"
+import { UserSidebarMenu } from "../../utils/index";
+import useFetchDetails from "../../Hooks/useFetchDetails";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDataContext } from "../../context/DataContext";
+import { fileDB } from "../../config/firebase";
 
 export default function UserSidebar({ showUserSidebar }) {
-  const { user, logout } = useAuthContext()
-  const { modal, setModal, setUserSidebar } = useDataContext()
-  const [imageUrl, setImageUrl] = useState(null)
-
-  const toggleModal = () => {
-    setModal(!modal)
-    return (document.body.style.overflow = "hidden")
-  }
+  const { user, logout } = useAuthContext();
+  const { modal, setModal, setUserSidebar } = useDataContext();
+  const [imageUrl, setImageUrl] = useState(null);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profilePic/`)
+    setReload(!reload);
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url)
-      })
-    })
-  }, [user?.uid])
+        setImageUrl(url);
+      });
+    });
+  }, []);
+
+  const toggleModal = () => {
+    setModal(!modal);
+    return (document.body.style.overflow = "hidden");
+  };
 
   useEffect(() => {
-    if (logout) setUserSidebar(false)
-  }, [logout, setUserSidebar])
+    if (logout) setUserSidebar(false);
+  }, [logout, setUserSidebar]);
 
   return (
     <aside
@@ -40,13 +43,16 @@ export default function UserSidebar({ showUserSidebar }) {
     }`}
     >
       <div className="flex items-center gap-4 mb-3">
-        <img
-          src={
-            imageUrl || user.photoURL || "/src/assets/profile-placeholder.svg"
-          }
-          alt="user image"
-          className="w-[50px] rounded-full border-2"
-        />
+        <div className="w-[50px] h-[50px] rounded-full border-2 overflow-hidden">
+          <img
+            src={
+              imageUrl || user.photoURL || "/src/assets/profile-placeholder.svg"
+            }
+            alt="user image"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
         <div>
           <h2>{user.displayName || "Guest User"}</h2>
           <p>{user.email || "sample@email.com"}</p>
@@ -79,5 +85,5 @@ export default function UserSidebar({ showUserSidebar }) {
         ))}
       </div>
     </aside>
-  )
+  );
 }

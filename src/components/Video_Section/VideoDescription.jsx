@@ -34,7 +34,7 @@ export default function VideoDescriptions({ videoDetail }) {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setSubscribe(doc.data().subscriptions)
+      (doc) => setSubscribe(doc.data()?.subscriptions["channels"])
     );
   }, []);
 
@@ -49,9 +49,9 @@ export default function VideoDescriptions({ videoDetail }) {
 
   const handdleSubscriptions = () => {
     if (subscribe.includes(channelId)) {
-      removeSubscription(user.uid, channelId);
+      removeSubscription(user.uid, "channels", channelId);
     } else {
-      addSubcription(user.uid, channelId);
+      addSubcription(user.uid, "channels", channelId);
     }
   };
 

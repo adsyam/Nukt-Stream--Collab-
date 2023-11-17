@@ -36,13 +36,13 @@ export default function Navbar() {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profilePic/`)
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url)
-      })
-    })
-  }, [user?.uid])
+        setImageUrl(url);
+      });
+    });
+  }, [user?.uid]);
 
   useEffect(() => {
     if (
@@ -164,7 +164,8 @@ export default function Navbar() {
               {!showSearchbar && <AiFillBell size={30} />}
               <button
                 onClick={showUserSidebar}
-                className="bg-[#0d0d0d50] rounded-full border-2 border-[#ffffff70]"
+                className="bg-[#0d0d0d50] rounded-full border-2 border-[#ffffff70]
+                w-[40px] h-[40px] overflow-hidden"
               >
                 <img
                   src={
@@ -173,9 +174,7 @@ export default function Navbar() {
                     "/src/assets/profile-placeholder.svg"
                   }
                   alt=""
-                  className="rounded-full"
-                  width={35}
-                  height={41}
+                  className="w-full h-full object-cover"
                 />
               </button>
               <UserSidebar showUserSidebar={userSidebar} />

@@ -13,7 +13,7 @@ export default function History() {
   const [historyToggle, setHistoryToggle] = useState(true);
   const location = useLocation().pathname.split("/")[2];
   const { sidebar } = useDataContext();
-  const { clearWatchHistory, switchHistory } = useDBContext();
+  const { clearHistoryOrLibrary, switchHistory } = useDBContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function History() {
 
   //clear the data of localStorage
   const handleClear = () => {
-    clearWatchHistory(user.uid, location);
+    clearHistoryOrLibrary(user.uid, location);
     setReload(true); //update reload value to rerender the component
   };
 
