@@ -32,11 +32,11 @@ export default function VideoDescriptions({ videoDetail }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
+      doc(textDB, "Users", user?.uid),
       { includeMetadataChanges: true },
       (doc) => setSubscribe(doc.data()?.subscriptions["channels"])
-    );
-  }, []);
+    )
+  }, [user?.uid])
 
   useEffect(() => {
     if (descriptionRef.current) {
@@ -73,10 +73,10 @@ export default function VideoDescriptions({ videoDetail }) {
             <button
               onClick={handdleSubscriptions}
               className={`px-2 rounded-md capitalize py-2 ${
-                subscribe.includes(channelId) ? "bg-[#389FDD]" : "bg-white/50"
+                subscribe?.includes(channelId) ? "bg-[#389FDD]" : "bg-white/50"
               }`}
             >
-              {!subscribe.includes(channelId) ? "subscribe" : "subscribed"}
+              {!subscribe?.includes(channelId) ? "subscribe" : "subscribed"}
             </button>
           </div>
           <div className="flex items-center gap-3">

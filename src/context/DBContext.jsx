@@ -5,6 +5,7 @@ import { createContext, useContext } from "react";
 import { getDoc, updateDoc, doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, listAll, deleteObject } from "firebase/storage";
 import { textDB, fileDB } from "../config/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const DBContext = createContext();
 
@@ -15,36 +16,52 @@ export const useDBContext = () => {
 
 export const DBProvider = ({ children }) => {
   //function call for adding user data to database
-  const addUser = async (userId, username, email) => {
-    const userDocRef = doc(textDB, "Users", userId); //user document reference
-    const docSnap = await getDoc(userDocRef); //snapshot of the user document in the database
+  const addUser = async () => {
+    const auth = getAuth()
 
-    //this will check if there is already an existing user data
-    //if there is no existing user data add an initial data values
-    if (!docSnap.exists()) {
-      return await setDoc(userDocRef, {
-        id: userId,
-        username: username || "",
-        email: email,
-        subscriptions: {
-          users: [],
-          channels: [],
-        },
-        subscribers: [],
-        library: {
-          movies: [],
-          series: [],
-          videos: [],
-        },
-        history: {
-          movies: [],
-          series: [],
-          videos: [],
-        },
-        storeHistory: true, //so users can choose if they want to store their watch history or not
-      });
+    try {
+      // Check the authentication state
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const userId = user?.uid
+          const email =
+            user?.email || user?.auth?.currentUser?.providerData[0]?.email
+          const username = ""
+
+          const userDocRef = doc(textDB, "Users", userId)
+          const docSnap = await getDoc(userDocRef)
+
+          if (!docSnap.exists()) {
+            const userData = {
+              id: userId,
+              username: username || "",
+              email: email,
+              subscriptions: {
+                users: [],
+                channels: [],
+              },
+              subscribers: [],
+              library: {
+                movies: [],
+                series: [],
+                videos: [],
+              },
+              history: {
+                movies: [],
+                series: [],
+                videos: [],
+              },
+              storeHistory: true,
+            }
+
+            await setDoc(userDocRef, userData)
+          }
+        }
+      })
+    } catch (error) {
+      console.error("Error adding user:", error)
     }
-  };
+  }
 
   //function call for getting the user data in the database
   const getUserData = async (userId) => {

@@ -61,10 +61,9 @@ export default function UserSidebar({ showUserSidebar }) {
       <hr />
       <div className="flex flex-col gap-3 mt-[1rem]">
         {UserSidebarMenu.map((item, index) => (
-          <>
+          <div key={index}>
             {item.name === "sign out" || item.name === "send feedback" ? (
               <button
-                key={index}
                 onClick={item.name === "sign out" ? logout : toggleModal}
                 className="uppercase hover:text-[#7300FF] hover:font-bold text-start"
               >
@@ -81,9 +80,9 @@ export default function UserSidebar({ showUserSidebar }) {
                 {item.name}
               </Link>
             )}
-          </>
+          </div>
         ))}
       </div>
     </aside>
-  );
+  )
 }

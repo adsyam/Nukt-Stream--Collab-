@@ -1,26 +1,27 @@
 import {
   faBars,
+  faBell,
   faMagnifyingGlass,
   faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { AiFillBell } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import useFetchDetails from "../../Hooks/useFetchDetails";
-import { nukt_logo } from "../../assets";
-import { useAuthContext } from "../../context/AuthContext";
-import { useDataContext } from "../../context/DataContext";
-import Searchbar from "../Common/SearchBar";
-import Sidebar from "../LeftSidebar/Sidebar";
-import FeedbackModal from "../Modal/FeedbackModal";
-import UserSidebar from "../UserSidebar/UserSideBar";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { fileDB } from "../../config/firebase";
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { getDownloadURL, listAll, ref } from "firebase/storage"
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
+import {} from "react-icons/ai"
+import { Link } from "react-router-dom"
+import useFetchDetails from "../../Hooks/useFetchDetails"
+import { nukt_logo } from "../../assets"
+import { fileDB } from "../../config/firebase"
+import { useAuthContext } from "../../context/AuthContext"
+import { useDataContext } from "../../context/DataContext"
+import Searchbar from "../Common/SearchBar"
+import Sidebar from "../LeftSidebar/Sidebar"
+import FeedbackModal from "../Modal/FeedbackModal"
+import UserSidebar from "../UserSidebar/UserSideBar"
 
 export default function Navbar() {
-  const { data, pathname } = useFetchDetails();
+  const { data, pathname } = useFetchDetails()
   const {
     showSidebar,
     sidebar,
@@ -28,21 +29,21 @@ export default function Navbar() {
     showUserSidebar,
     isActive,
     modal,
-  } = useDataContext();
-  const { user } = useAuthContext();
-  const [searchMobile, setSearchMobile] = useState(false);
-  const [showSearchbar, setShowSearchbar] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [imageUrl, setImageUrl] = useState(null);
+  } = useDataContext()
+  const { user } = useAuthContext()
+  const [searchMobile, setSearchMobile] = useState(false)
+  const [showSearchbar, setShowSearchbar] = useState(false)
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+  const [imageUrl, setImageUrl] = useState(null)
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, [user?.uid]);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   useEffect(() => {
     if (
@@ -54,47 +55,47 @@ export default function Navbar() {
         pathname.includes("home/toprated")
       )
     ) {
-      document.title = "Nukt";
-      return;
+      document.title = "Nukt"
+      return
     }
 
     if (!(data && (data.original_name || data.original_title))) {
-      return;
+      return
     }
 
     if (pathname.includes("Movie")) {
-      document.title = `Movie | ${data.original_title}`;
+      document.title = `Movie | ${data.original_title}`
     } else if (pathname.includes("TVSeries")) {
-      document.title = `Series | ${data.original_name}`;
+      document.title = `Series | ${data.original_name}`
     } else if (pathname.includes("/home/popular")) {
-      document.title = `meow`;
+      document.title = `meow`
     } else if (pathname.includes("/home/trending")) {
-      document.title = `Series | ${data.original_name}`;
+      document.title = `Series | ${data.original_name}`
     } else if (pathname.includes("/home/toprated")) {
-      document.title = `Series | ${data.original_name}`;
+      document.title = `Series | ${data.original_name}`
     }
-  }, [data, pathname]);
+  }, [data, pathname])
 
   useEffect(() => {
     const handleResize = () => {
-      setScreenWidth(window.innerWidth);
+      setScreenWidth(window.innerWidth)
       if (screenWidth < 640) {
-        setSearchMobile(true);
+        setSearchMobile(true)
       } else {
-        setSearchMobile(false);
+        setSearchMobile(false)
       }
-    };
+    }
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [screenWidth]);
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [screenWidth])
 
   const onClose = () => {
-    setShowSearchbar(!showSearchbar);
-  };
+    setShowSearchbar(!showSearchbar)
+  }
 
   return (
     <>
@@ -161,7 +162,7 @@ export default function Navbar() {
                   />
                 </motion.div>
               )}
-              {!showSearchbar && <AiFillBell size={30} />}
+              {!showSearchbar && <FontAwesomeIcon icon={faBell} className="font-[90px]"/>}
               <button
                 onClick={showUserSidebar}
                 className="bg-[#0d0d0d50] rounded-full border-2 border-[#ffffff70]
@@ -185,5 +186,5 @@ export default function Navbar() {
       <Sidebar showSidebar={sidebar} />
       <FeedbackModal active={modal} />
     </>
-  );
+  )
 }
