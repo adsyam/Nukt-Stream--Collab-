@@ -1,23 +1,35 @@
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
-import useFetchDetails from "../../Hooks/useFetchDetails"
-import { useAuthContext } from "../../context/AuthContext"
-import { useDataContext } from "../../context/DataContext"
-import { UserSidebarMenu } from "../../utils/index"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+
+import { UserSidebarMenu } from "../../utils/index";
+import useFetchDetails from "../../Hooks/useFetchDetails";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDataContext } from "../../context/DataContext";
+import { fileDB } from "../../config/firebase";
 
 export default function UserSidebar({ showUserSidebar }) {
-  const { user, logout } = useAuthContext()
-  const { modal, setModal, setUserSidebar } = useDataContext()
+  const { user, logout } = useAuthContext();
+  const { modal, setModal, setUserSidebar } = useDataContext();
+  const [imageUrl, setImageUrl] = useState(null);
 
   const toggleModal = () => {
-    setModal(!modal)
-    return (document.body.style.overflow = "hidden")
-  }
+    setModal(!modal);
+    return (document.body.style.overflow = "hidden");
+  };
 
   useEffect(() => {
-    if (logout) setUserSidebar(false)
-  }, [logout, setUserSidebar])
+    const listRef = ref(fileDB, `${user?.uid}/profilePic/`);
+    listAll(listRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setImageUrl(url);
+      });
+    });
+  }, []);
 
+  useEffect(() => {
+    if (logout) setUserSidebar(false);
+  }, [logout, setUserSidebar]);
 
   return (
     <aside
@@ -30,7 +42,9 @@ export default function UserSidebar({ showUserSidebar }) {
     >
       <div className="flex items-center gap-4 mb-3">
         <img
-          src={user.photoURL || "/src/assets/profile-placeholder.svg"}
+          src={
+            imageUrl || user.photoURL || "/src/assets/profile-placeholder.svg"
+          }
           alt="user image"
           className="w-[50px] rounded-full border-2"
         />
@@ -66,5 +80,5 @@ export default function UserSidebar({ showUserSidebar }) {
         ))}
       </div>
     </aside>
-  )
+  );
 }

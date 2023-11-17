@@ -1,35 +1,59 @@
-import { useEffect, useRef, useState } from "react"
-import { AiFillCheckCircle, AiFillLike, AiOutlineLike } from "react-icons/ai"
-import { Link } from "react-router-dom"
-import { timeFormat } from "../../utils/timeFormat"
+import { useEffect, useRef, useState } from "react";
+import { AiFillCheckCircle, AiFillLike, AiOutlineLike } from "react-icons/ai";
+import { Link } from "react-router-dom";
+
+import { timeFormat } from "../../utils/timeFormat";
+import { useDBContext } from "../../context/DBContext";
+import { useAuthContext } from "../../context/AuthContext";
+import { doc, onSnapshot } from "firebase/firestore";
+import { textDB } from "../../config/firebase";
 
 const descriptionStyles = {
   WebkitLineClamp: 5,
   WebkitBoxOrient: "vertical",
   display: "-webkit-box",
   overflow: "hidden",
-}
+};
 
 export default function VideoDescriptions({ videoDetail }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [readMore, setReadMore] = useState(false)
-  const [subscribe, setSubscribe] = useState(false)
-  const [like, setLike] = useState(false)
-  const descriptionRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const [readMore, setReadMore] = useState(false);
+  const [subscribe, setSubscribe] = useState([]);
+  const [like, setLike] = useState(false);
+  const descriptionRef = useRef(null);
+
+  const { user } = useAuthContext();
+  const { addSubcription, removeSubscription } = useDBContext();
+
+  const {
+    snippet: { title, channelId, channelTitle, description, publishedAt },
+    statistics: { viewCount, likeCount },
+  } = videoDetail;
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(textDB, "Users", user.uid),
+      { includeMetadataChanges: true },
+      (doc) => setSubscribe(doc.data().subscriptions)
+    );
+  }, []);
 
   useEffect(() => {
     if (descriptionRef.current) {
       setReadMore(
         descriptionRef.current.scrollHeight >=
           descriptionRef.current.clientHeight
-      )
+      );
     }
-  }, [])
+  }, []);
 
-  const {
-    snippet: { title, channelId, channelTitle, description, publishedAt },
-    statistics: { viewCount, likeCount },
-  } = videoDetail
+  const handdleSubscriptions = () => {
+    if (subscribe.includes(channelId)) {
+      removeSubscription(user.uid, channelId);
+    } else {
+      addSubcription(user.uid, channelId);
+    }
+  };
 
   return (
     <>
@@ -47,12 +71,12 @@ export default function VideoDescriptions({ videoDetail }) {
               <AiFillCheckCircle size=".8rem" color="gray" />
             </Link>
             <button
-              onClick={() => setSubscribe(!subscribe)}
+              onClick={handdleSubscriptions}
               className={`px-2 rounded-md capitalize py-2 ${
-                subscribe ? "bg-[#389FDD]" : "bg-white/50"
+                subscribe.includes(channelId) ? "bg-[#389FDD]" : "bg-white/50"
               }`}
             >
-              {!subscribe ? "subscribe" : "subscribed"}
+              {!subscribe.includes(channelId) ? "subscribe" : "subscribed"}
             </button>
           </div>
           <div className="flex items-center gap-3">
@@ -104,5 +128,5 @@ export default function VideoDescriptions({ videoDetail }) {
         </div>
       </div>
     </>
-  )
+  );
 }
