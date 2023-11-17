@@ -1,23 +1,18 @@
-//this file is the main fetch file
-//we used axios as our fetching library
 import axios from "axios"
-// import "dotenv/config"
 
 
 const apiKeys = [
   import.meta.env.VITE_RAPID_API_KEY_1,
   import.meta.env.VITE_RAPID_API_KEY_2,
   import.meta.env.VITE_RAPID_API_KEY_3,
+  import.meta.env.VITE_RAPID_API_KEY_4,
 ]
 
 let currentApiKeyIndex = 0
-//this is our base url for fetching our API video data
 const BASE_URL = "https://youtube-v31.p.rapidapi.com"
 
 const options = {
   params: {
-    //we fixed the get results to be 20
-    //can be change depending on the needs
     maxResults: "20",
   },
   headers: {
