@@ -1,7 +1,8 @@
-import "@stripe/stripe-js"
-import { createBrowserRouter, Outlet } from "react-router-dom"
-import { AuthProvider } from "./context/AuthContext"
-import { DataProvider } from "./context/DataContext"
+import "@stripe/stripe-js";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { DataProvider } from "./context/DataContext";
+import { DBProvider } from "./context/DBContext";
 
 import {
   Navbar,
@@ -13,7 +14,7 @@ import {
   ProfilePlaylist,
   ProtectedRoute,
   RedirectRoute,
-} from "./components"
+} from "./components";
 
 import {
   AllCategory,
@@ -33,18 +34,20 @@ import {
   WatchMovie,
   WatchSeries,
   WatchVideo,
-} from "./pages"
+} from "./pages";
 
 const AppLayout = () => (
   <>
     <AuthProvider>
-      <DataProvider>
-        <Navbar />
-        <Outlet />
-      </DataProvider>
+      <DBProvider>
+        <DataProvider>
+          <Navbar />
+          <Outlet />
+        </DataProvider>
+      </DBProvider>
     </AuthProvider>
   </>
-)
+);
 
 export const AppRouter = createBrowserRouter([
   {
@@ -298,4 +301,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-])
+]);

@@ -1,24 +1,33 @@
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { AiOutlineClose } from "react-icons/ai";
+
 import { TOKEN_AUTH } from "../../constants/apiConfig";
 import CategoryCard from "../Common/CategoryCard";
+import { doc, onSnapshot } from "firebase/firestore";
+import { textDB } from "../../config/firebase";
+import { useDBContext } from "../../context/DBContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 export default function SeriesHistory({ reload }) {
-  const localStorageValue = window.localStorage.getItem("seriesIds");
-
-  const storedSeriesIds = useMemo(() => {
-    return window.localStorage.getItem("seriesIds")
-      ? JSON.parse(window.localStorage.getItem("seriesIds"))
-      : [];
-  }, [localStorageValue]);
-
+  const { user } = useAuthContext();
+  const { updateHistoryOrLibrary } = useDBContext();
+  const [seriesIds, setSeriesIds] = useState([]);
   const [seriesDetails, setSeriesDetails] = useState([]);
-  const [itemToDelete, setItemToDelete] = useState("");
+  const location = useLocation().pathname.split("/")[2];
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(textDB, "Users", user.uid),
+      { includeMetadataChanges: true },
+      (doc) => setSeriesIds(doc.data().history.series)
+    );
+  }, []);
 
   useEffect(() => {
     //create an array of promises for fetching movie details
-    const fetchSeriesDetailsPromises = storedSeriesIds.map((seriesId) => {
+    const fetchSeriesDetailsPromises = seriesIds.map((seriesId) => {
       const options = {
         method: "GET",
         url: `https://api.themoviedb.org/3/tv/${seriesId}`,
@@ -41,28 +50,17 @@ export default function SeriesHistory({ reload }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [reload]);
+  }, [reload, seriesIds]);
 
   const handleDelete = (idToDelete) => {
-    const seriesIds =
-      JSON.parse(window.localStorage.getItem("seriesIds")) || [];
-    const indexToRemove = seriesIds.indexOf(idToDelete.toString());
+    const newIds = [...seriesIds];
 
+    const indexToRemove = newIds.indexOf(idToDelete.toString());
     if (indexToRemove !== -1) {
-      seriesIds.splice(indexToRemove, 1);
-      setSeriesDetails((prevSeriesDetails) =>
-        prevSeriesDetails.filter(
-          (seriesDetail) => seriesDetail?.id !== idToDelete
-        )
-      );
-      setItemToDelete(null);
-      window.localStorage.setItem("seriesIds", JSON.stringify(seriesIds));
+      newIds.splice(indexToRemove, 1);
+      updateHistoryOrLibrary(user.uid, location, "series", newIds);
     }
   };
-
-  const filteredSeriesDetails = seriesDetails.filter(
-    (seriesDetail) => seriesDetail?.id !== itemToDelete
-  );
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
@@ -71,9 +69,9 @@ export default function SeriesHistory({ reload }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {storedSeriesIds.length < 1 ? "" : <h2>Series</h2>}
+      {seriesIds.length < 1 ? "" : <h2>Series</h2>}
       <div className="flex gap-5 flex-wrap">
-        {filteredSeriesDetails.map((seriesDetail, index) => (
+        {seriesDetails.map((seriesDetail, index) => (
           <div key={seriesDetail?.id} className="w-[200px] relative group">
             <CategoryCard
               tvID={seriesDetail?.id}

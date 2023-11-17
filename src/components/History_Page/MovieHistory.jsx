@@ -1,24 +1,34 @@
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { AiOutlineClose } from "react-icons/ai";
+
 import { TOKEN_AUTH } from "../../constants/apiConfig";
 import CategoryCard from "../Common/CategoryCard";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDBContext } from "../../context/DBContext";
+import { textDB } from "../../config/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export default function MovieHistory({ reload }) {
-  const localStorageValue = window.localStorage.getItem("movieIds");
+  const { user } = useAuthContext();
+  const { updateHistoryOrLibrary } = useDBContext();
 
-  const storedMovieIds = useMemo(() => {
-    return window.localStorage.getItem("movieIds")
-      ? JSON.parse(window.localStorage.getItem("movieIds"))
-      : [];
-  }, [localStorageValue]);
-
+  const [movieIds, setMovieIds] = useState([]);
   const [movieDetails, setMovieDetails] = useState([]);
-  const [itemToDelete, setItemToDelete] = useState(null);
+  const location = useLocation().pathname.split("/")[2];
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(textDB, "Users", user.uid),
+      { includeMetadataChanges: true },
+      (doc) => setMovieIds(doc.data().history.movies)
+    );
+  }, []);
 
   useEffect(() => {
     //create an array of promises for fetching movie details
-    const fetchMovieDetailsPromises = storedMovieIds.map((movieId) => {
+    const fetchMovieDetailsPromises = movieIds.map((movieId) => {
       const options = {
         method: "GET",
         url: `https://api.themoviedb.org/3/movie/${movieId}`,
@@ -41,25 +51,17 @@ export default function MovieHistory({ reload }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [reload]);
+  }, [reload, movieIds]);
 
   const handleDelete = (idToDelete) => {
-    const movieIds = JSON.parse(window.localStorage.getItem("movieIds")) || [];
-    const indexToRemove = movieIds.indexOf(idToDelete.toString());
+    const newIds = [...movieIds];
 
+    const indexToRemove = newIds.indexOf(idToDelete.toString());
     if (indexToRemove !== -1) {
-      movieIds.splice(indexToRemove, 1);
-      setMovieDetails((prevMovieDetails) =>
-        prevMovieDetails.filter((movieDetail) => movieDetail?.id !== idToDelete)
-      );
-      setItemToDelete(null);
-      window.localStorage.setItem("movieIds", JSON.stringify(movieIds));
+      newIds.splice(indexToRemove, 1);
+      updateHistoryOrLibrary(user.uid, location, "movies", newIds);
     }
   };
-
-  const filteredMovieDetails = movieDetails.filter(
-    (movieDetail) => movieDetail?.id !== itemToDelete
-  );
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
@@ -68,9 +70,9 @@ export default function MovieHistory({ reload }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {storedMovieIds.length < 1 ? "" : <h2>Movies</h2>}
+      {movieIds.length < 1 ? "" : <h2>Movies</h2>}
       <div className="flex gap-5 flex-wrap">
-        {filteredMovieDetails.map((movieDetail, index) => (
+        {movieDetails.map((movieDetail, index) => (
           <div key={movieDetail?.id} className="w-[200px] relative group">
             <CategoryCard
               MovieID={movieDetail?.id}
