@@ -16,52 +16,37 @@ export const useDBContext = () => {
 
 export const DBProvider = ({ children }) => {
   //function call for adding user data to database
-  const addUser = async () => {
-    const auth = getAuth()
-
+  const addUser = async (userId, username, email) => {
     try {
-      // Check the authentication state
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const userId = user?.uid
-          const email =
-            user?.email || user?.auth?.currentUser?.providerData[0]?.email
-          const username = ""
-
-          const userDocRef = doc(textDB, "Users", userId)
-          const docSnap = await getDoc(userDocRef)
-
-          if (!docSnap.exists()) {
-            const userData = {
-              id: userId,
-              username: username || "",
-              email: email,
-              subscriptions: {
-                users: [],
-                channels: [],
-              },
-              subscribers: [],
-              library: {
-                movies: [],
-                series: [],
-                videos: [],
-              },
-              history: {
-                movies: [],
-                series: [],
-                videos: [],
-              },
-              storeHistory: true,
-            }
-
-            await setDoc(userDocRef, userData)
-          }
-        }
-      })
+      const userDocRef = doc(textDB, "Users", userId); //user document reference
+      const docSnap = await getDoc(userDocRef);
+      if (!docSnap.exists()) {
+        await setDoc(userDocRef, {
+          id: userId,
+          email: email,
+          username: username,
+          storeHistory: true,
+          subscribers: [],
+          subscriptions: {
+            users: [],
+            channels: [],
+          },
+          library: {
+            movies: [],
+            series: [],
+            videos: [],
+          },
+          history: {
+            movies: [],
+            series: [],
+            videos: [],
+          },
+        });
+      }
     } catch (error) {
-      console.error("Error adding user:", error)
+      console.error("Error adding user:", error);
     }
-  }
+  };
 
   //function call for getting the user data in the database
   const getUserData = async (userId) => {

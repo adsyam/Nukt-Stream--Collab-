@@ -46,7 +46,9 @@ export default function ProfilePic({ image, isUser }) {
       <img
         src={
           isUser
-            ? imageUrl || "../../assets/profile-placeholder.svg"
+            ? imageUrl ||
+              user?.photoURL ||
+              "../../assets/profile-placeholder.svg"
             : image || "../../assets/profile-placeholder.svg"
         }
         alt="user profile pic"

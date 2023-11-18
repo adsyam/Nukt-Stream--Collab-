@@ -87,77 +87,87 @@ export const useFetchVideoComments = (param) => {
 };
 
 export const useFetchSubsVideos = (subChannels) => {
-  const [videos, setVideos] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    //create an array of promises for fetching movie details
-    const fetchVideoDetailsPromises = subChannels.map((channelId) => {
-      const options = {
-        method: "GET",
-        url: "https://youtube-v31.p.rapidapi.com/search",
-        params: {
-          channelId: channelId,
-          part: "snippet,id",
-          order: "date",
-          maxResults: "10",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "87fb168a06msh5f3e5ad900266aap1fb264jsn25b67766afd2",
-          "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
-        },
-      };
-      return axios.request(options);
-    });
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          subChannels.map((channelId) =>
+            useFetch(
+              `search?channelId=${channelId}&part=snippet,id&order=date&`
+            )
+          )
+        );
 
-    //use Promise.all to fetch all movie details in parallel
-    Promise.all(fetchVideoDetailsPromises)
-      .then((responses) => {
-        //responses will be an array of movie details based on the movie ids
-        const results = responses.map((response) => response.data.items);
-        setVideos(results);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [subChannels]);
 
-  return videos;
+  return data;
 };
 
 export const useFetchSubChannels = (subChannels) => {
-  const [channels, setChannels] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    //create an array of promises for fetching movie details
-    const fetchVideoDetailsPromises = subChannels.map((channelId) => {
-      const options = {
-        method: "GET",
-        url: "https://youtube-v31.p.rapidapi.com/channels",
-        params: {
-          id: channelId,
-          part: "snippet",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "87fb168a06msh5f3e5ad900266aap1fb264jsn25b67766afd2",
-          "X-RapidAPI-Host": "youtube-v31.p.rapidapi.com",
-        },
-      };
-      return axios.request(options);
-    });
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          subChannels.map((channelId) =>
+            useFetch(`channels?part=snippet&id=${channelId}`)
+          )
+        );
 
-    //use Promise.all to fetch all movie details in parallel
-    Promise.all(fetchVideoDetailsPromises)
-      .then((responses) => {
-        //responses will be an array of movie details based on the movie ids
-        const results = responses.map((response) => response.data.items);
-        setChannels(results);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [subChannels]);
 
-  return channels;
+  return data;
+};
+
+export const useFetchVideoDetail = (videoIds) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          videoIds.map((videoId) =>
+            useFetch(`videos?part=snippet&id=${videoId}`)
+          )
+        );
+
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [videoIds]);
+
+  return data;
 };

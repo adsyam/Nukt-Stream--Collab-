@@ -43,17 +43,21 @@ export default function History() {
       }`}
     >
       <div className="w-full flex justify-between items-center translate-y-[8rem]">
-        <h1 className="text-[1.5rem] font-medium">History Feed</h1>
+        <h1 className="text-[1.2rem] md:text-[1.5rem] font-medium">
+          History Feed
+        </h1>
         <div className="flex gap-3 items-center">
           <button
             onClick={handleSwitch}
-            className="capitalize font-medium bg-white/20 p-[.5rem] rounded-lg hover:bg-[#7300FF]"
+            className="capitalize font-medium bg-white/20 p-[.4rem] md:p-[.5rem] rounded-lg hover:bg-[#7300FF]
+            text-sm md:text-normal"
           >
             History: {historyToggle ? "On" : "Off"}
           </button>
           <button
             onClick={handleClear}
-            className="capitalize font-medium bg-white/20 p-[.5rem] rounded-lg hover:bg-[#7300FF]"
+            className="capitalize font-medium bg-white/20 p-[.4rem] md:p-[.5rem] rounded-lg hover:bg-[#7300FF]
+            text-sm md:text-normal"
           >
             clear history
           </button>

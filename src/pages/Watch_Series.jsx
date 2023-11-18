@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-import { doc, onSnapshot } from "firebase/firestore"
-import { motion } from "framer-motion"
-import useFetchDetails from "../Hooks/useFetchDetails"
+import { doc, onSnapshot } from "firebase/firestore";
+import { motion } from "framer-motion";
+import useFetchDetails from "../Hooks/useFetchDetails";
 import {
   EpisodeList,
   Footer,
@@ -11,23 +11,22 @@ import {
   MediaRecommendation,
   MediaReviews,
   SeasonCards,
-} from "../components"
-import { textDB } from "../config/firebase"
-import { useAuthContext } from "../context/AuthContext"
-import { useDBContext } from "../context/DBContext"
-import { useDataContext } from "../context/DataContext"
+} from "../components";
+import { textDB } from "../config/firebase";
+import { useAuthContext } from "../context/AuthContext";
+import { useDBContext } from "../context/DBContext";
+import { useDataContext } from "../context/DataContext";
 
 export default function WatchSeries() {
   const { id, season, episode, isLoading, setIsLoading, pathname, data } =
-    useFetchDetails()
-  const [mediaType, setMediaType] = useState()
-  const [serverState, setServerState] = useState("Server1")
-  const [currentServer, setCurrentServer] = useState()
-  const [historyToggle, setHistoryToggle] = useState(true)
+    useFetchDetails();
+  const [mediaType, setMediaType] = useState();
+  const [serverState, setServerState] = useState("Server1");
+  const [currentServer, setCurrentServer] = useState();
 
-  const { user } = useAuthContext()
-  const { sidebar } = useDataContext()
-  const { addHistoryOrLibrary } = useDBContext()
+  const { user } = useAuthContext();
+  const { sidebar } = useDataContext();
+  const { addHistoryOrLibrary } = useDBContext();
 
   const servers = {
     Server1: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${season}&e=${episode}`,
@@ -35,38 +34,34 @@ export default function WatchSeries() {
     Server3: `https://vidsrc.to/embed/${mediaType}/${id}/${season}/${episode}/`,
     Server4: `https://2embed.org/series.php?id=${id}/${season}/${episode}/`,
     Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
-  }
+  };
 
   //===== this code is for watch history =======
   useEffect(() => {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setHistoryToggle(doc.data().storeHistory)
-    )
-  }, [user.uid])
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (historyToggle) {
-        addHistoryOrLibrary(user?.uid, "history", "series", id)
+      (doc) => {
+        if (doc.data().storeHistory) {
+          addHistoryOrLibrary(user?.uid, "history", "series", id);
+        }
       }
-    }, 1000)
+    );
 
-    return () => clearTimeout(timeout)
-  }, [addHistoryOrLibrary, historyToggle, id, user?.uid])
+    return () => unsubscribe();
+  }, [user?.uid]);
 
   useEffect(() => {
     if (serverState in servers) {
-      setCurrentServer(servers[serverState])
+      setCurrentServer(servers[serverState]);
     }
 
-    pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie")
+    pathname.includes("/TVSeries") ? setMediaType("tv") : setMediaType("movie");
 
     setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [serverState, mediaType, id, season, episode, pathname, setIsLoading])
+      setIsLoading(false);
+    }, 2000);
+  }, [serverState, mediaType, id, season, episode, pathname, setIsLoading]);
 
   return (
     <>
@@ -174,5 +169,5 @@ export default function WatchSeries() {
           />
         </div> */}
     </>
-  )
+  );
 }

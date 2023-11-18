@@ -49,7 +49,9 @@ export default function CoverPhoto({ isUser }) {
     <div className="w-full relative">
       <img
         src={
-          isUser ? image : `https://source.unsplash.com/random/landscape?sunset`
+          isUser
+            ? image || "https://source.unsplash.com/random/landscape?sunset"
+            : `https://source.unsplash.com/random/landscape?sunset`
         }
         alt=""
         className="w-full h-[60vh] object-cover"
