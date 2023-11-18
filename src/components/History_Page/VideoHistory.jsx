@@ -19,7 +19,7 @@ export default function VideoHistory({ reload }) {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setVideoIds(doc.data().history.videos)
+      (doc) => setVideoIds(doc.data()[location].videos)
     );
   }, []);
 

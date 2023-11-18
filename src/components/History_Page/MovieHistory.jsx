@@ -22,7 +22,7 @@ export default function MovieHistory({ reload }) {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setMovieIds(doc.data().history.movies)
+      (doc) => setMovieIds(doc.data()[location].movies)
     );
   }, []);
 

@@ -1,20 +1,43 @@
 // import { useLocation } from "react-router"
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
-import useFetchDetails from "../../Hooks/useFetchDetails"
-import useFetchTrailer from "../../Hooks/useFetchTrailer"
-import useResponsive from "../../Hooks/useResponsive"
-import TrailerModal from "../Modal/TrailerModal"
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import useFetchDetails from "../../Hooks/useFetchDetails";
+import useFetchTrailer from "../../Hooks/useFetchTrailer";
+import useResponsive from "../../Hooks/useResponsive";
+import TrailerModal from "../Modal/TrailerModal";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDBContext } from "../../context/DBContext";
 
 export default function MediaDetails({ Season, Episode, mediaType, id }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [expandSynopsis, setExpandSynopsis] = useState(false)
-  const [starRate, setStarRate] = useState(0)
-  const { data, pathname } = useFetchDetails()
-  const { getTrailer } = useFetchTrailer(mediaType, id)
-  const { md, sm, xsm, xxsm, screen } = useResponsive()
+  const [isOpen, setIsOpen] = useState(false);
+  const [expandSynopsis, setExpandSynopsis] = useState(false);
+  const [starRate, setStarRate] = useState(0);
+  const { data, pathname } = useFetchDetails();
+  const { getTrailer } = useFetchTrailer(mediaType, id);
+  const { md, sm, xsm, xxsm, screen } = useResponsive();
+
+  const { user } = useAuthContext();
+  const { addHistoryOrLibrary } = useDBContext();
+
+  const handleAddToLibrary = (e) => {
+    e.preventDefault();
+    let type;
+    if (pathname.includes("Movie")) {
+      type = "movies";
+    } else {
+      type = "series";
+    }
+
+    try {
+      addHistoryOrLibrary(user?.uid, "library", type, id);
+
+      alert("Successfully added to library");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -74,7 +97,10 @@ export default function MediaDetails({ Season, Episode, mediaType, id }) {
                   onClose={() => setIsOpen(false)}
                 />
               ))}
-              <button className="rounded-md px-3 py-1 bg-[#ffffff05] border-2 border-[#7300FF99] hover:bg-[#7300FF20] text-[#7300FF99] transition-all text-center align-middle hover:text-white/30">
+              <button
+                onClick={(e) => handleAddToLibrary(e)}
+                className="rounded-md px-3 py-1 bg-[#ffffff05] border-2 border-[#7300FF99] hover:bg-[#7300FF20] text-[#7300FF99] transition-all text-center align-middle hover:text-white/30"
+              >
                 &nbsp;ADD TO THE LIBRARY
               </button>
             </div>
@@ -324,5 +350,5 @@ export default function MediaDetails({ Season, Episode, mediaType, id }) {
         </div>
       )} */}
     </>
-  )
+  );
 }

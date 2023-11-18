@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useFetchChannelVideos } from "../../Hooks/customHooks";
 import { useAuthContext } from "../../context/AuthContext";
 import VideosGrid from "../Video_Section/VideosGrid";
-// import UploadVideoModal from "../Modal/UploadVideoModal";
+import UploadVideoModal from "../Modal/UploadVideoModal";
 
 export default function Profile_Contents() {
   const { id } = useParams();
@@ -28,7 +28,7 @@ export default function Profile_Contents() {
         translate-y-[4rem] md:translate-y-0"
       >
         <div className="w-full flex justify-end items-center px-10">
-          {/* <UploadVideoModal showModal={showModal} onClose={onClose} /> */}
+          <UploadVideoModal showModal={showModal} onClose={onClose} />
           <button
             onClick={() => setShowModal(true)}
             className="w-max bg-white/50 px-5 py-1 rounded-md"
