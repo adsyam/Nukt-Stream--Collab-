@@ -7,13 +7,21 @@ import { useAuthContext } from "../../context/AuthContext";
 import { fileDB } from "../../config/firebase";
 import { useParams } from "react-router";
 
-export default function CoverPhoto() {
+export default function CoverPhoto({ isUser }) {
   const { id } = useParams();
   const inputRef = useRef(null);
   const [image, setImage] = useState(null);
   const [reload, setReload] = useState(false);
   const { user } = useAuthContext();
   const { addImage } = useDBContext();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setReload(!reload);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [reload]);
 
   useEffect(() => {
     const listRef = ref(fileDB, `${id}/coverImage/`);
@@ -40,7 +48,9 @@ export default function CoverPhoto() {
   return (
     <div className="w-full relative">
       <img
-        src={image || `https://source.unsplash.com/random/landscape?sunset`}
+        src={
+          isUser ? image : `https://source.unsplash.com/random/landscape?sunset`
+        }
         alt=""
         className="w-full h-[60vh] object-cover"
       />

@@ -45,7 +45,7 @@ export default function UserProfile() {
         "Loading..."
       ) : (
         <>
-          <CoverPhoto />
+          <CoverPhoto isUser={isUser} />
           <ProfilePic
             image={detail?.snippet?.thumbnails?.high?.url}
             isUser={isUser}
