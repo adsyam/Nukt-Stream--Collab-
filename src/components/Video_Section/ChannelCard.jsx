@@ -1,5 +1,5 @@
-import { AiFillCheckCircle } from "react-icons/ai"
-import { Link } from "react-router-dom"
+import { AiFillCheckCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 export default function ChannelCard({ channelDetail, marginTop }) {
   return (
@@ -7,7 +7,9 @@ export default function ChannelCard({ channelDetail, marginTop }) {
       className="w-[200px] md:w-full flex justify-center items-center"
       style={{ marginTop: marginTop }}
     >
-      <Link to={`/profile/${channelDetail?.id?.channelId}`}>
+      <Link
+        to={`/profile/${channelDetail?.id?.channelId || channelDetail?.id}`}
+      >
         <div className="flex flex-col justify-center text-center text-white w-[400px] lg:w-[300px]">
           <img
             src={channelDetail?.snippet?.thumbnails?.high?.url}
@@ -31,5 +33,5 @@ export default function ChannelCard({ channelDetail, marginTop }) {
         </div>
       </Link>
     </div>
-  )
+  );
 }

@@ -21,7 +21,7 @@ export default function SeriesHistory({ reload }) {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setSeriesIds(doc.data().history.series)
+      (doc) => setSeriesIds(doc.data()[location].series)
     );
   }, []);
 
