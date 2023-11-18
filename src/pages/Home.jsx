@@ -19,10 +19,18 @@ export default function Home() {
 
   useEffect(() => {
     const addUserData = async () => {
-      if (user?.providerData[0].providerId === "google.com") {
-        await addUser(user?.uid, user?.displayName);
-      } else {
-        await addUser(user?.uid);
+      try {
+        if (user?.providerData[0].providerId === "google.com") {
+          await addUser(
+            user?.uid,
+            user?.displayName,
+            user?.auth?.currentUser?.providerData[0]?.email
+          );
+        } else {
+          await addUser(user?.uid);
+        }
+      } catch (err) {
+        console.log("[HOME]Error adding user data: ", err);
       }
     };
 

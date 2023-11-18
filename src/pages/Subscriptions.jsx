@@ -11,6 +11,7 @@ import { useFetchSubChannels, useFetchSubsVideos } from "../Hooks/customHooks";
 import ChannelCard from "../components/Video_Section/ChannelCard";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { Link } from "react-router-dom";
+import VideoCard from "../components/Video_Section/VideoCard";
 
 export default function Subscriptions() {
   const [manage, setManage] = useState(false);
@@ -69,7 +70,7 @@ export default function Subscriptions() {
 
   const videos = useFetchSubsVideos(subChannels);
   const channels = useFetchSubChannels(subChannels);
-  console.log(userData);
+
   if (!videos || loading) return;
 
   return (
@@ -100,7 +101,7 @@ export default function Subscriptions() {
             <div className="flex items-center gap-5">
               {channels.map((item, index) => (
                 <div key={index}>
-                  <ChannelCard channelDetail={item[0]} />
+                  <ChannelCard channelDetail={item} />
                 </div>
               ))}
             </div>
@@ -134,9 +135,9 @@ export default function Subscriptions() {
           </div>
         </div>
       ) : (
-        <div className="max-w-[1800px] mx-auto">
-          {videos.map((items, index) => (
-            <VideosGrid key={index} videos={items} />
+        <div className="w-full flex flex-wrap justify-center items-center gap-5">
+          {videos.map((video, index) => (
+            <VideoCard key={index} video={video} />
           ))}
         </div>
       )}

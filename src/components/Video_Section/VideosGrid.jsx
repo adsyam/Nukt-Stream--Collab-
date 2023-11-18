@@ -1,13 +1,13 @@
-import ChannelCard from "./ChannelCard"
-import VideoCard from "./VideoCard"
+import ChannelCard from "./ChannelCard";
+import VideoCard from "./VideoCard";
 
 export default function VideosGrid({ videos }) {
-  if (!videos?.length) {
+  if (!videos) {
     return (
       <section className="text-white text-[1.5rem] text-center font-medium">
         Loading...
       </section>
-    )
+    );
   }
 
   return (
@@ -23,5 +23,5 @@ export default function VideosGrid({ videos }) {
         </div>
       ))}
     </div>
-  )
+  );
 }

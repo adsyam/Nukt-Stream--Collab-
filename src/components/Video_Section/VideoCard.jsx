@@ -24,7 +24,7 @@ export default function VideoCard({ video, item, index }) {
       console.log(err);
     }
   };
-  console.log(location);
+
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
