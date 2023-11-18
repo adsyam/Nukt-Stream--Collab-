@@ -102,7 +102,7 @@ export default function MediaDetails({ Season, Episode, mediaType, id }) {
                   ? data.production_companies.map((pc) => (
                       <li
                         key={pc.id}
-                        className="rounded-md px-3 bg-[#ffffff10] flex whitespace-nowrap"
+                        className="rounded-md px-3 bg-[#ffffff10] flex"
                       >
                         {pc.name}
                       </li>

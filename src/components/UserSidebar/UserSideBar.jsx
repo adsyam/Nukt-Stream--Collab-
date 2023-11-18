@@ -35,7 +35,7 @@ export default function UserSidebar({ showUserSidebar }) {
 
   return (
     <aside
-      className={`absolute text-black font-medium top-[4rem] right-[2rem] w-[300px]  bg-[#ffffff90] p-[1rem]
+      className={`absolute h-fit text-black font-medium top-[4rem] right-[2rem]  bg-[#ffffff90] p-[1rem]
     rounded-md shadow-sm border-2 border-[#ffffff30] shadow-white ${
       showUserSidebar
         ? "origin-top-right scale-1 duration-300 ease-in-out"

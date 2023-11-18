@@ -61,7 +61,7 @@ export default function FeedbackModal({ active }) {
               <textarea
                 cols="40"
                 rows="10"
-                className="resize-none text-black px-1 rounded-md"
+                className="resize-none text-black px-1 rounded-md w-full"
               ></textarea>
               <p className="text-sm text-white/50">
                 **do not include any sensitive information

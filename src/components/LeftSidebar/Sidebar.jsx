@@ -21,7 +21,7 @@ export default function Sidebar({ showSidebar }) {
   return (
     <aside
       className={`fixed top-[-2%] bg-[#0A0E1730] flex flex-col overflow-y-auto h-[92%] ps-[1rem]
-       -left-[100%] transition-all duration-300 z-[100] translate-y-[4.51rem]
+       -left-[100%] transition-all duration-300 z-[100] translate-y-[4.51rem] backdrop-blur-[1px]
         ${
           showSidebar ? "left-0 transition-all duration-300" : ""
         } snap-mandatory`}
