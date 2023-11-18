@@ -74,14 +74,16 @@ export default function SeriesHistory({ reload }) {
         {seriesDetails.map((seriesDetail, index) => (
           <div key={seriesDetail?.id} className="w-[200px] relative group">
             <CategoryCard
-              tvID={seriesDetail?.id}
+              key={seriesDetail.id}
               index={index}
-              poster={seriesDetail?.poster_path}
-              backdrop={seriesDetail?.backdrop_path}
-              title={seriesDetail?.original_name}
-              date1={seriesDetail?.release_date}
-              date2={seriesDetail?.first_air_date}
-              animation={fadeInVariants}
+              id={seriesDetail.id}
+              poster={seriesDetail.poster_path}
+              title={seriesDetail.original_title}
+              name={seriesDetail.original_name}
+              releaseDate={seriesDetail.release_date}
+              firstAirDate={seriesDetail.first_air_date}
+              mediaType={"tv"}
+              rating={seriesDetail.vote_average.toFixed(1)}
             />
             <button
               onClick={() => handleDelete(seriesDetail?.id)}
@@ -94,5 +96,5 @@ export default function SeriesHistory({ reload }) {
         ))}
       </div>
     </div>
-  );
+  )
 }

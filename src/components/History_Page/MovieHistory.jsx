@@ -24,7 +24,7 @@ export default function MovieHistory({ reload }) {
       { includeMetadataChanges: true },
       (doc) => setMovieIds(doc.data()[location].movies)
     );
-  }, []);
+  }, [location, user.uid]);
 
   useEffect(() => {
     //create an array of promises for fetching movie details
@@ -75,14 +75,16 @@ export default function MovieHistory({ reload }) {
         {movieDetails.map((movieDetail, index) => (
           <div key={movieDetail?.id} className="w-[200px] relative group">
             <CategoryCard
-              MovieID={movieDetail?.id}
+              key={movieDetail.id}
               index={index}
-              poster={movieDetail?.poster_path}
-              backdrop={movieDetail?.backdrop_path}
-              title={movieDetail?.original_title}
-              date1={movieDetail?.release_date}
-              date2={movieDetail?.first_air_date}
-              animation={fadeInVariants}
+              id={movieDetail.id}
+              poster={movieDetail.poster_path}
+              title={movieDetail.original_title}
+              name={movieDetail.original_name}
+              releaseDate={movieDetail.release_date}
+              firstAirDate={movieDetail.first_air_date}
+              mediaType={"movie"}
+              rating={movieDetail.vote_average.toFixed(1)}
             />
             <button
               onClick={() => handleDelete(movieDetail?.id)}
@@ -95,5 +97,5 @@ export default function MovieHistory({ reload }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
