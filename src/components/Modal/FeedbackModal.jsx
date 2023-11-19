@@ -1,23 +1,36 @@
 // import { faStar } from "@fortawesome/free-regular-svg-icons"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
-import { AiOutlineClose } from "react-icons/ai"
-import { nukt_logo } from "../../assets"
-import { useDataContext } from "../../context/DataContext"
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { nukt_logo } from "../../assets";
+import { useDataContext } from "../../context/DataContext";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDBContext } from "../../context/DBContext";
 
 export default function FeedbackModal({ active }) {
-  const { modal, setModal } = useDataContext()
-  const [rating, setRating] = useState(0)
-  const [hover, setHover] = useState(null)
-  const [sendFeedback, setSendFeedback] = useState(false)
+  const { modal, setModal } = useDataContext();
+  const { user } = useAuthContext();
+  const { addUserFeedback } = useDBContext();
+
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [hover, setHover] = useState(null);
+  const [sendFeedback, setSendFeedback] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    addUserFeedback(user?.uid, user?.displayName, feedback, rating);
+    setSendFeedback(true);
+  };
 
   const toggleCloseModal = () => {
-    setModal(!modal)
-    setSendFeedback(!sendFeedback)
-    setRating(0)
-    document.body.style.overflow = "auto"
-  }
+    setModal(!modal);
+    setSendFeedback(false);
+    setRating(0);
+    document.body.style.overflow = "auto";
+  };
 
   return (
     <section
@@ -31,7 +44,9 @@ export default function FeedbackModal({ active }) {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <img src={nukt_logo} className="w-[50px]" />
-              <h2 className="capitalize font-semibold">send a feedback to us</h2>
+              <h2 className="capitalize font-semibold">
+                send a feedback to us
+              </h2>
             </div>
             <button
               onClick={() => (
@@ -61,6 +76,8 @@ export default function FeedbackModal({ active }) {
               <textarea
                 cols="40"
                 rows="10"
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
                 className="resize-none text-black px-1 rounded-md w-full"
               ></textarea>
               <p className="text-sm text-white/50">
@@ -68,7 +85,7 @@ export default function FeedbackModal({ active }) {
               </p>
             </div>
             <button
-              onClick={() => setSendFeedback(!sendFeedback)}
+              onClick={(e) => handleSubmit(e)}
               className="capitalize border-2 py-1 hover:border-[#ffffff90] hover:bg-[#ffffff90]
               rounded-md mt-[2rem]"
             >
@@ -77,12 +94,12 @@ export default function FeedbackModal({ active }) {
           </form>
         </div>
       ) : (
-        <div className="bg-[#0d0d0d] min-w-[400px] p-[1.5rem] flex flex-col gap-[2rem]">
+        <div className="bg-[#ffffff90] min-w-[400px] p-[1.5rem] flex flex-col gap-[2rem] rounded-md">
           <img src={nukt_logo} className="w-[50px]" />
           <p className="text-[1.3rem] text-center">Thanks for the feedback!!</p>
           <button
             onClick={toggleCloseModal}
-            className="capitalize border-2 py-1 hover:border-[#389FDD] hover:bg-[#389FDD]
+            className="capitalize border-2 py-1 hover:border-[#ffffff90] hover:bg-[#ffffff90]
               rounded-md mt-[2rem]"
           >
             back to home page
@@ -90,5 +107,5 @@ export default function FeedbackModal({ active }) {
         </div>
       )}
     </section>
-  )
+  );
 }

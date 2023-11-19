@@ -24,12 +24,14 @@ export default function CoverPhoto({ isUser }) {
   }, [reload]);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${id}/coverImage/`);
-    listAll(listRef).then((response) => {
-      getDownloadURL(response.items[0]).then((url) => {
-        setImage(url);
+    if (isUser) {
+      const listRef = ref(fileDB, `${id}/coverImage/`);
+      listAll(listRef).then((response) => {
+        getDownloadURL(response.items[0]).then((url) => {
+          setImage(url);
+        });
       });
-    });
+    }
   }, [reload, image]);
 
   const handleImageUpload = () => {

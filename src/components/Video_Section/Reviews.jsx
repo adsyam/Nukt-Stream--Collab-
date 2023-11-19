@@ -1,28 +1,40 @@
-import { useState } from "react"
-import { useAuthContext } from "../../context/AuthContext"
-import { timeFormat } from "../../utils/timeFormat"
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { timeFormat } from "../../utils/timeFormat";
+import { fileDB } from "../../config/firebase";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
 
 function containsHtmlTags(text) {
-  const htmlTagPattern = /<[^>]*>/
-  return htmlTagPattern.test(text)
+  const htmlTagPattern = /<[^>]*>/;
+  return htmlTagPattern.test(text);
 }
 
 export default function Reviews({ comments }) {
-  const { user } = useAuthContext()
-  const [isOpen, setIsOpen] = useState(false)
-  const [visible, setVisible] = useState(10)
+  const { user } = useAuthContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(10);
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
+    listAll(listRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setImageUrl(url);
+      });
+    });
+  }, [imageUrl]);
 
   const toggleLoadComments = () => {
     if (isOpen) {
-      setVisible(10)
-      setIsOpen(false)
+      setVisible(10);
+      setIsOpen(false);
     } else {
-      setVisible(Infinity)
-      setIsOpen(true)
+      setVisible(Infinity);
+      setIsOpen(true);
     }
-  }
+  };
 
-  if (!comments) return
+  if (!comments) return;
 
   return (
     <section className="text-white w-full lg:max-w-[50%] p-[2rem] flex flex-1 flex-col justify-center items-start">
@@ -30,7 +42,11 @@ export default function Reviews({ comments }) {
         <h2 className="font-bold">{comments.length} Reviews</h2>
         <div className="flex gap-3">
           <img
-            src={user.photoURL ? user.photoURL : "https://i.pravatar.cc/50"}
+            src={
+              imageUrl ||
+              user.photoURL ||
+              "../../assets/profile-placeholder.svg"
+            }
             alt=""
             className="rounded-full h-[50px]"
           />
@@ -100,5 +116,5 @@ export default function Reviews({ comments }) {
         {isOpen ? "Load less reviews" : "Load more reviews"}
       </button>
     </section>
-  )
+  );
 }

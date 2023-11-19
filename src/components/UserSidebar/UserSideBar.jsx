@@ -82,7 +82,9 @@ export default function UserSidebar({ showUserSidebar }) {
               <Link
                 key={index}
                 to={
-                  item.name === "my profile" ? `/profile/${user.uid}` : item.url
+                  item.name === "my profile"
+                    ? `/profile/${user?.uid}`
+                    : item.url
                 }
                 className="uppercase hover:text-[#7300FF] hover:font-bold"
               >

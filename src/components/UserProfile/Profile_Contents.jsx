@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+
 import { useFetchChannelVideos } from "../../Hooks/customHooks";
 import { useAuthContext } from "../../context/AuthContext";
 import VideosGrid from "../Video_Section/VideosGrid";
 import UploadVideoModal from "../Modal/UploadVideoModal";
+import { fileDB } from "../../config/firebase";
 
 export default function Profile_Contents() {
   const { id } = useParams();
   const { user } = useAuthContext();
   const [showModal, setShowModal] = useState(false);
+  const [videos, setVideos] = useState([]);
 
+  useEffect(() => {
+    const listRef = ref(fileDB, `${id}/videos/`);
+    listAll(listRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setVideos((prev) => [url]);
+      });
+    });
+  }, []);
+  // console.log(videos);
   const onClose = () => {
     setShowModal(false);
   };
@@ -36,7 +49,18 @@ export default function Profile_Contents() {
             Upload a video
           </button>
         </div>
-        <h2 className="text-[1.1rem]">You haven&#39;t uploaded any videos.</h2>
+        {videos.length < 1 ? (
+          <h2 className="text-[1.1rem]">
+            You haven&#39;t uploaded any videos.
+          </h2>
+        ) : (
+          <div>
+            <h2>Your Videos</h2>
+            {videos.map((video) => (
+              <div>video</div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }

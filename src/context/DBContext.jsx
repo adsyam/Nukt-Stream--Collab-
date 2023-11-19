@@ -2,10 +2,16 @@
 //the firestore database will store the user's text data
 //the storage will store the user's file data e.g images, videos
 import { createContext, useContext } from "react";
-import { getDoc, updateDoc, doc, setDoc } from "firebase/firestore";
+import {
+  getDoc,
+  updateDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { ref, uploadBytes, listAll, deleteObject } from "firebase/storage";
 import { textDB, fileDB } from "../config/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { v4 } from "uuid";
 
 const DBContext = createContext();
 
@@ -145,6 +151,21 @@ export const DBProvider = ({ children }) => {
     });
   };
 
+  const removeSubscribers = async (userId, id) => {
+    const userDocRef = doc(textDB, "Users", userId); //user doc reference
+    const userDocSnapshot = await getDoc(userDocRef); //snapshot of the document
+    const subs = userDocSnapshot.data().subscribers;
+
+    if (subs.includes(id)) {
+      let newSub = subs.filter((item) => item != id);
+
+      updateDoc(userDocRef, {
+        ...userDocSnapshot.data(),
+        subscribers: newSub,
+      });
+    }
+  };
+
   //this is for toggling the history status
   //the function will update the value be true or false depending if user
   //wants to store the watch history or not
@@ -213,11 +234,38 @@ export const DBProvider = ({ children }) => {
     });
   };
 
+  const addUserFeedback = async (userId, username, feedback, rating) => {
+    try {
+      const feedbackDocRef = doc(textDB, "Feedbacks", userId);
+      const id = v4();
+      const item = {
+        [id]: {
+          id: userId,
+          username: username || "anonymous",
+          feedback: feedback,
+          rating: rating,
+          createdAt: serverTimestamp(),
+        },
+      };
+      await setDoc(feedbackDocRef, item, { merge: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //------------ THIS IS NOT YET TESTED -----------------//
   //function to add video in the firebase storage
-  const addVideo = async (userId, title, description, tags, video) => {
+  const addVideo = async (
+    userId,
+    title,
+    description,
+    tags,
+    video,
+    thumbnail,
+    status
+  ) => {
     //a video reference folder where the video will be uploaded
-    const videoRef = ref(fileDB, `${userId}/videos/${v4() + video.name}`);
+    const videoRef = ref(fileDB, `${userId}/videos/${video.name}`);
 
     //metadata that will be filled out by user when uploading the video
     const metadata = {
@@ -225,6 +273,8 @@ export const DBProvider = ({ children }) => {
         title: title,
         description: description,
         tags: tags,
+        thumbnail: thumbnail.name,
+        isPrivate: status,
       },
     };
 
@@ -248,6 +298,8 @@ export const DBProvider = ({ children }) => {
         updateHistoryOrLibrary,
         clearHistoryOrLibrary,
         addVideo,
+        addUserFeedback,
+        removeSubscribers,
       }}
     >
       {children}

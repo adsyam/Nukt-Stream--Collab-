@@ -15,6 +15,7 @@ import { textDB } from "../config/firebase";
 export default function WatchVideo() {
   const id = new URLSearchParams(window.location.search).get("v");
   const [historyToggle, setHistoryToggle] = useState(true);
+
   const videoDetails = useFetchStats(id);
   const videos = useFetchRelatedVideos(id);
   const comments = useFetchVideoComments(id);
@@ -28,8 +29,8 @@ export default function WatchVideo() {
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
       (doc) => setHistoryToggle(doc.data().storeHistory)
-    )
-  }, [user.uid])
+    );
+  }, [user.uid]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

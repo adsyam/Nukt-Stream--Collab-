@@ -17,13 +17,23 @@ export default function ProfilePic({ image, isUser }) {
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${id}/profileImage/`);
-    listAll(listRef).then((response) => {
-      getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
+    const timeout = setTimeout(() => {
+      setReload(!reload);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [reload]);
+
+  useEffect(() => {
+    if (isUser) {
+      const listRef = ref(fileDB, `${id}/profileImage/`);
+      listAll(listRef).then((response) => {
+        getDownloadURL(response.items[0]).then((url) => {
+          setImageUrl(url);
+        });
       });
-    });
-  }, [reload, imageUrl]);
+    }
+  }, [reload, id, imageUrl]);
 
   const handleImageUpload = () => {
     inputRef.current.click();

@@ -1,6 +1,5 @@
 //custom hooks for fetching different kinds of video queries and parameters
 
-import axios from "axios";
 import { useFetch } from "./useFetch";
 import { useEffect, useState } from "react";
 
@@ -49,13 +48,28 @@ export const useFetchRelatedVideos = (param) => {
 //this will be used through out the pages where we display all videos and channels
 export const useFetchChannelDetails = (param) => {
   const [channelDetail, setChannelDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    useFetch(`channels?part=snippet&id=${param}`).then((data) =>
-      setChannelDetail(data?.items[0])
-    );
-  }, [param]);
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await useFetch(`channels?part=snippet&id=${param}`);
 
+        if (data.items && data.items.length > 0) {
+          setChannelDetail(data.items[0]);
+        } else {
+          setChannelDetail(null);
+        }
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [param]);
   return { channelDetail };
 };
 

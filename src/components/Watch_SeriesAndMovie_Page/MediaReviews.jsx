@@ -1,46 +1,60 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import axios from "axios"
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router"
-import { defprofile } from "../../assets"
-import { TOKEN_AUTH } from "../../constants/apiConfig"
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { defprofile } from "../../assets";
+import { TOKEN_AUTH } from "../../constants/apiConfig";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { fileDB } from "../../config/firebase";
+import { useAuthContext } from "../../context/AuthContext";
 
 export default function MediaReviews({ id }) {
-  const [review, setReview] = useState([])
-  const [showReviews, setShowReviews] = useState(false)
-  const [expanded, setExpanded] = useState({})
-  const [showRest, setShowRest] = useState(1)
-  const [path, setPath] = useState()
+  const { user } = useAuthContext();
+  const [review, setReview] = useState([]);
+  const [showReviews, setShowReviews] = useState(false);
+  const [expanded, setExpanded] = useState({});
+  const [showRest, setShowRest] = useState(1);
+  const [path, setPath] = useState();
+  const [imageUrl, setImageUrl] = useState("");
 
-  const location = useLocation()
-  const pathname = location.pathname
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  useEffect(() => {
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
+    listAll(listRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setImageUrl(url);
+      });
+    });
+  }, [imageUrl]);
 
   useEffect(() => {
     if (pathname.includes("/TVSeries")) {
-      setPath("tv")
+      setPath("tv");
     } else if (pathname.includes("/Movie")) {
-      setPath("movie")
+      setPath("movie");
     }
-  }, [pathname])
+  }, [pathname]);
 
   const toggleExpanded = (reviewId) => {
     setExpanded((prevMap) => ({
       ...prevMap,
       [reviewId]: !prevMap[reviewId],
-    }))
-  }
+    }));
+  };
 
   const toggleShowAll = () => {
-    setShowReviews(!showReviews)
+    setShowReviews(!showReviews);
 
     if (showRest === 1) {
-      setShowRest(Infinity)
+      setShowRest(Infinity);
     } else {
-      setShowRest(1)
+      setShowRest(1);
     }
-  }
+  };
 
   useEffect(() => {
     const options = {
@@ -51,33 +65,37 @@ export default function MediaReviews({ id }) {
         accept: "application/json",
         Authorization: TOKEN_AUTH,
       },
-    }
+    };
 
     axios
       .request(options)
       .then(function (response) {
-        setReview(response.data.results)
+        setReview(response.data.results);
       })
       .catch(function (error) {
-        console.error(error)
-      })
-  }, [id, path])
+        console.error(error);
+      });
+  }, [id, path]);
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  }
+  };
 
   function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric" }
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US", options)
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
   }
 
   return (
     <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12 p-3">
       <div className="flex items-center justify-center gap-2">
-        <img src={defprofile} alt="" className="rounded-full max-w-[45px]" />
+        <img
+          src={imageUrl || defprofile}
+          alt=""
+          className="rounded-full max-w-[45px]"
+        />
         <input
           type="text"
           className="w-full px-3 py-2 rounded-md outline-none"
@@ -166,5 +184,5 @@ export default function MediaReviews({ id }) {
           : "There are no more reviews"}
       </button>
     </div>
-  )
+  );
 }
