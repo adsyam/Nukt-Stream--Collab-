@@ -1,145 +1,136 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { loader_Geometric } from "../assets";
-import { SearchMovie, SearchTVSeries } from "../components";
-import { VideoCategories } from "../components/index";
-import { TOKEN_AUTH } from "../constants/apiConfig";
-import { searchFilters } from "../utils/index";
-import { useDataContext } from "../context/DataContext";
+import { Player } from "@lottiefiles/react-lottie-player"
+import { useState } from "react"
+import useSearch from "../Hooks/useSearch"
+import { loader_Geometric } from "../assets"
+import { CategoryCard, VideoCategories } from "../components"
+import { useDataContext } from "../context/DataContext"
 
-export default function SearchPage() {
-  const { query } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [movieData, setMovieData] = useState([]);
-  const [tvData, setTvData] = useState([]);
-  const [animationKey, setAnimationKey] = useState(0);
-  const [filter, setFilter] = useState("");
-  const searchParams = new URLSearchParams(window.location.search).get("q");
-  const { sidebar } = useDataContext();
-
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/search/multi",
-      params: {
-        query: `${searchParams}`,
-        include_adult: "false",
-        language: "en-US",
-        page: "1",
-      },
-      headers: {
-        accept: "application/json",
-        Authorization: TOKEN_AUTH,
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        setMovieData(
-          response.data.results.filter((md) => md.media_type === "movie")
-        );
-        setTvData(response.data.results.filter((md) => md.media_type === "tv"));
-        setAnimationKey((prevKey) => prevKey + 1);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1300);
-      })
-      .catch(function (error) {
-        console.error(error);
-        setLoading(false);
-      });
-  }, [searchParams]);
+export default function SearchMedia() {
+  const [filter, setFilter] = useState("")
+  const [category, setCategory] = useState("all")
+  const searchParams = new URLSearchParams(window.location.search).get("q")
+  const { sidebar } = useDataContext()
+  const { movieResult, seriesResult, loading } = useSearch(searchParams)
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  };
+  }
 
   return (
     <>
-      {/* <Navbar /> */}
       {!loading ? (
         <>
           <section
-            className={`min-h-[100vh] flex flex-col pt-[7rem] px-[3rem] text-white ${
+            className={`min-h-[100vh] flex flex-col items-center pt-[7rem] text-white ${
               sidebar
                 ? "translate-x-[11rem] origin-left duration-300 w-[89%]"
                 : "w-full origin-right duration-300"
             }`}
           >
-            <div className="flex gap-[1rem] justify-center items-center">
-              {searchFilters.map((item, index) => (
-                <button
-                  onClick={() => setFilter(item.name)}
-                  key={index}
-                  className={`${
-                    filter === item.name ? "bg-[#FFFF]/10" : "bg-transparent"
-                  } p-[.5rem] uppercase rounded-md`}
-                >
-                  {item.name}
-                </button>
-              ))}
+            <div className="flex gap-2 w-fit">
+              <button
+                onClick={() => setCategory("all")}
+                className={`rounded-md px-2 ${
+                  category === "all" && "border-2"
+                }`}
+              >
+                ALL
+              </button>
+              <button
+                onClick={() => setCategory("movie")}
+                className={`rounded-md px-2 ${
+                  category === "movie" && "border-2"
+                }`}
+              >
+                MOVIE
+              </button>
+              <button
+                onClick={() => setCategory("series")}
+                className={`rounded-md px-2 ${
+                  category === "series" && "border-2"
+                }`}
+              >
+                SERIES
+              </button>
+              <button
+                onClick={() => setCategory("video")}
+                className={`rounded-md px-2 ${
+                  category === "video" && "border-2"
+                }`}
+              >
+                VIDEO
+              </button>
             </div>
             <p className="text-white text-center font-bold">
               Showing results for{" "}
-              <span className="text-[#398FDD]">&quot;{searchParams}&quot;</span>
+              <span className="text-[#7300FF]">&quot;{searchParams}&quot;</span>
             </p>
-            <section className="mb-12 ">
-              <h2 className="mx-12">Movie</h2>
-              <div className="grid grid-cols-8 mx-12 gap-4">
-                {movieData
-                  .filter((md) => md.poster_path && md.backdrop_path)
-                  .map((md, index) => (
-                    <SearchMovie
-                      key={index}
-                      MovieID={md.id}
-                      index={index}
-                      poster={md.poster_path}
-                      backdrop={md.backdrop_path}
-                      title={md.original_title}
-                      date1={md.release_date}
-                      date2={md.first_air_date}
-                      animation={fadeInVariants}
-                    />
-                  ))}
-              </div>
-            </section>
-            <section className="mb-12 ">
-              <h2 className="mx-12">TV Series</h2>
-              <div className="grid grid-cols-8 mx-12 gap-4">
-                {tvData
-                  .filter((tv) => tv.poster_path && tv.backdrop_path)
-                  .map((tv, index) => (
-                    <SearchTVSeries
-                      key={index}
-                      tvID={tv.id}
-                      index={index}
-                      poster={tv.poster_path}
-                      backdrop={tv.backdrop_path}
-                      title={tv.original_name}
-                      date1={tv.release_date}
-                      date2={tv.first_air_date}
-                      animation={fadeInVariants}
-                    />
-                  ))}
-              </div>
-            </section>
-            <VideoCategories catergoryName={searchParams} />
+            {category === "movie" || category === "all" ? (
+              <section className="mb-12 mx-16">
+                <h2 className="mb-1">Movie</h2>
+                <div className="grid grid-cols-8 max-xl:grid-cols-7 max-lg:grid-cols-6 max-md:grid-cols-5 max-sm:grid-cols-4 max-xsm:grid-cols-3 max-xxsm:grid-cols-2 gap-4 text-white">
+                  {movieResult
+                    .filter((md) => md.poster_path && md.backdrop_path)
+                    .map((md, index) => (
+                      <CategoryCard
+                        key={index}
+                        id={md.id}
+                        index={index}
+                        poster={md.poster_path}
+                        backdrop={md.backdrop_path}
+                        title={md.original_title}
+                        date1={md.release_date}
+                        date2={md.first_air_date}
+                        animation={fadeInVariants}
+                        rating={md.vote_average.toFixed(1)}
+                        mediaType={"movie"}
+                        releaseDate={md.release_date}
+                        firstAirDate={md.first_air_date}
+                      />
+                    ))}
+                </div>
+              </section>
+            ) : null}
+            {category === "series" || category === "all" ? (
+              <section className="mb-12 mx-16">
+                <h2 className="mb-1">TV Series</h2>
+                <div className="grid grid-cols-8 max-xl:grid-cols-7 max-lg:grid-cols-6 max-md:grid-cols-5 max-sm:grid-cols-4 max-xsm:grid-cols-3 max-xxsm:grid-cols-2 gap-4 text-white">
+                  {seriesResult
+                    .filter((tv) => tv.poster_path && tv.backdrop_path)
+                    .map((tv, index) => (
+                      <CategoryCard
+                        key={index}
+                        id={tv.id}
+                        index={index}
+                        poster={tv.poster_path}
+                        backdrop={tv.backdrop_path}
+                        title={tv.original_name}
+                        date1={tv.release_date}
+                        date2={tv.first_air_date}
+                        animation={fadeInVariants}
+                        rating={tv.vote_average.toFixed(1)}
+                        mediaType={"tv"}
+                        releaseDate={tv.release_date}
+                        firstAirDate={tv.first_air_date}
+                      />
+                    ))}
+                </div>
+              </section>
+            ) : null}
+            {category === "video" || category === "all" ? (
+              <VideoCategories catergoryName={searchParams} />
+            ) : null}
           </section>
         </>
       ) : (
-        <div key={animationKey}>
-          <Player
-            autoplay
-            loop
-            src={loader_Geometric}
-            className="h-[35vh] flex items-center justify-center"
-          ></Player>
-        </div>
+        <Player
+          autoplay
+          loop
+          src={loader_Geometric}
+          className="h-[35vh] flex items-center justify-center"
+        />
       )}
     </>
-  );
+  )
 }

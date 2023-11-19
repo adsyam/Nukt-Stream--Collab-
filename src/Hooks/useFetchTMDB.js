@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router"
+import { useLocation, useParams } from "react-router"
 import { API_KEY, TMDB_BASE_URL } from "../constants/apiConfig"
 
 export default function useFetchTMDB(
@@ -8,10 +8,11 @@ export default function useFetchTMDB(
   defPage = 1,
   category
 ) {
+  const { page } = useParams()
   const [data, setData] = useState([])
   const [isloading, setIsLoading] = useState(true)
   const [mediaType, setMediaType] = useState(defMediaType)
-  const [page, setPage] = useState(defPage)
+  const [pages, setPage] = useState(defPage)
   const location = useLocation()
   const pathname = location.pathname
 
@@ -21,11 +22,25 @@ export default function useFetchTMDB(
         let response
         if (pathname.includes("trending")) {
           response = await axios.get(
-            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${page}`
+            `${TMDB_BASE_URL}/trending/${mediaType}/day?api_key=${API_KEY}&page=${
+              page === null ? pages : page
+            }`
           )
+        } else if (pathname.includes("home/latest")) {
+          if (mediaType === "tv") {
+            response = await axios.get(
+              `${TMDB_BASE_URL}/tv/airing_today?api_key=${API_KEY}&page=${page}`
+            )
+          } else if (mediaType === "movie") {
+            response = await axios.get(
+              `${TMDB_BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}`
+            )
+          }
         } else {
           response = await axios.get(
-            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${page}`
+            `${TMDB_BASE_URL}/${mediaType}/${category}?api_key=${API_KEY}&page=${
+              pathname.includes(page) ? page : 1
+            }`
           )
         }
 
@@ -40,15 +55,16 @@ export default function useFetchTMDB(
     }
 
     fetchData()
-  }, [category, mediaType, page, pathname])
+  }, [category, mediaType, page, pages, pathname])
   return {
     data,
     isloading,
     mediaType,
     setMediaType,
-    page,
+    pages,
     setPage,
     category,
     pathname,
+    page,
   }
 }

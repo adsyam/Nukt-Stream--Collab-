@@ -2,10 +2,17 @@ import { Player } from "@lottiefiles/react-lottie-player"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import useFetchTMDB from "../Hooks/useFetchTMDB"
+import useResponsive from "../Hooks/useResponsive"
 import { loader_Geometric } from "../assets"
-import { Carousel, CategoryCard, CategoryToggle } from "../components"
-import { Footer } from "../components/Footer"
-import MediaTypeButton from "../components/MediaTypeButton"
+import {
+  Carousel,
+  CategoryCard,
+  CategoryToggle,
+  Footer,
+  MediaTypeButton,
+  PagingButton,
+} from "../components"
+
 import { useDataContext } from "../context/DataContext"
 
 export default function AllCategory() {
@@ -13,9 +20,18 @@ export default function AllCategory() {
   const location = useLocation()
   const pathname = location.pathname
   const { sidebar } = useDataContext()
+  const { responsiveGridCard } = useResponsive()
 
-  const { data, mediaType, setMediaType, isloading, page, setPage, category } =
-    useFetchTMDB("tv", 1, changeCategory)
+  const {
+    data,
+    mediaType,
+    setMediaType,
+    isloading,
+    pages,
+    page,
+    setPage,
+    category,
+  } = useFetchTMDB("tv", 1, changeCategory)
 
   useEffect(() => {
     if (pathname.includes("home/popular")) {
@@ -24,7 +40,7 @@ export default function AllCategory() {
       setChangeCategory("trending")
     } else if (pathname.includes("home/toprated")) {
       setChangeCategory("top_rated")
-    } else if (pathname.includes("home/airingtoday")) {
+    } else if (pathname.includes("home/latest")) {
       setChangeCategory("airing_today")
     } else if (pathname.includes("home/intheatre")) {
       setChangeCategory("now_playing")
@@ -35,19 +51,19 @@ export default function AllCategory() {
     <>
       <Carousel mediaType={mediaType} />
       <div
-        className={`${
+        className={`whitespace-nowrap ${
           sidebar
             ? "translate-x-[10rem] origin-left duration-300 w-[95%]"
             : "w-full origin-right duration-300"
         }`}
       >
-        <div className="my-12 mx-32 flex flex-col items-center gap-4 justify-center text-white">
+        <div className="mt-12 mb-3 mx-32 flex flex-col items-center gap-4 justify-center text-white">
           <div className="flex items-center gap-4">
             <CategoryToggle category={category} />
           </div>
           <MediaTypeButton mediaType={mediaType} setMediaType={setMediaType} />
         </div>
-        <div className="grid grid-cols-8 gap-4 mx-32 text-white mb-12">
+        <div className={responsiveGridCard}>
           {!isloading
             ? data
                 .filter((d) => d.poster_path && d.backdrop_path)
@@ -79,7 +95,16 @@ export default function AllCategory() {
                   />
                 ))}
         </div>
-        {isloading ? null : <div className="text-white mb-12">sdsds</div>}
+        {isloading ? null : (
+          <div className="flex justify-center mt-12">
+            <PagingButton
+              data={data}
+              pages={pages}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
+        )}
       </div>
       <Footer />
     </>

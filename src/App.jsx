@@ -1,59 +1,54 @@
-import "@stripe/stripe-js" //stripe library for user authentication
-import { createBrowserRouter, Outlet } from "react-router-dom"
+import "@stripe/stripe-js";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { DataProvider } from "./context/DataContext";
+import { DBProvider } from "./context/DBContext";
 
 import {
+  Navbar,
+  Pricing,
+  ProfileAbout,
+  ProfileContents,
+  ProfileDownloads,
+  ProfileHome,
+  ProfilePlaylist,
+  ProtectedRoute,
+  RedirectRoute,
+} from "./components";
+
+import {
+  AllCategory,
   Dashboard,
   Feed,
   ForgotPassword,
   History,
-  Login,
-  Navbar,
-  Pricing,
-  Profile_About,
-  Profile_Contents,
-  Profile_Downloads,
-  Profile_Home,
-  Profile_Playlist,
-  ProtectedRoute,
-  RedirectRoute,
+  Home,
+  Library,
+  Report,
+  SearchMedia,
+  SignIn,
   SignUp,
   Subscriptions,
   Success,
-  User,
-  ReportPage,
-  Library,
-} from "./components/index.js";
-
-import {
-  AllCategory,
-  Home,
-  SearchMedia,
+  UserProfile,
   WatchMovie,
-  WatchPage,
-  WatchTVSeries,
-} from "./pages"
+  WatchSeries,
+  WatchVideo,
+} from "./pages";
 
-import { AuthProvider } from "./context/AuthContext"
-import { DataProvider } from "./context/DataContext"
-//======== CONTEXT PROVIDER ========
-
-//USER-CHANNEL PAGE
-
-//create an app layout that will be the parent router of our pages
-//this is for the context hooks and so that the navigation bar will be present in all pages
-//context use here are AuthProvider for the user authentication and DataProvider for the global data
 const AppLayout = () => (
   <>
     <AuthProvider>
-      <DataProvider>
-        <Navbar />
-        <Outlet />
-      </DataProvider>
+      <DBProvider>
+        <DataProvider>
+          <Navbar />
+          <Outlet />
+        </DataProvider>
+      </DBProvider>
     </AuthProvider>
   </>
-)
+);
 
-//create a browser router with the pages as the children of the app layout
 export const AppRouter = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -73,7 +68,7 @@ export const AppRouter = createBrowserRouter([
             path: "/login",
             element: (
               <RedirectRoute>
-                <Login />
+                <SignIn />
               </RedirectRoute>
             ),
           },
@@ -120,7 +115,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "popular",
+            path: "popular/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -128,7 +123,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "trending",
+            path: "trending/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -136,7 +131,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "toprated",
+            path: "toprated/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -144,7 +139,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "airingtoday",
+            path: "latest/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -152,7 +147,7 @@ export const AppRouter = createBrowserRouter([
             ),
           },
           {
-            path: "intheatre",
+            path: "cinema/:page",
             element: (
               <ProtectedRoute>
                 <AllCategory />
@@ -202,7 +197,7 @@ export const AppRouter = createBrowserRouter([
         path: "/report",
         element: (
           <ProtectedRoute>
-            <ReportPage />
+            <Report />
           </ProtectedRoute>
         ),
       },
@@ -247,7 +242,7 @@ export const AppRouter = createBrowserRouter([
             path: "/TVSeries",
             element: (
               <ProtectedRoute>
-                <WatchTVSeries />
+                <WatchSeries />
               </ProtectedRoute>
             ),
           },
@@ -255,7 +250,7 @@ export const AppRouter = createBrowserRouter([
             path: ":id/:season/:episode",
             element: (
               <ProtectedRoute>
-                <WatchTVSeries />
+                <WatchSeries />
               </ProtectedRoute>
             ),
           },
@@ -265,7 +260,7 @@ export const AppRouter = createBrowserRouter([
         path: "/watch",
         element: (
           <ProtectedRoute>
-            <WatchPage />
+            <WatchVideo />
           </ProtectedRoute>
         ),
       },
@@ -276,29 +271,29 @@ export const AppRouter = createBrowserRouter([
             path: "/profile/:id",
             element: (
               <ProtectedRoute>
-                <User />
+                <UserProfile />
               </ProtectedRoute>
             ),
             children: [
               {
                 path: "home",
-                element: <Profile_Home />,
+                element: <ProfileHome />,
               },
               {
                 path: "contents",
-                element: <Profile_Contents />,
+                element: <ProfileContents />,
               },
               {
                 path: "playlist",
-                element: <Profile_Playlist />,
+                element: <ProfilePlaylist />,
               },
               {
                 path: "downloads",
-                element: <Profile_Downloads />,
+                element: <ProfileDownloads />,
               },
               {
                 path: "about",
-                element: <Profile_About />,
+                element: <ProfileAbout />,
               },
             ],
           },
@@ -306,4 +301,4 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-])
+]);

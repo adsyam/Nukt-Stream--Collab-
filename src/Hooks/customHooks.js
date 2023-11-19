@@ -1,5 +1,6 @@
 //custom hooks for fetching different kinds of video queries and parameters
 
+import axios from "axios";
 import { useFetch } from "./useFetch";
 import { useEffect, useState } from "react";
 
@@ -83,4 +84,90 @@ export const useFetchVideoComments = (param) => {
   }, [param]);
 
   return comments;
+};
+
+export const useFetchSubsVideos = (subChannels) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          subChannels.map((channelId) =>
+            useFetch(
+              `search?channelId=${channelId}&part=snippet,id&order=date&`
+            )
+          )
+        );
+
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [subChannels]);
+
+  return data;
+};
+
+export const useFetchSubChannels = (subChannels) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          subChannels.map((channelId) =>
+            useFetch(`channels?part=snippet&id=${channelId}`)
+          )
+        );
+
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [subChannels]);
+
+  return data;
+};
+
+export const useFetchVideoDetail = (videoIds) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all(
+          videoIds.map((videoId) =>
+            useFetch(`videos?part=snippet&id=${videoId}`)
+          )
+        );
+
+        const flattenedData = responses.flatMap(
+          (response) => response?.items || []
+        );
+
+        setData((prevData) => [...flattenedData]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [videoIds]);
+
+  return data;
 };

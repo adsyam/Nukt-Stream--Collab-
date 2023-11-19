@@ -8,9 +8,15 @@ export default {
         "hero-pattern": "url('./assets/BG.jpg')",
       },
       screens: {
-        "xsm": "510px",
-        "xxsm" : "370px"
-      }
+        xsm: "510px",
+        xxsm: "370px",
+      },
+      gridTemplateColumns: {
+        "20": "repeat(20, minmax(0, 1fr))",
+        "18": "repeat(18, minmax(0, 1fr))",
+        "16": "repeat(16, minmax(0, 1fr))",
+        "14": "repeat(14, minmax(0, 1fr))",
+      },
     },
   },
   plugins: [],

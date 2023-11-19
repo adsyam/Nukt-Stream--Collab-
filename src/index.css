@@ -31,6 +31,15 @@ body {
   white-space: normal;
 }
 
+.truncate-synopsis-watch {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
 .dashboard-bg {
   background-image: url("./assets/BG.jpg");
   background-repeat: no-repeat;

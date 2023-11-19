@@ -1,133 +1,81 @@
-import { SearchPage } from "../pages/SearchPage";
-import { Banner } from "./Banner";
-import Carousel from "./Carousel";
-import CategoryCard from "./CategoryCard";
-import CategoryToggle from "./CategoryToggle";
-import { ChannelCard } from "./ChannelCard";
-import { CoverPhoto } from "./CoverPhoto";
-import { Dashboard } from "./Dashboard";
-import { EmailInput } from "./EmailInput";
-import EpisodeList from "./EpisodeList";
-import { FAQs } from "./FAQs";
-import Feed from "./Feed";
-import { Footer } from "./Footer";
-import { ForgotPassword } from "./ForgotPassword";
-import GenreMap from "./GenreMap";
-import { Hero } from "./Hero";
-import { History } from "./History";
-import { Library } from "./Library";
-import { Login } from "./Login";
-import MediaDetails from "./MediaDetails";
-import MediaFrame from "./MediaFrame";
-import MediaRecommendation from "./MediaRecommendation";
-import MediaReviews from "./MediaReviews";
-import MediaTypeButton from "./MediaTypeButton";
-import { MovieWatchHistory } from "./MovieWatchHistory";
-import { Navbar } from "./Navbar";
-import { Plans } from "./Plans";
-import Popular from "./Popular";
-import { Pricing } from "./Pricing";
-import { ProfileDetails } from "./ProfileDetails";
-import { ProfileNav } from "./ProfileNav";
-import { ProfilePic } from "./ProfilePic";
-import { Profile_About } from "./Profile_About";
-import { Profile_Contents } from "./Profile_Contents";
-import { Profile_Downloads } from "./Profile_Downloads";
-import { Profile_Home } from "./Profile_Home";
-import { Profile_Playlist } from "./Profile_Playlist";
-import { ProtectedRoute } from "./ProtectedRoute";
-import { RedirectRoute } from "./RedirectRoute";
-import { ReportPage } from "./ReportPage";
-import { Reviews } from "./Reviews";
-import { Searchbar } from "./SearchBar";
-import SearchMovie from "./SearchMovie";
-import SearchTVSeries from "./SearchTVSeries";
-import { SeriesWatchHistory } from "./SeriesWatchHistory";
-import ServerList from "./ServerList.jsx";
-import { Sidebar } from "./Sidebar";
-import { SignUp } from "./SignUp";
-import { Subscriptions } from "./Subscriptions";
-import { Success } from "./Success";
-import TopRated from "./TopRated";
-import Trending from "./Trending";
-import { User } from "./User";
-import { UserSidebar } from "./UserSideBar";
-import { VideoCard } from "./VideoCard";
-import { VideoCategories } from "./VideoCategories";
-import { VideoDescriptions } from "./VideoDescription";
-import { VideoFeed } from "./VideoFeed";
-import { VideosGrid } from "./VideosGrid";
-import { VideosLinear } from "./VideosLinear";
-import AiringTodayTV from "./AiringTodayTV.jsx";
-import { VideoLibrary } from "./VideoLibrary";
-import { MovieLibrary } from "./MovieLibrary";
-import { SeriesLibrary } from "./SeriesLibrary";
-import { VideoHistory } from "./VideoHistory";
+import Carousel from "./Common/Carousel.jsx";
+import CategoryCard from "./Common/CategoryCard.jsx";
+import CategoryToggle from "./Common/CategoryToggle.jsx";
+import Footer from "./Common/Footer.jsx";
+import MediaTypeButton from "./Common/MediaTypeButton.jsx";
+import Navbar from "./Common/Navbar.jsx";
+import PagingButton from "./Common/PagingButton.jsx";
+import MovieHistory from "./History_Page/MovieHistory.jsx";
+import SeriesHistory from "./History_Page/SeriesHistory.jsx";
+import Banner from "./NoUser/Banner.jsx";
+import FAQs from "./NoUser/FAQs.jsx";
+import Plans from "./NoUser/Plans.jsx";
+import Pricing from "./NoUser/Pricing.jsx";
+import ProtectedRoute from "./Route_Protection/ProtectedRoute.jsx";
+import RedirectRoute from "./Route_Protection/RedirectRoute.jsx";
+import Popular from "./Series_Movie_Section/Popular.jsx";
+import TopRated from "./Series_Movie_Section/TopRated.jsx";
+import Trending from "./Series_Movie_Section/Trending.jsx";
+import CoverPhoto from "./UserProfile/CoverPhoto.jsx";
+import ProfileDetails from "./UserProfile/ProfileDetails.jsx";
+import ProfilePic from "./UserProfile/ProfilePic.jsx";
+import ProfileAbout from "./UserProfile/Profile_About.jsx";
+import ProfileContents from "./UserProfile/Profile_Contents.jsx";
+import ProfileDownloads from "./UserProfile/Profile_Downloads.jsx";
+import ProfileHome from "./UserProfile/Profile_Home.jsx";
+import ProfilePlaylist from "./UserProfile/Profile_Playlist.jsx";
+import Reviews from "./Video_Section/Reviews.jsx";
+import VideoCard from "./Video_Section/VideoCard.jsx";
+import VideoCategories from "./Video_Section/VideoCategories.jsx";
+import VideoDescriptions from "./Video_Section/VideoDescription.jsx";
+import VideoFeed from "./Video_Section/VideoFeed.jsx";
+import VideosGrid from "./Video_Section/VideosGrid.jsx";
+import EpisodeList from "./Watch_SeriesAndMovie_Page/EpisodeList.jsx";
+import MediaDetails from "./Watch_SeriesAndMovie_Page/MediaDetails.jsx";
+import MediaFrame from "./Watch_SeriesAndMovie_Page/MediaFrame.jsx";
+import MediaRecommendation from "./Watch_SeriesAndMovie_Page/MediaRecommendation.jsx";
+import MediaReviews from "./Watch_SeriesAndMovie_Page/MediaReviews.jsx";
+import SeasonCards from "./Watch_SeriesAndMovie_Page/SeasonCards.jsx";
+import VideoHistory from "./History_Page/VideoHistory.jsx";
 
 export {
   Banner,
   Carousel,
   CategoryCard,
   CategoryToggle,
-  ChannelCard,
   CoverPhoto,
-  Dashboard,
-  EmailInput,
   EpisodeList,
   FAQs,
-  Feed,
   Footer,
-  ForgotPassword,
-  GenreMap,
-  Hero,
-  History,
-  Library,
-  Login,
   MediaDetails,
   MediaFrame,
   MediaRecommendation,
   MediaReviews,
   MediaTypeButton,
-  MovieWatchHistory,
+  MovieHistory,
   Navbar,
+  PagingButton,
   Plans,
   Popular,
   Pricing,
+  ProfileAbout,
+  ProfileContents,
   ProfileDetails,
-  ProfileNav,
+  ProfileDownloads,
+  ProfileHome,
   ProfilePic,
-  Profile_About,
-  Profile_Contents,
-  Profile_Downloads,
-  Profile_Home,
-  Profile_Playlist,
+  ProfilePlaylist,
   ProtectedRoute,
   RedirectRoute,
-  ReportPage,
   Reviews,
-  SearchMovie,
-  SearchPage,
-  SearchTVSeries,
-  Searchbar,
-  SeriesWatchHistory,
-  ServerList,
-  Sidebar,
-  SignUp,
-  Subscriptions,
-  Success,
+  SeasonCards,
+  SeriesHistory,
   TopRated,
   Trending,
-  User,
-  UserSidebar,
   VideoCard,
   VideoCategories,
   VideoDescriptions,
   VideoFeed,
   VideosGrid,
-  VideosLinear,
-  AiringTodayTV,
-  VideoLibrary,
-  MovieLibrary,
-  SeriesLibrary,
   VideoHistory,
 };
