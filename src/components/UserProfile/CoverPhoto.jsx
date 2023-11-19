@@ -32,7 +32,7 @@ export default function CoverPhoto({ isUser }) {
         });
       });
     }
-  }, [reload, image]);
+  }, [image, id, isUser]);
 
   const handleImageUpload = () => {
     inputRef.current.click();
