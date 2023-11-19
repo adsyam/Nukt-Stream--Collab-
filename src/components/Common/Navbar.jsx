@@ -46,13 +46,13 @@ export default function Navbar() {
   }, [reload]);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, [reload]);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   useEffect(() => {
     if (

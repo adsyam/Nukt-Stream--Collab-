@@ -22,13 +22,13 @@ export default function UserSidebar({ showUserSidebar }) {
   }, [reload]);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`)
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url);
-      });
-    });
-  }, [reload]);
+        setImageUrl(url)
+      })
+    })
+  }, [user?.uid])
 
   const toggleModal = () => {
     setModal(!modal);
