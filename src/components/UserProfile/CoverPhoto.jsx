@@ -15,13 +15,13 @@ export default function CoverPhoto({ isUser }) {
   const { user } = useAuthContext();
   const { addImage } = useDBContext();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setReload(!reload);
-    }, 1000);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setReload(!reload);
+  //   }, 1000);
 
-    return () => clearTimeout(timeout);
-  }, [reload]);
+  //   return () => clearTimeout(timeout);
+  // }, [reload]);
 
   useEffect(() => {
     if (isUser) {

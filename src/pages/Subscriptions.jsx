@@ -111,7 +111,7 @@ export default function Subscriptions() {
                 You are not subscribed to any channels
               </p>
             )}{" "}
-            <div className="flex items-center gap-5">
+            <div className="flex flex-wrap items-center gap-5">
               {channels.map((item) => (
                 <div
                   key={item?.id?.channelId || item?.id}

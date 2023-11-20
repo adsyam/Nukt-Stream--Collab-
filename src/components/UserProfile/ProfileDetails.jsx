@@ -17,7 +17,9 @@ export default function ProfileDetails({ channelDetail, id }) {
       { includeMetadataChanges: true },
       (doc) => setSubscribe(doc.data()?.subscriptions)
     );
-  }, [subscribe]);
+
+    return () => unsubscribe();
+  }, []);
 
   // console.log(subscribe);
 

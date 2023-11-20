@@ -7,17 +7,28 @@ import { useLocation } from "react-router";
 import { defprofile } from "../../assets";
 import { TOKEN_AUTH } from "../../constants/apiConfig";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { fileDB } from "../../config/firebase";
+import { fileDB, textDB } from "../../config/firebase";
 import { useAuthContext } from "../../context/AuthContext";
+import { useDBContext } from "../../context/DBContext";
+import { doc, onSnapshot } from "firebase/firestore";
+import moment from "moment-timezone";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineMore } from "react-icons/ai";
 
 export default function MediaReviews({ id }) {
   const { user } = useAuthContext();
+  const { addReview, deleteReview, updateReview } = useDBContext();
   const [review, setReview] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
   const [expanded, setExpanded] = useState({});
   const [showRest, setShowRest] = useState(1);
   const [path, setPath] = useState();
   const [imageUrl, setImageUrl] = useState("");
+  const [reviewInput, setReviewInput] = useState("");
+  const [reviewData, setReviewData] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [editReview, setEditReview] = useState("");
+  const [isEdit, setIsEdit] = useState(null);
+  const [options, setOptions] = useState(null);
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -38,6 +49,72 @@ export default function MediaReviews({ id }) {
       setPath("movie");
     }
   }, [pathname]);
+
+  useEffect(() => {
+    const reviewsCollectionRef = doc(textDB, "Reviews", id);
+    onSnapshot(reviewsCollectionRef, async (snapshot) => {
+      const newReviewData = await Promise.all(
+        Object.keys(snapshot._document.data.value.mapValue.fields).map(
+          async (key) => {
+            const {
+              createdAt: { timestampValue: createdAt },
+              id: { stringValue: userId },
+              review: { stringValue: review },
+              username: { stringValue: username },
+            } = snapshot._document.data.value.mapValue.fields[key].mapValue
+              .fields;
+
+            const listRef = ref(fileDB, `${userId}/profileImage/`);
+            try {
+              const response = await listAll(listRef);
+              const url = response.items[0]
+                ? await getDownloadURL(response.items[0])
+                : null;
+
+              return {
+                userId: userId,
+                reviewId: key,
+                username,
+                review,
+                createdAt:
+                  createdAt !== null
+                    ? moment.tz(createdAt, "Asia/Singapore").toDate()
+                    : null,
+                url,
+              };
+            } catch (error) {
+              console.error("Error fetching download URL:", error);
+              return null;
+            }
+          }
+        )
+      );
+
+      const filteredReviewData = newReviewData.filter(Boolean);
+      filteredReviewData.sort((a, b) => b.createdAt - a.createdAt);
+      console.log(filteredReviewData);
+      setReviewData(filteredReviewData);
+    });
+  }, [isSubmitted, id, path]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addReview(user?.uid, id, user?.displayName, reviewInput);
+    setReviewInput("");
+    setIsSubmitted(!isSubmitted);
+  };
+
+  const handleEdit = (e, reviewId) => {
+    e.preventDefault();
+
+    updateReview(reviewId, id, editReview);
+    setIsEdit(null), setOptions(null), setEditReview("");
+  };
+
+  const handleDelete = (e, reviewId) => {
+    e.preventDefault();
+    deleteReview(reviewId, id);
+  };
 
   const toggleExpanded = (reviewId) => {
     setExpanded((prevMap) => ({
@@ -90,19 +167,133 @@ export default function MediaReviews({ id }) {
 
   return (
     <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12 p-3">
-      <div className="flex items-center justify-center gap-2">
+      <div className="w-full flex gap-5">
         <img
           src={imageUrl || defprofile}
           alt=""
-          className="rounded-full max-w-[45px]"
+          className="rounded-full w-[45px] h-[45px]"
         />
-        <input
-          type="text"
-          className="w-full px-3 py-2 rounded-md outline-none"
-          placeholder="Write a review"
-        />
+        <div className="w-full flex flex-col items-center justify-center gap-2">
+          <input
+            type="text"
+            value={reviewInput}
+            onChange={(e) => setReviewInput(e.target.value)}
+            className="w-full px-3 py-2 rounded-md outline-none bg-black/80 focus:outline-white/30
+          text-white"
+            placeholder="Write a review"
+          />
+          <div className="w-full flex gap-5">
+            <button
+              onClick={(e) => handleSubmit(e)}
+              className={`w-max text-white px-[1rem] rounded-md hover:bg-white/50 ${
+                reviewInput.length === 0 ? "bg-white/10" : "bg-white/50"
+              }`}
+            >
+              Submit
+            </button>
+            <button
+              onClick={() => setReviewInput("")}
+              className="w-max text-white bg-white/10 px-[1rem] rounded-md hover:bg-white/50"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
       <div className={`${!showReviews ? "" : "overflow-y-scroll h-[70vh]"}`}>
+        {/* our review data */}
+        {reviewData.slice(0, showRest).map((review) => (
+          <div
+            key={review.reviewId}
+            className="w-full flex justify-between items-center text-white"
+          >
+            <div className="w-full flex gap-4 my-6 px-10">
+              <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
+                <img
+                  src={review?.url}
+                  alt={review?.username}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {isEdit !== review.reviewId ? (
+                <div className="w-full flex flex-col gap-2">
+                  <div className="flex gap-3 items-center">
+                    <p>{review?.username}</p>
+                    <p className="text-white/50 text-sm">
+                      posted {moment(review?.createdAt).fromNow()}{" "}
+                      {review?.isEdited && "(edited)"}
+                    </p>
+                  </div>
+                  <p>{review?.review}</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <textarea
+                    placeholder="Write a review"
+                    name=""
+                    cols="120"
+                    rows="2"
+                    value={editReview || review?.review}
+                    onChange={(e) => setEditReview(e.target.value)}
+                    className="text-white resize-none outline-none rounded-md p-2 w-full
+              bg-black/80 focus:outline-white/30"
+                  />
+                  <div className="w-full flex gap-5">
+                    <button
+                      onClick={(e) => handleEdit(e, review?.reviewId)}
+                      className={`w-max  px-[1rem] rounded-md hover:bg-white/50 ${
+                        editReview.length === 0 ? "bg-white/10" : "bg-white/50"
+                      }`}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => (
+                        setIsEdit(null), setOptions(null), setEditReview("")
+                      )}
+                      className="w-max bg-white/10 px-[1rem] rounded-md hover:bg-white/50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            {user?.uid === review?.userId && isEdit !== review.reviewId && (
+              <div className="relative">
+                <AiOutlineMore
+                  onClick={() =>
+                    setOptions((prevOptions) =>
+                      prevOptions === review.reviewId ? null : review.reviewId
+                    )
+                  }
+                  className="w-[25px] h-[25px] cursor-pointer font-bold"
+                />
+                <div
+                  className={`absolute bg-black p-1 rounded-md top-0 right-5
+                  ${options === review.reviewId ? "block" : "hidden"}`}
+                >
+                  <button
+                    onClick={(e) =>
+                      setIsEdit((prevOptions) =>
+                        prevOptions === review.reviewId ? null : review.reviewId
+                      )
+                    }
+                    className="flex items-center gap-1 hover:bg-white/40 w-full rounded-md p-1 text-sm"
+                  >
+                    <AiOutlineEdit /> Edit
+                  </button>
+                  <button
+                    onClick={(e) => handleDelete(e, review?.reviewId)}
+                    className="flex items-center gap-1 hover:bg-white/40 w-full rounded-md p-1 text-sm"
+                  >
+                    <AiOutlineDelete /> Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
         {review.slice(0, showRest).map((r, index) => (
           <motion.div
             key={r.id}

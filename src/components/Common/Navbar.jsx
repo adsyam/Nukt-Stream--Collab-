@@ -37,22 +37,22 @@ export default function Navbar() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [imageUrl, setImageUrl] = useState(null);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setReload(!reload);
-    }, 1000);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setReload(!reload);
+  //   }, 1000);
 
-    return () => clearTimeout(timeout);
-  }, [reload]);
+  //   return () => clearTimeout(timeout);
+  // }, [reload]);
 
   useEffect(() => {
-    const listRef = ref(fileDB, `${user?.uid}/profileImage/`)
+    const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
     listAll(listRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
-        setImageUrl(url)
-      })
-    })
-  }, [user?.uid])
+        setImageUrl(url);
+      });
+    });
+  }, [user?.uid]);
 
   useEffect(() => {
     if (
