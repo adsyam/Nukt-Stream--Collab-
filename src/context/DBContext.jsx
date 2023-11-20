@@ -8,6 +8,7 @@ import {
   doc,
   setDoc,
   serverTimestamp,
+  deleteField,
 } from "firebase/firestore";
 import { ref, uploadBytes, listAll, deleteObject } from "firebase/storage";
 import { textDB, fileDB } from "../config/firebase";
@@ -253,6 +254,54 @@ export const DBProvider = ({ children }) => {
     }
   };
 
+  const addReview = async (userId, videoId, username, review) => {
+    try {
+      const reviewDocRef = doc(textDB, "Reviews", videoId);
+      const id = v4();
+      const item = {
+        [id]: {
+          id: userId,
+          username: username || "User",
+          review: review,
+          createdAt: serverTimestamp(),
+          isEdited: false,
+        },
+      };
+
+      await setDoc(reviewDocRef, item, { merge: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteReview = async (reviewId, videoId) => {
+    try {
+      const reviewDocRef = doc(textDB, "Reviews", videoId);
+      await updateDoc(reviewDocRef, {
+        [reviewId]: deleteField(),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateReview = async (reviewId, videoId, review) => {
+    try {
+      const reviewDocRef = doc(textDB, "Reviews", videoId);
+      const reviewSnapshot = await getDoc(reviewDocRef);
+      await updateDoc(reviewDocRef, {
+        ...reviewSnapshot.data(),
+        [reviewId]: {
+          ...reviewSnapshot.data()[reviewId],
+          review,
+          isEdited: true,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //------------ THIS IS NOT YET TESTED -----------------//
   //function to add video in the firebase storage
   const addVideo = async (
@@ -300,6 +349,9 @@ export const DBProvider = ({ children }) => {
         addVideo,
         addUserFeedback,
         removeSubscribers,
+        addReview,
+        deleteReview,
+        updateReview,
       }}
     >
       {children}

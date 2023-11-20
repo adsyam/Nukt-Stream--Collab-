@@ -90,13 +90,13 @@ export default function VideoCard({ video, item, index }) {
         <div
           role="button"
           onClick={(e) => handleAddToLibrary(e)}
-          className="w-[30px] h-[30px] bg-black/60 rounded-md flex items-center justify-center
-        cursor-pointer opacity-0 transition-all duration-200 z-[99999] translate-x-[16.5rem]
-        -translate-y-[17rem] group-hover/card:opacity-100 relative group/add"
+          className="w-[25px] md:w-[30px] h-[25px] md:h-[30px] bg-black/60 rounded-md flex items-center justify-center
+          cursor-pointer opacity-0 transition-all duration-200 z-[99999] translate-x-[10.5rem] md:translate-x-[16.5rem]
+          -translate-y-[12rem] md:-translate-y-[17rem] group-hover/card:opacity-100 relative group/add"
         >
-          <AiOutlinePlus size={25} className="font-bold" />
+          <AiOutlinePlus className="font-bold w-[20px] md:w-[25px] h-[20px] md:h-[25px]" />
           <p
-            className="absolute w-max bg-black/80 p-1 rounded-md text-sm opacity-0 group-hover/add:opacity-100
+            className="absolute w-max bg-black/80 p-1 rounded-md text-xs md:text-sm opacity-0 group-hover/add:opacity-100
           translate-x-0 group-hover/add:-translate-x-16 transition-all ease-in-out duration-300"
           >
             Add to library

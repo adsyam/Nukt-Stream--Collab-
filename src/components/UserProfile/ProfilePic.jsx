@@ -16,13 +16,13 @@ export default function ProfilePic({ image, isUser }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [reload, setReload] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setReload(!reload);
-    }, 1000);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setReload(!reload);
+  //   }, 1000);
 
-    return () => clearTimeout(timeout);
-  }, [reload]);
+  //   return () => clearTimeout(timeout);
+  // }, [reload]);
 
   useEffect(() => {
     if (isUser) {
@@ -33,7 +33,7 @@ export default function ProfilePic({ image, isUser }) {
         });
       });
     }
-  }, [reload, id, imageUrl]);
+  }, [isUser, id, imageUrl]);
 
   const handleImageUpload = () => {
     inputRef.current.click();

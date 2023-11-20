@@ -76,7 +76,7 @@ export default function WatchVideo() {
             </div>
           </div>
           <div className="flex flex-col items-baseline flex-1 w-full lg:flex-row">
-            <Reviews comments={comments} />
+            <Reviews comments={comments} id={id} />
             <div className="flex flex-col flex-1">
               <p className="text-white text-center text-[1.5rem] font-medium">
                 Related Videos
