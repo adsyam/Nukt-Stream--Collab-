@@ -19,10 +19,8 @@ export default function MovieHistory({ reload }) {
   const location = useLocation().pathname.split("/")[2];
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => setMovieIds(doc.data()[location].movies)
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setMovieIds(doc.data()[location].movies)
     );
   }, [location, user.uid]);
 
@@ -51,7 +49,7 @@ export default function MovieHistory({ reload }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [reload, movieIds]);
+  }, [movieIds]);
 
   const handleDelete = (idToDelete) => {
     const newIds = [...movieIds];
@@ -97,5 +95,5 @@ export default function MovieHistory({ reload }) {
         ))}
       </div>
     </div>
-  )
+  );
 }

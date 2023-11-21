@@ -16,6 +16,7 @@ import { useDataContext } from "../context/DataContext";
 export default function WatchMovie() {
   const { id, isLoading, setIsLoading, pathname } = useFetchDetails();
   const [path, setPath] = useState();
+  const [historyToggle, setHistoryToggle] = useState(true);
 
   const [servers, setServers] = useState(
     `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`
@@ -32,17 +33,19 @@ export default function WatchMovie() {
 
   //---this will be a listener for the toggle history
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => {
-        if (doc.data().storeHistory) {
-          addHistoryOrLibrary(user?.uid, "history", "movies", id);
-        }
-      }
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setHistoryToggle(doc.data().storeHistory)
     );
+  }, []);
 
-    return () => unsubscribe();
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (historyToggle) {
+        addHistoryOrLibrary(user?.uid, "history", "movies", id);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [id]);
 
   useEffect(() => {

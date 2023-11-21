@@ -23,6 +23,7 @@ export default function WatchSeries() {
   const [mediaType, setMediaType] = useState();
   const [serverState, setServerState] = useState("Server1");
   const [currentServer, setCurrentServer] = useState();
+  const [historyToggle, setHistoryToggle] = useState(true);
 
   const { user } = useAuthContext();
   const { sidebar } = useDataContext();
@@ -38,18 +39,20 @@ export default function WatchSeries() {
 
   //===== this code is for watch history =======
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => {
-        if (doc.data().storeHistory) {
-          addHistoryOrLibrary(user?.uid, "history", "series", id);
-        }
-      }
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setHistoryToggle(doc.data().storeHistory)
     );
+  }, []);
 
-    return () => unsubscribe();
-  }, [user?.uid]);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (historyToggle) {
+        addHistoryOrLibrary(user?.uid, "history", "series", id);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [id]);
 
   useEffect(() => {
     if (serverState in servers) {

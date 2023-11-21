@@ -52,7 +52,11 @@ export default function MediaReviews({ id }) {
 
   useEffect(() => {
     const reviewsCollectionRef = doc(textDB, "Reviews", id);
-    onSnapshot(reviewsCollectionRef, async (snapshot) => {
+    const unsub = onSnapshot(reviewsCollectionRef, async (snapshot) => {
+      if (snapshot._document === null) {
+        setReviewData([]);
+        return unsub();
+      }
       const newReviewData = await Promise.all(
         Object.keys(snapshot._document.data.value.mapValue.fields).map(
           async (key) => {
