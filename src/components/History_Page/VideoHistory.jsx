@@ -13,7 +13,6 @@ export default function VideoHistory({ reload }) {
   const { user } = useAuthContext();
   const { updateHistoryOrLibrary } = useDBContext();
   const [videoIds, setVideoIds] = useState([]);
-  // const [videoDetails, setVideoDetails] = useState([]);
   const location = useLocation().pathname.split("/")[2];
 
   useEffect(() => {
@@ -25,7 +24,6 @@ export default function VideoHistory({ reload }) {
   }, []);
 
   const videoDetails = useFetchVideoDetail(videoIds);
-  // console.log(videoDetails);
 
   if (!videoDetails) return;
 

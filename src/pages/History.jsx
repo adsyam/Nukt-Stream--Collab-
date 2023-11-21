@@ -17,10 +17,8 @@ export default function History() {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => setHistoryToggle(doc.data().storeHistory)
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setHistoryToggle(doc.data().storeHistory)
     );
   }, []);
 

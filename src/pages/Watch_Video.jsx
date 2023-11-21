@@ -25,12 +25,10 @@ export default function WatchVideo() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => setHistoryToggle(doc.data().storeHistory)
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setHistoryToggle(doc.data().storeHistory)
     );
-  }, [user.uid]);
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

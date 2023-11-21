@@ -18,10 +18,8 @@ export default function SeriesHistory({ reload }) {
   const location = useLocation().pathname.split("/")[2];
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(textDB, "Users", user.uid),
-      { includeMetadataChanges: true },
-      (doc) => setSeriesIds(doc.data()[location].series)
+    const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
+      setSeriesIds(doc.data()[location].series)
     );
   }, []);
 
@@ -50,7 +48,7 @@ export default function SeriesHistory({ reload }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [reload, seriesIds]);
+  }, [seriesIds]);
 
   const handleDelete = (idToDelete) => {
     const newIds = [...seriesIds];
@@ -96,5 +94,5 @@ export default function SeriesHistory({ reload }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
