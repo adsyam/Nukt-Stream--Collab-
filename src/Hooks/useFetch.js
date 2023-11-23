@@ -8,6 +8,11 @@ const apiKeys = [
   import.meta.env.VITE_RAPID_API_KEY_5,
   import.meta.env.VITE_RAPID_API_KEY_6,
   import.meta.env.VITE_RAPID_API_KEY_7,
+  import.meta.env.VITE_RAPID_API_KEY_8,
+  import.meta.env.VITE_RAPID_API_KEY_9,
+  import.meta.env.VITE_RAPID_API_KEY_10,
+  import.meta.env.VITE_RAPID_API_KEY_11,
+  import.meta.env.VITE_RAPID_API_KEY_12,
 ]
 
 let currentApiKeyIndex = 0
@@ -38,12 +43,12 @@ export const useFetch = async (url) => {
       }
 
     } catch (error) {
-      console.error(`Error with API key ${apiKeys[i]}:`, error)
+    //   console.error(`Error with API key ${apiKeys[i]}:`, error)
     }
   }
 
   if (!response) {
-    console.error("All API keys used. Wait for rate limit reset.")
+    // console.error("All API keys used. Wait for rate limit reset.")
     throw new Error("Rate limit exceeded with all API keys.")
   }
 
