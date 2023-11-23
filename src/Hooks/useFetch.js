@@ -43,12 +43,12 @@ export const useFetch = async (url) => {
       }
 
     } catch (error) {
-    //   console.error(`Error with API key ${apiKeys[i]}:`, error)
+      console.error(error)
     }
   }
 
   if (!response) {
-    // console.error("All API keys used. Wait for rate limit reset.")
+    console.error("All API keys used. Wait for rate limit reset.")
     throw new Error("Rate limit exceeded with all API keys.")
   }
 

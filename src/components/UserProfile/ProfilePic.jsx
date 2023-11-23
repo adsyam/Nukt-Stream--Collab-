@@ -33,7 +33,7 @@ export default function ProfilePic({ image, isUser }) {
         });
       });
     }
-  }, [isUser, id, imageUrl]);
+  }, [isUser, id, imageUrl, reload]);
 
   const handleImageUpload = () => {
     inputRef.current.click();
