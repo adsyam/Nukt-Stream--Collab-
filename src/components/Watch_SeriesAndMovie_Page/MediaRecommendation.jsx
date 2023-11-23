@@ -8,7 +8,7 @@ export default function MediaRecommendation({ id }) {
   const [mediaType, setMediaType] = useState()
 
   const { data, pathname } = useFetchRecommend()
-  const { maxCards, responsiveGridCard } = useResponsive()
+  const { maxCards, lgBelow } = useResponsive()
 
   const fadeInVariants = {
     hidden: { opacity: 0 },
@@ -24,7 +24,13 @@ export default function MediaRecommendation({ id }) {
   }, [pathname])
 
   return (
-    <div className={`text-white ${pathname.includes("Movie") ? "mt-10 mx-2" : "mx-24 max-lg:mx-20 max-sm:mx-12 py-12 px-3" } `}>
+    <div
+      className={`text-white ${
+        pathname.includes("Movie") || lgBelow
+          ? "mt-10 mx-2"
+          : "mx-24 max-lg:mx-20 max-sm:mx-12 py-12 px-3"
+      } `}
+    >
       <h1 className="text-center uppercase text-2xl mb-4 font-medium">
         Recommended {mediaType === "tv" ? "Series" : "Movies"}
       </h1>
@@ -32,7 +38,7 @@ export default function MediaRecommendation({ id }) {
         className={`grid grid-cols-8 max-xl:grid-cols-7 max-lg:grid-cols-6 max-md:grid-cols-5 max-sm:grid-cols-4 max-xsm:grid-cols-3 max-xxsm:grid-cols-2 gap-4 text-white`}
       >
         {data
-          .filter((rec) => rec.poster_path && rec.backdrop_path)
+          ?.filter((rec) => rec.poster_path && rec.backdrop_path)
           .slice(0, maxCards)
           .map((rec, index) => (
             <Link

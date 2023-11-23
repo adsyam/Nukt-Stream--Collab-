@@ -31,20 +31,21 @@ export default function VideoCard({ video, item, index }) {
   };
 
   return (
-    <div className="w-[200px] md:w-[300px] h-max group/card">
+    <div className="w-[200px] md:w-[300px] h-max group/card relative">
       <Link
         to={
           video?.id?.videoId
             ? `/watch?v=${video?.id?.videoId}`
             : `/watch?v=${item?.id}`
         }
+        className=""
       >
         <motion.div
           variants={fadeInVariants}
           initial="hidden"
           animate="visible"
           transition={{ delay: index * 0.07 }}
-          className="w-full h-[100px] md:h-[160px] overflow-hidden rounded-md"
+          className="w-full h-[100px] md:h-[160px] overflow-hidden rounded-md "
         >
           <motion.img
             style={{ y: -25 }}
@@ -91,13 +92,12 @@ export default function VideoCard({ video, item, index }) {
           role="button"
           onClick={(e) => handleAddToLibrary(e)}
           className="w-[25px] md:w-[30px] h-[25px] md:h-[30px] bg-black/60 rounded-md flex items-center justify-center
-          cursor-pointer opacity-0 transition-all duration-200 z-[99999] translate-x-[10.5rem] md:translate-x-[16.5rem]
-          -translate-y-[12rem] md:-translate-y-[17rem] group-hover/card:opacity-100 relative group/add"
+          cursor-pointer opacity-0 transition-all duration-200 z-[99999] group-hover/card:opacity-100 group/add absolute  bottom-[130px] left-[260px]"
         >
           <AiOutlinePlus className="font-bold w-[20px] md:w-[25px] h-[20px] md:h-[25px]" />
           <p
             className="absolute w-max bg-black/80 p-1 rounded-md text-xs md:text-sm opacity-0 group-hover/add:opacity-100
-          translate-x-0 group-hover/add:-translate-x-16 transition-all ease-in-out duration-300"
+          translate-x-0 group-hover/add:-translate-x-20 transition-all ease-in-out duration-300"
           >
             Add to library
           </p>

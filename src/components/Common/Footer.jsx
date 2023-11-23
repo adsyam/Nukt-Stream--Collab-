@@ -11,16 +11,20 @@ import { nukt_logo } from "../../assets/index"
 import { useAuthContext } from "../../context/AuthContext"
 import { useDataContext } from "../../context/DataContext"
 import { FooterLinks1, FooterLinks2 } from "../../utils"
+import useResponsive from "../../Hooks/useResponsive"
 
 export default function Footer() {
   const { sidebar } = useDataContext()
   const { user } = useAuthContext()
   const location = useLocation()
   const pathname = location.pathname
+  const { lgBelow } = useResponsive()
 
   return (
     <footer
-      className={`w-full text-white bg-transparent flex flex-col font-fig px-[2rem] ${
+      className={`w-full text-white bg-transparent flex flex-col font-fig  ${
+        lgBelow ? "" : "px-[2rem]"
+      } ${
         pathname.includes("login") || pathname.includes("signup")
           ? "absolute bottom-0 opacity-75"
           : ""
@@ -35,7 +39,7 @@ export default function Footer() {
         }`}
         >
           <div className="flex items-center gap-4">
-            <img src={nukt_logo} className="w-[100px]" />
+            <img alt="nukt" src={nukt_logo} className="w-[100px]" />
             <h2 className="uppercase font-medium text-[2.5rem]">nukt</h2>
           </div>
           <div className="w-full xl:w-[70%] flex flex-col lg:flex-row items-center">
@@ -46,7 +50,7 @@ export default function Footer() {
                     key={index}
                     className="capitalize text-[1rem] hover:text-[#7300FF]"
                   >
-                    <Link>{item.name}</Link>
+                    <Link to={"#"}>{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -56,7 +60,7 @@ export default function Footer() {
                     key={index}
                     className="capitalize text-[1rem] hover:text-[#7300FF]"
                   >
-                    <Link>{item.name}</Link>
+                    <Link to={"#"}>{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -71,7 +75,10 @@ export default function Footer() {
                 </h2>
                 <ul className="flex gap-4 items-center justify-center">
                   <li>
-                    <Link className="hover:text-[#7300FF] hover:scale-[1.5]">
+                    <Link
+                      to={"#"}
+                      className="hover:text-[#7300FF] hover:scale-[1.5]"
+                    >
                       <FontAwesomeIcon
                         icon={faInstagram}
                         className="text-[30px]"
@@ -79,7 +86,7 @@ export default function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#7300FF]">
+                    <Link to={"#"} className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faTiktok}
                         className="text-[30px]"
@@ -87,7 +94,7 @@ export default function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#7300FF]">
+                    <Link to={"#"} className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faFacebook}
                         className="text-[30px]"
@@ -95,7 +102,7 @@ export default function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="hover:text-[#7300FF]">
+                    <Link to={"#"} className="hover:text-[#7300FF]">
                       <FontAwesomeIcon
                         icon={faXTwitter}
                         className="text-[30px]"
@@ -104,10 +111,10 @@ export default function Footer() {
                   </li>
                 </ul>
                 <div className="flex flex-col items-center underline">
-                  <Link className="hover:text-[#7300FF]">
+                  <Link to={"#"} className="hover:text-[#7300FF]">
                     yambaoadrianne@gmail.com
                   </Link>
-                  <Link className="hover:text-[#7300FF]">
+                  <Link to={"#"} className="hover:text-[#7300FF]">
                     danemaas16@gmail.com
                   </Link>
                 </div>

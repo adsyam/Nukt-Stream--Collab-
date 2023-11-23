@@ -6,6 +6,7 @@ export default function useResponsive() {
   const [maxCards, setMaxCards] = useState()
   const { sidebar } = useDataContext()
   const screen = useMediaQuery({ maxWidth: 425 })
+  const lgBelow = useMediaQuery({ maxWidth: 1024 })
   const xxsm = useMediaQuery({ minWidth: 370, maxWidth: 509 })
   const xsm = useMediaQuery({ minWidth: 510, maxWidth: 640 })
   const sm = useMediaQuery({ minWidth: 640, maxWidth: 768 })
@@ -38,5 +39,6 @@ export default function useResponsive() {
     sm,
     xsm,
     xxsm,
+    lgBelow
   }
 }

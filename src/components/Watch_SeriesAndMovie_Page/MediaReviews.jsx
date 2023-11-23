@@ -13,6 +13,7 @@ import { useDBContext } from "../../context/DBContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import moment from "moment-timezone";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineMore } from "react-icons/ai";
+import useResponsive from "../../Hooks/useResponsive";
 
 export default function MediaReviews({ id }) {
   const { user } = useAuthContext();
@@ -32,6 +33,7 @@ export default function MediaReviews({ id }) {
 
   const location = useLocation();
   const pathname = location.pathname;
+  const { lgBelow } = useResponsive();
 
   useEffect(() => {
     const listRef = ref(fileDB, `${user?.uid}/profileImage/`);
@@ -170,7 +172,11 @@ export default function MediaReviews({ id }) {
   }
 
   return (
-    <div className="my-12 flex flex-col gap-2 mx-24 max-lg:mx-20 max-sm:mx-12 p-3">
+    <div
+      className={`my-12 flex flex-col gap-2 p-3 ${
+        lgBelow ? "" : "mx-24 max-lg:mx-20 max-sm:mx-12"
+      }`}
+    >
       <div className="w-full flex gap-5">
         <img
           src={imageUrl || defprofile}
@@ -206,7 +212,7 @@ export default function MediaReviews({ id }) {
       </div>
       <div className={`${!showReviews ? "" : "overflow-y-scroll h-[70vh]"}`}>
         {/* our review data */}
-        {reviewData.slice(0, showRest).map((review) => (
+        {reviewData?.slice(0, showRest).map((review) => (
           <div
             key={review.reviewId}
             className="w-full flex justify-between items-center text-white"
@@ -214,7 +220,7 @@ export default function MediaReviews({ id }) {
             <div className="w-full flex gap-4 my-6 px-10">
               <div className="rounded-full w-[45px] h-[45px] overflow-hidden">
                 <img
-                  src={review?.url}
+                  src={String(review?.url)}
                   alt={review?.username}
                   className="w-full h-full object-cover"
                 />
@@ -235,8 +241,8 @@ export default function MediaReviews({ id }) {
                   <textarea
                     placeholder="Write a review"
                     name=""
-                    cols="120"
-                    rows="2"
+                    cols={120}
+                    rows={2}
                     value={editReview || review?.review}
                     onChange={(e) => setEditReview(e.target.value)}
                     className="text-white resize-none outline-none rounded-md p-2 w-full
@@ -278,7 +284,7 @@ export default function MediaReviews({ id }) {
                   ${options === review.reviewId ? "block" : "hidden"}`}
                 >
                   <button
-                    onClick={(e) =>
+                    onClick={() =>
                       setIsEdit((prevOptions) =>
                         prevOptions === review.reviewId ? null : review.reviewId
                       )
@@ -298,7 +304,7 @@ export default function MediaReviews({ id }) {
             )}
           </div>
         ))}
-        {review.slice(0, showRest).map((r, index) => (
+        {review?.slice(0, showRest).map((r, index) => (
           <motion.div
             key={r.id}
             className="flex flex-col gap-3"
@@ -310,6 +316,7 @@ export default function MediaReviews({ id }) {
             <div className="text-white flex gap-2 ml-16 max-xsm:ml-4 mt-3">
               <div className="flex gap-3">
                 <img
+                  title="user profile"
                   className="rounded-full max-h-[45px]"
                   src={`https://xsgames.co/randomusers/assets/avatars/pixel/${
                     index + 1
@@ -335,7 +342,7 @@ export default function MediaReviews({ id }) {
               </div>
             </div>
             <div className="text-white font-thin opacity-80 mb-4 xsm:ml-32 max-xsm:ml-4">
-              {expanded[r.id] ? (
+              {expanded?.[r.id] ? (
                 <div dangerouslySetInnerHTML={{ __html: r.content }}></div>
               ) : (
                 <div
@@ -349,7 +356,7 @@ export default function MediaReviews({ id }) {
                 onClick={() => toggleExpanded(r.id)}
                 className="text-[#7300FF] italic"
               >
-                {expanded[r.id] ? (
+                {expanded?.[r.id] ? (
                   <>
                     <span className="mr-1">&nbsp;</span>
                     <span className="underline">show less</span>
@@ -368,10 +375,10 @@ export default function MediaReviews({ id }) {
       <button
         onClick={toggleShowAll}
         className="text-white"
-        disabled={review.length <= 1}
+        // disabled={review?.length <= 1}
       >
-        {review.length !== 1
-          ? review.length === 0
+        {review?.length !== 1
+          ? review?.length === 0
             ? "There are no reviews"
             : !showReviews
             ? "Show All Reviews"
@@ -379,5 +386,5 @@ export default function MediaReviews({ id }) {
           : "There are no more reviews"}
       </button>
     </div>
-  );
+  )
 }
