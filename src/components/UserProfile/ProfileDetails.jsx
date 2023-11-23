@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import ProfileNav from "./ProfileNav";
 import { textDB } from "../../config/firebase";
 import { useAuthContext } from "../../context/AuthContext";
 import { useDBContext } from "../../context/DBContext";
+import { AiOutlineEdit } from "react-icons/ai";
 
 export default function ProfileDetails({ channelDetail, id }) {
   const [isUser, setIsUser] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
   const [subscribe, setSubscribe] = useState([]);
   const { user } = useAuthContext();
   const { addSubcription, removeSubscription, addSubscribers } = useDBContext();
@@ -15,13 +18,14 @@ export default function ProfileDetails({ channelDetail, id }) {
     const unsubscribe = onSnapshot(
       doc(textDB, "Users", user.uid),
       { includeMetadataChanges: true },
-      (doc) => setSubscribe(doc.data()?.subscriptions)
+      (doc) => {
+        setSubscribe(doc.data()?.subscriptions),
+          setNewUsername(doc.data()?.username);
+      }
     );
 
     return () => unsubscribe();
-  }, []);
-
-  // console.log(subscribe);
+  }, [isEdit]);
 
   useEffect(() => {
     if (!channelDetail?.kind) {
@@ -48,6 +52,15 @@ export default function ProfileDetails({ channelDetail, id }) {
     }
   };
 
+  const handleSave = async () => {
+    const userDocRef = doc(textDB, "Users", user?.uid);
+
+    await updateDoc(userDocRef, {
+      username: newUsername,
+    });
+    setIsEdit(false);
+  };
+
   return (
     <section className="px-[2rem]">
       <div
@@ -55,9 +68,32 @@ export default function ProfileDetails({ channelDetail, id }) {
         -translate-y-[7rem] md:-translate-y-[12rem]"
       >
         <div>
-          <h2 className="text-[1.2rem] font-medium">
-            {isUser ? channelDetail?.username : channelDetail?.snippet?.title}
-          </h2>
+          <div className="flex items-center gap-3">
+            {isEdit ? (
+              <>
+                <input
+                  type="text"
+                  value={newUsername}
+                  onChange={(e) => setNewUsername(e.target.value)}
+                  className="bg-transparent outline-none border-2 rounded-md w-max px-1 py-1"
+                />
+                <button onClick={handleSave}>save</button>
+                <button onClick={() => setIsEdit(false)}>cancel</button>
+              </>
+            ) : (
+              <>
+                <h2 className="text-[1.2rem] font-medium">
+                  {isUser ? newUsername : channelDetail?.snippet?.title}
+                </h2>
+                {user?.uid === id && (
+                  <AiOutlineEdit
+                    className="cursor-pointer"
+                    onClick={() => setIsEdit(true)}
+                  />
+                )}
+              </>
+            )}
+          </div>
           <p className="text-white/60">
             {isUser ? channelDetail?.email : channelDetail?.snippet?.customUrl}
           </p>
