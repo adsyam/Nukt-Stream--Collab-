@@ -39,6 +39,14 @@ export default function WatchSeries() {
     Server5: `https://www.2embed.cc/embedtv/${id}&s=${season}&e=${episode}/`,
   };
 
+useEffect(() => {
+  // Scroll to the top of the page when the component mounts
+  setTimeout(() => {
+    window.scrollTo(0, 0)
+  }, 1000)
+}, [])
+
+
   //===== this code is for watch history =======
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>

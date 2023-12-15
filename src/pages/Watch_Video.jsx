@@ -1,54 +1,66 @@
-import { useEffect, useRef, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore"
+import { useEffect, useRef, useState } from "react"
 
 import {
   useFetchRelatedVideos,
   useFetchStats,
   useFetchVideoComments,
-} from "../Hooks/customHooks";
-import { Footer, MediaFrame, Reviews, VideoDescriptions, VideosGrid } from "../components";
-import { useDataContext } from "../context/DataContext";
-import { useDBContext } from "../context/DBContext";
-import { useAuthContext } from "../context/AuthContext";
-import { textDB } from "../config/firebase";
-import useResponsive from "../Hooks/useResponsive";
-
+} from "../Hooks/customHooks"
+import useResponsive from "../Hooks/useResponsive"
+import {
+  Footer,
+  MediaFrame,
+  Reviews,
+  VideoDescriptions,
+  VideosGrid,
+} from "../components"
+import { textDB } from "../config/firebase"
+import { useAuthContext } from "../context/AuthContext"
+import { useDBContext } from "../context/DBContext"
+import { useDataContext } from "../context/DataContext"
 
 export default function WatchVideo() {
-  const id = new URLSearchParams(window.location.search).get("v");
-  const [historyToggle, setHistoryToggle] = useState(true);
+  const id = new URLSearchParams(window.location.search).get("v")
+  const [historyToggle, setHistoryToggle] = useState(true)
 
-  const videoDetails = useFetchStats(id);
-  const videos = useFetchRelatedVideos(id);
-  const comments = useFetchVideoComments(id);
-  const { user } = useAuthContext();
-  const { sidebar } = useDataContext();
-  const { addHistoryOrLibrary } = useDBContext();
-  const videoRef = useRef(null);
+  const videoDetails = useFetchStats(id)
+  const videos = useFetchRelatedVideos(id)
+  const comments = useFetchVideoComments(id)
+  const { user } = useAuthContext()
+  const { sidebar } = useDataContext()
+  const { addHistoryOrLibrary } = useDBContext()
+  const videoRef = useRef(null)
   const { lgBelow } = useResponsive()
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 1000)
+  }, [])
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>
       setHistoryToggle(doc.data().storeHistory)
-    );
-  }, [user.uid]);
+    )
+  }, [user.uid])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (historyToggle) {
-        addHistoryOrLibrary(user?.uid, "history", "videos", id);
+        addHistoryOrLibrary(user?.uid, "history", "videos", id)
       }
-    }, 1000);
+    }, 1000)
 
-    return () => clearTimeout(timeout);
-  }, [addHistoryOrLibrary, historyToggle, id, user?.uid, videoDetails]);
+    return () => clearTimeout(timeout)
+  }, [addHistoryOrLibrary, historyToggle, id, user?.uid, videoDetails])
 
   if (!videoDetails) {
     return (
       <div className="w-full h-[100vh] bg-[#0d0d0d] grid place-items-center">
         <h1 className="text-[2rem] text-white">Loading...</h1>
       </div>
-    );
+    )
   }
 
   if (lgBelow) {
@@ -118,5 +130,5 @@ export default function WatchVideo() {
       </div>
       <Footer />
     </>
-  );
+  )
 }

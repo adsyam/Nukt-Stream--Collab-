@@ -33,6 +33,14 @@ export default function WatchMovie() {
   const server4 = `https://2embed.org/series.php?id=${id}/`
   const server5 = `https://www.2embed.cc/embed/${id}/`
 
+useEffect(() => {
+  // Scroll to the top of the page when the component mounts
+  setTimeout(() => {
+    window.scrollTo(0, 0)
+  }, 1000)
+}, [])
+
+
   //---this will be a listener for the toggle history
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(textDB, "Users", user.uid), (doc) =>

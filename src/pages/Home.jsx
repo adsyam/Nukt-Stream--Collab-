@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from "react"
 import {
   Carousel,
   Footer,
@@ -6,16 +6,23 @@ import {
   TopRated,
   Trending,
   VideoFeed,
-} from "../components";
-import { useDataContext } from "../context/DataContext";
-import { useAuthContext } from "../context/AuthContext";
-import { useDBContext } from "../context/DBContext";
+} from "../components"
+import { useAuthContext } from "../context/AuthContext"
+import { useDBContext } from "../context/DBContext"
+import { useDataContext } from "../context/DataContext"
 // import PopularMovie from "../components/Popular"
 
 export default function Home() {
-  const { sidebar } = useDataContext();
-  const { user } = useAuthContext();
-  const { addUser } = useDBContext();
+  const { sidebar } = useDataContext()
+  const { user } = useAuthContext()
+  const { addUser } = useDBContext()
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 1000)
+  }, [])
 
   useEffect(() => {
     const addUserData = async () => {
@@ -25,17 +32,17 @@ export default function Home() {
             user?.uid,
             user?.displayName,
             user?.auth?.currentUser?.providerData[0]?.email
-          );
+          )
         } else {
-          await addUser(user?.uid);
+          await addUser(user?.uid)
         }
       } catch (err) {
-        console.log("[HOME]Error adding user data: ", err);
+        console.log("[HOME]Error adding user data: ", err)
       }
-    };
+    }
 
-    addUserData();
-  }, []);
+    addUserData()
+  }, [])
 
   return (
     <div className="overflow-x-hidden">
@@ -56,5 +63,5 @@ export default function Home() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
